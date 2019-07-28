@@ -127,6 +127,9 @@
     <ClInclude Include="sort.h" />
     <ClInclude Include="Zuochengyun.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Readme.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
