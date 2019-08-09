@@ -398,49 +398,357 @@
 //	return 0;
 //}
 
-#include <string>
+
+//数组中的数按频次排序，相同次数的数以第一次出现为优先
+//#include <string>
+//#include <iostream>
+//#include <map>  
+//#include <functional>  
+//#include <vector>
+//#include <algorithm>
+//#include<iterator>
+//
+//using namespace std;
+//
+//vector<int> CinIntVector() {
+//	vector<int>nums;
+//	int num;
+//	do {
+//		cin >> num;
+//		nums.push_back(num);
+//	} while (getchar() != '\n');
+//
+//	return nums;
+//}
+//
+//bool greater_cmp(pair<int, int> a, pair<int, int> b) {
+//	return  a.second > b.second;  //降序
+//};
+
+//int main(void)
+//{
+//	//int n;
+//	//cin >> n;
+//	//vector<int> A = CinIntVector();
+//	//vector<int> B = CinIntVector();
+//
+//	int n = 19;
+//	vector<int> salaries{ 1,2,4,6,3,3,4,2,5,5,5,5,6,3,6,7,8,9,10};//数组中的数按频次排序，相同次数的数以第一次出现为优先
+//
+	//map<int, int> mymap;
+	//for (int i = 0; i < n; ++i) {
+	//	if (mymap.find(salaries[i]) != mymap.end()) {
+	//		mymap[salaries[i]]++;
+	//	}
+	//	else
+	//		mymap.insert(make_pair(salaries[i], 1));
+	//}
+//	vector<int> vec;
+//	std::vector<std::pair<int, int>> tmp(mymap.begin(), mymap.end());
+//	std::sort(tmp.begin(), tmp.end(), greater_cmp);
+//	for (int i = 0; i < tmp.size(); ++i) {
+//		for (int j = 0; j < tmp[i].second; ++j) {
+//			vec.push_back(tmp[i].first);
+//		}
+//	}
+//
+//	std::multimap<int, int, greater<int>> orderedmap;//按valse降序排列
+//	//std::transform(mymap.begin(), mymap.end(), std::inserter(orderedmap, orderedmap.begin()), [](std::pair<int, int> a))
+//	//{ return std::make_pair(a.second, a.first); });
+//
+//
+//	//orderedmap中将mymap的key与value交换，然后按orderedmap的key排序
+//	transform(mymap.begin(), mymap.end(), std::inserter(orderedmap, orderedmap.begin()), [](pair<int, int> a) { return pair<int, int>(a.second, a.first); });
+//	
+//	for (auto it = mymap.begin(); it != mymap.end(); ++it) {
+//		cout << it->first << " ";
+//	}
+//	return 0;
+//}
+
+//#include<bits/stdc++.h>
+//
+//using namespace std;
+//
+//int main() {
+//
+//	return 0;
+//}
+
+//#include<bits/stdc++.h>
+//
+//using namespace std;
+//
+//struct window{
+//	int x1, y1;
+//	int x2, y2;
+//	int num;
+//	window(int a = 0, int b = 0, int c = 0, int d = 0, int x = 0) :
+//		x1(a), y1(b), x2(a+c), y2(b+d), num(x) {};
+//};
+//vector<window> v;
+//bool check(int x, int y, window& w) {
+//	if (x >= w.x1 && y >= w.y1 && x <= w.x2 && y <= w.y2)
+//		return true;
+//	return false;
+//}
+//void search(int x, int y) {
+//	size_t i = 0;
+//	while (i < v.size()) {
+//		if (check(x, y, v[i])) {
+//			window t = v[i];
+//			v.erase(v.begin()+i);
+//			v.insert(v.begin(), t);
+//			cout << t.num << endl;
+//			return;
+//		}
+//		++i;
+//	}
+//	cout << "-1";
+//}
+//int main() {
+//	int n, m;
+//	cin >> n >> m;
+//	v.resize(n);
+//	for (int i = n - 1; i >= 0; --i) {
+//		int x1, y1, x2, y2;
+//		cin >> x1 >> y1 >> x2 >> y2;
+//		v[i] = window(x1, y1, x2, y2, n - i);
+//	}
+//	while (m--) {
+//		int x, y;
+//		cin >> x >> y;
+//		search(x, y);
+//	}
+//	return 0;
+//}
+
+
+
+//#include<bits/stdc++.h>
+//
+//using namespace std;
+//
+//vector<int> CinIntVector() {
+//	vector<int>nums;
+//	int num;
+//	do {
+//		cin >> num;
+//		nums.push_back(num);
+//	} while (getchar() != '\n');
+//
+//	return nums;
+//}
+//
+//int main() {
+//	int n;
+//	//cin >> n;
+//	//vector<int> vec = CinIntVector();
+//	n = 8;
+//	vector<int> vec{ 1,6,2,5,4,6,7,4};
+//	int len = vec.size();
+//	vector<int> A;
+//	vector<int> B;
+//
+//	int timeA = 1;
+//	int timeB = 1;
+//	int i = 0, j = len - 1;
+//	while (len > 0) {
+//		if (len > 1) {
+//			if (timeA % 2 == 1 && vec[i] >= vec[j]) {
+//				A.push_back(vec[i]);
+//				timeA++;
+//				i++;
+//			}
+//			else if (timeA % 2 == 1 && vec[i] < vec[j]) {
+//				A.push_back(vec[j]);
+//				timeA++;
+//				j--;
+//			}
+//			else if (timeA % 2 == 0 && vec[i] <= vec[j]) {
+//				A.push_back(vec[i]);
+//				timeA++;
+//				i++;
+//			}
+//			else if (timeA % 2 == 0 && vec[i] > vec[j]) {
+//				A.push_back(vec[j]);
+//				timeA++;
+//				j--;
+//			}
+//			len--;
+//		}
+//		else {
+//			A.push_back(vec[i]);
+//			len--;
+//		}
+//		if (len > 1) {
+//			if (timeB % 2 == 1 && vec[i] >= vec[j]) {
+//				B.push_back(vec[i]);
+//				timeB++;
+//				i++;
+//			}
+//			else if (timeB % 2 == 1 && vec[i] < vec[j]) {
+//				B.push_back(vec[j]);
+//				timeB++;
+//				j--;
+//			}
+//			else if (timeB % 2 == 0 && vec[i] <= vec[j]) {
+//				B.push_back(vec[i]);
+//				timeB++;
+//				i++;
+//			}
+//			else if (timeB % 2 == 0 && vec[i] > vec[j]) {
+//				B.push_back(vec[j]);
+//				timeB++;
+//				j--;
+//			}
+//			len--;
+//		}
+//		else {
+//			B.push_back(vec[i]);
+//			len--;
+//		}
+//	}
+//	int sorceA = 0, sorceB = 0;
+//	int preA = 0, preB = 0;
+//	for (int i = 0; i < A.size(); ++i) {
+//		sorceA += abs(A[i] - preA);
+//		preA = A[i];
+//	}
+//	for (int i = 0; i < B.size(); ++i) {
+//		sorceB += abs(B[i] - preB);
+//		preB = B[i];
+//	}
+//	cout << sorceA << " " << sorceB << endl;
+//	return 0;
+//}
+
+//#include<bits/stdc++.h>
+//
+//using namespace std;
+//
+//struct emoji{
+//	int x, y;
+//};
+//
+//int main() {
+//	int W, XE, YE, XC, YC, PX, PY;
+//	cin >> W >> XE >> YE >> XC >> YC >> PX >> PY;
+//	vector<emoji> emojiVec(20);
+//	for (int i = 0; i < 20; ++i) {
+//		cin >> emojiVec[i].x >> emojiVec[i].y;
+//	}
+//	int row = 0, col = 0;
+//	int x = 0, y = 0;
+//	bool rflag = false;//转义符标志位
+//	bool emo = false;//10~19表情标志
+//	string str;
+//	cin >> str;
+//	for (int i = 0; i < str.length(); i += 2) {
+//		//换行
+//		if (x >= W) {
+//			x -= W;
+//			row ++;
+//		}
+//		string temp = str.substr(i, 2);
+//		if (rflag) {
+//			int num = stoi(temp);
+//			//"#"
+//			if (temp == "23") {
+//				rflag = true;
+//				continue;
+//			}
+//			//表情
+//			if (rflag && 31 == num) {
+//				emo = true;
+//			}
+//			else if (emo = true && 30 <= num && num <= 39) {
+//				x += emojiVec[num - 20].x;
+//			}
+//			else if (rflag && 30 <= num && num <= 39) {
+//				x += XC;
+//			}
+//		}
+//		//汉字
+//		else if (temp[0] == 'E') {
+//			x += XC;
+//			i += 4;
+//		}
+//		else {
+//			x += XE;
+//		}
+//	}
+//
+//	return 0;
+//}
+
+//#include<bits/stdc++.h>
+//
+//using namespace std;
+//
+//bool greater_cmp(pair<int, int> a, pair<int, int> b) {
+//	double ave1 = (double)a.first / (double)a.second;
+//	double ave2 = (double)b.first / (double)b.second;
+//	return  ave1 > ave2;  //降序
+//};
+//
+//int main() {
+//	int n;
+//	cin >> n;
+//	pair<int, int> game;
+//	for (int i = 0; i < n; ++i) {
+//		int N, X;
+//		//cin >> N >> X;
+//		N = 3, X = 4;
+//		vector<pair<int, int>> vec(N);
+//		for (int j = 0; j < N; ++j) {
+//			cin >> game.first >> game.second;
+//			vec[j] = game;
+//		}
+//		sort(vec.begin(), vec.end(), greater_cmp);
+//		int sum = 0;
+//		for (auto it = vec.begin(); it != vec.end(); ++it) {
+//			if (it->second <= X) {
+//				sum += it->first;
+//				X -= it->second;
+//			}
+//			else{
+//				sum += (it->first / it->second) * X;
+//			}
+//		}
+//		cout << sum << endl;
+//	}
+//	return 0;
+//}
+
 #include <iostream>
-#include <map>  
-#include <functional>  
-#include <vector>
+#include <string>
+#include <map>
 
 using namespace std;
 
-vector<int> CinIntVector() {
-	vector<int>nums;
-	int num;
-	do {
-		cin >> num;
-		nums.push_back(num);
-	} while (getchar() != '\n');
-
-	return nums;
-}
-
-int main(void)
+int calEncodeLen(string &str)
 {
-	//int n;
-	//cin >> n;
-	//vector<int> A = CinIntVector();
-	//vector<int> B = CinIntVector();
-
-	int n = 10;
-	vector<int> A{ 1,2,3,4,5,6,7,8,9,10};
-	vector<int> B{ 1,1,1,1,1,1,1,1,1,10 };
-	map<int, int> mymap;
-	int count = 0;
-	for (int i = 0; i < n; ++i) {
-		if (mymap.find(A[i]) == mymap.end()) {
-			mymap[A[i]] = B[i];
-		}
-		else if (mymap.find(A[i]) != mymap.end() && mymap[A[i]] > B[i]) {
-			mymap[A[i]] = B[i];
-		}
+	int len = 0;
+	// please write your code here.
+	int lenght = str.length();
+	map<char,int> mymap;
+	for (auto ch : str) {
+		mymap[ch]++;
 	}
-	cout << mymap.size();
-
-	return 0;
+	return len;
 }
 
 
+
+//int main(void) {
+//	string mystr{"adsfaerwkeljfasodfjoqweirfaskdh"};
+//	//cin >> mystr;
+//
+//
+//	int len = calEncodeLen(mystr);
+//
+//	cout << len << endl;
+//	return 0;
+//}
 

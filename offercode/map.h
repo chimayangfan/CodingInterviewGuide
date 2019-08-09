@@ -31,6 +31,9 @@ struct less
 //1、按key排序(使用用map，通过构造参数列表中第三个参数控制升降，不写默认升序)
 #include <map> 
 #include <functional>  
+
+using namespace std;
+
 template <class T>
 std::map<T, int, std::greater<T> > map;//按key降序排列
 template <class T>
@@ -45,6 +48,8 @@ std::map<T, int> map;//按key升序排列
 #include <algorithm>
 #include <vector>
 #include <map>
+
+using namespace std;
 
 bool less_cmp(pair<string, int> a, pair<string, int> b) {
 	return  a.second < b.second;  //升序
