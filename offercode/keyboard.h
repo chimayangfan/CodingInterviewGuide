@@ -32,8 +32,11 @@ public:
 	vector<T> CinIntVector();							//2:从键盘读入任意长度的数组，不需要先确定数组长度
 	T CinRandonZeroToN(T N);							//3:从键盘读入N,生成0~N的随机数
 	int GetGCD(int M, int N);							//4:从键盘读入两个数M和N,返回两个数的最大公约数
-	string BigNumAdd(string& str1, string& str2);		//5:从键盘读入两个超大数M和N,返回两个数之和
-	string BigNumMultiply(string& s1, string& s2);		//6:从键盘读入两个超大数M和N,返回两个数之积
+	string BigIntNumAdd(string& str1, string& str2);	//5:从键盘读入两个超大数M和N,返回两个数之和(整数)方式1
+	void BigIntNumAdd2(string& ans, string& b);			//5:从键盘读入两个超大数M和N,返回两个数之和(整数)方式2
+	string BigFloatNumAdd(string a, string b);			//5:从键盘读入两个超大数M和N,返回两个数之和(浮点数)
+	string subtract(string ans, string b);				//6:从键盘读入两个超大数M和N,返回两个数之差(整数)
+	string BigNumMultiply(string& s1, string& s2);		//6:从键盘读入两个超大数M和N,返回两个数之积(整数)
 	void CinVectorMatN(vector<vector<T> > &vec, int n);	//7:从键盘读入N阶矩阵，vector<vector<T> >形式
 	void CinArrayMatN(int** &arr, int n);				//8:从键盘读入N阶矩阵，int**形式														
 	vector<string> split(string str, string pattern);	//9:从键盘读入字符串，按指定字符分割成子串数组														
@@ -91,10 +94,10 @@ int keyboard<T>::GetGCD(int M, int N){
 	return GetGCD(N, r);//欧几里得算法digui
 }
 
-//5:从键盘读入两个超大数M和N,返回两个数之和
+//5:从键盘读入两个超大数M和N,返回两个数之和(整数)
 //思路：先转成字符串数组，再按位相加
 template <typename T>
-string keyboard<T>::BigNumAdd(string& str1, string& str2)
+string keyboard<T>::BigIntNumAdd(string& str1, string& str2)
 {
 	int a[1000] = { 0 };//定义数长不超过1000位
 	int b[1000] = { 0 };
@@ -136,7 +139,110 @@ string keyboard<T>::BigNumAdd(string& str1, string& str2)
 	return str1;
 }
 
-//6:从键盘读入两个超大数M和N,返回两个数之积
+//5:从键盘读入两个超大数M和N,返回两个数之和(整数)
+template <typename T>
+void keyboard<T>::BigIntNumAdd2(string& ans, string& b) {
+	if (ans.length()<b.length()) ans.swap(b);
+	for (int i = ans.length() - 1, j = b.length() - 1; i >= 0; i--, j--) {
+		ans[i] = ans[i] + (j >= 0 ? b[j] - '0' : 0);
+		if (ans[i]>'9') {
+			ans[i] -= 10;
+			if (i>0) ans[i - 1]++;
+			else ans.insert(0, "1");
+		}
+	}
+	//return ans;
+}
+
+//5:从键盘读入两个超大数M和N,返回两个数之和(浮点数)
+string big_plus(string a, string b, int& op, bool point_flag)
+{
+	string reusult = "";
+	if (a.length()<b.length())
+	{
+		std::swap(a, b);
+	}
+	if (point_flag)
+	{
+		//小数部分的加法在后面补零
+		for (int i = a.length() - b.length(); i>0; i--)
+		{
+			b = b + "0";
+		}
+	}
+	else
+	{
+		//整数部分的加法，在前面补零
+		for (int i = a.length() - b.length(); i>0; i--)
+		{
+			b = "0" + b;
+		}
+	}
+	int i, j, t;
+	for (i = a.length() - 1; i >= 0; i--)
+	{
+		t = a[i] - '0' + b[i] - '0' + op;
+		reusult += '0' + t % 10;
+		op = t / 10;
+	}
+
+	reverse(reusult.begin(), reusult.end());
+	return reusult;
+}
+
+template <typename T>
+string keyboard<T>::BigFloatNumAdd(string a, string b)
+{
+	string a_point_part;
+	string b_point_part;
+	string result_point_part;
+	string result_int_part;
+
+	string a_int_part;
+	string b_int_part;
+
+	int a_p = find(a.begin(), a.end(), '.') - a.begin();
+	int b_p = find(b.begin(), b.end(), '.') - b.begin();
+
+	a_int_part = a.substr(0, a_p);
+	a_point_part = a.substr(a_p + 1, a.length());
+
+	b_int_part = b.substr(0, b_p);
+	b_point_part = b.substr(b_p + 1, b.length());
+
+	int op = 0;
+
+	//小数部分相加
+	result_point_part = big_plus(a_point_part, b_point_part, op, true);
+	//整数部分的加法
+	result_int_part = big_plus(a_int_part, b_int_part, op, false);
+
+
+	return result_int_part + "." + result_point_part;
+}
+
+//6:从键盘读入两个超大数M和N,返回两个数之差
+template <typename T>
+string keyboard<T>::subtract(string ans, string b) {
+	int flag = 0;
+	if (ans.length()<b.length() || ans.length() == b.length() && ans<b) {
+		flag = 1;
+		ans.swap(b);
+	}
+	for (int i = ans.length() - 1, j = b.length() - 1; i >= 0; i--, j--) {
+		ans[i] = ans[i] - (j >= 0 ? b[j] - '0' : 0);
+		if (ans[i]<'0') {
+			ans[i] += 10;
+			--ans[i - 1];
+		}
+	}
+	while (ans.length() && ans[0] == '0') ans.erase(ans.begin());
+	if (flag) ans.insert(0, "-");
+	if (ans.empty()) return "0";
+	return ans;
+}
+
+//7:从键盘读入两个超大数M和N,返回两个数之积
 //思路：先转成字符串数组，再按位相加
 template <typename T>
 string keyboard<T>::BigNumMultiply(string& s1, string& s2) {
@@ -171,7 +277,7 @@ string keyboard<T>::BigNumMultiply(string& s1, string& s2) {
 	return s1;
 }
 
-//7:从键盘读入N阶矩阵，vector<vector<T> >形式
+//8:从键盘读入N阶矩阵，vector<vector<T> >形式
 template <typename T>
 void keyboard<T>::CinVectorMatN(vector<vector<T> > &vec, int n) {
 	if (n == 0) return ;
@@ -186,7 +292,7 @@ void keyboard<T>::CinVectorMatN(vector<vector<T> > &vec, int n) {
 	}
 }
 
-//8:从键盘读入N阶矩阵,int**形式
+//9:从键盘读入N阶矩阵,int**形式
 template <typename T>
 void keyboard<T>::CinArrayMatN(int** &arr, int n) {
 	if (n == 0) return;
@@ -203,7 +309,7 @@ void keyboard<T>::CinArrayMatN(int** &arr, int n) {
 	}
 }
 
-//9:从键盘读入字符串，按指定字符分割成子串数组
+//10:从键盘读入字符串，按指定字符分割成子串数组
 template <typename T>
 vector<string> keyboard<T>::split(string str, string pattern) {
 	string::size_type pos;
@@ -224,7 +330,7 @@ vector<string> keyboard<T>::split(string str, string pattern) {
 	return result;
 }
 
-//10:从键盘读入字符串，提取无符号整型数组(不判断符号、小数点)
+//11:从键盘读入字符串，提取无符号整型数组(不判断符号、小数点)
 template <typename T>
 void keyboard<T>::extractuintarray(string _str, vector<int> &_num)
 {
@@ -255,7 +361,7 @@ void keyboard<T>::extractuintarray(string _str, vector<int> &_num)
 		_num.push_back(sum);
 }
 
-//11:从键盘读入字符串，提取整型数组(不判断小数点)
+//12:从键盘读入字符串，提取整型数组(不判断小数点)
 template <typename T>
 void keyboard<T>::extractintarray(string str, vector<int> &_num)
 {

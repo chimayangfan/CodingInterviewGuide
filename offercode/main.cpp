@@ -721,9 +721,8 @@
 //	return 0;
 //}
 
-#include <iostream>
-#include <string>
-#include <map>
+#include <bits/stdc++.h>
+#include "keyboard.h"
 
 using namespace std;
 
@@ -740,6 +739,14 @@ int calEncodeLen(string &str)
 }
 
 
+int main(void) {
+	keyboard<int> temp;
+	string a{ "1234567.5123" };
+	string b{ "3214.58741" };
+	//string sumstr = temp.subtract(b, a);
+	string sumstr = temp.BigFloatNumAdd(a, b);
+	return 0;
+}
 
 //int main(void) {
 //	string mystr{"adsfaerwkeljfasodfjoqweirfaskdh"};
