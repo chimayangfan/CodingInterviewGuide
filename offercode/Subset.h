@@ -39,6 +39,18 @@ public:
 };
 //////////////////////////////////////////////////////////
 
+//*************************************************************************//
+//							Part2 背包问题
+//*************************************************************************//
+class Backpack {
+public:
+	Backpack() {};//构造
+	~Backpack() {};//析构
+	vector<int> ZeroOneBackpack(vector<pair<int, int>> items, int limit);			//题目1：01背包问题
+
+};
+//////////////////////////////////////////////////////////
+
 //class Subsets成员函数定义
 #ifndef SubsetsClass 
 #define SubsetsClass
@@ -309,6 +321,57 @@ set<vector<int>> Subsets::permuteUnique(vector<int> nums) {
 	backTracking(nums, subset, resSet, used);
 	return resSet;
 }
+
+#endif
+
+//class Backpack成员函数定义
+#ifndef BackpackClass 
+#define BackpackClass
+
+/// \题目1：01背包问题(二维 动态规划解法)
+/// \vector<pair<int,int>> items 总物品(pair.first = 物品价值，pair.second = 物品重量)
+/// \param c2 参数2
+/// \return 返回说明
+vector<int> Backpack::ZeroOneBackpack(vector<pair<int,int>> items, int limit) {
+	int n = items.size();//物品数
+	vector<int> resvec;
+	vector<vector<int>> dp(n + 1, vector<int>(limit + 1, 0));
+	for (int i = 1; i <= n; i++)//第i个物品
+		for (int j = limit; j >= 0; j--)//剩余空间j
+		{
+			//cout << "i:" << i << " j:" << j << endl;
+			//assert(i >= 0 || i <= 7 || j >= 0 || j <= 13);
+			if (j >= items[i-1].second)//如果装得下
+				dp[i][j] = max(dp[i - 1][j - items[i-1].second] + items[i-1].first, dp[i - 1][j]);
+			else//如果装不下
+				dp[i][j] = dp[i - 1][j];
+		}
+
+	////路径矩阵
+	//for (int i = 1; i <= n; ++i) {
+	//	for (int j = 1; j <= limit; ++j) {
+	//		printf("%2d ", dp[i][j]);
+	//	}
+	//	cout << endl;
+	//}
+	//回溯法记录路径
+	vector<bool> used(n, false);
+	for (int i = n; i >= 1; i--)
+	{
+		if (dp[i][limit] == dp[i - 1][limit])
+			used[i - 1] = false;
+		else
+		{
+			used[i - 1] = true;
+			//cout << items[i - 1].first << " ";
+			resvec.push_back(items[i - 1].first);
+			limit -= items[i - 1].second;
+		}
+	}
+	//cout << endl;
+	return resvec;
+}
+
 
 #endif
 

@@ -748,39 +748,27 @@
 //
 
 
-//#include<bits/stdc++.h>
-//
-//using namespace std;
-//
-//vector<int> CinIntVector(int n) {
-//	vector<int>nums;
-//	int num;
-//	for (int i = 0; i < n; ++i) {
-//		cin >> num;
-//		nums.push_back(num);
-//	}
-//
-//	return nums;
-//}
-//
-//int main() {
-//	int n;
-//	//cin >> n;
-//	n = 5;
-//	if (n <= 2) {
-//		cout << 0 << endl;
-//		return 0;
-//	}
-//	//vector<int> vec = CinIntVector(n);
-//	vector<int> vec{ 1,4,3,2,5 };
-//	int len = vec.size();
-//	vector<int> peak;
-//	for (int i = 1; i < len; ++i) {
-//
-//	}
-//
-//	return 0;
-//}
+#include<bits/stdc++.h>
+#include"Subset.h"
+
+using namespace std;
+
+int main() {
+	int n = 6;
+	//vector<int> vec = CinIntVector(n);
+	vector<int> first{ 0 , 2 , 5 , 3 , 10 , 4 };
+	vector<int> second{ 0 , 1 , 3 , 2 , 6 , 2 };
+	vector<pair<int, int>> items(n);
+	for (int i = 0; i < n; ++i) {
+		items[i].first = first[i];
+		items[i].second = second[i];
+	}
+	Backpack bag;
+	vector<int> res = bag.ZeroOneBackpack(items, 12);
+
+
+	return 0;
+}
 
 
 
