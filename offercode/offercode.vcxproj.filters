@@ -52,6 +52,9 @@
     <ClInclude Include="sort.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Subset.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Readme.txt">

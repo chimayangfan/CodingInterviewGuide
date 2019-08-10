@@ -721,41 +721,31 @@
 //	return 0;
 //}
 
+
+//int main(void) {
+//	Subsets myset;
+//	vector<int> vec{ 1, 2, 3, 4 };
+//	//set<vector<int>> subset = myset.Allsubsets1(vec);
+//	//set<vector<int>> subset = myset.SubsetSum(vec, 5);
+//
+//	return 0;
+//}
+
 #include <bits/stdc++.h>
-#include "keyboard.h"
+#include <iostream>
+#include <vector>
+#include "Subset.h"
+#include <algorithm>
 
 using namespace std;
 
-int calEncodeLen(string &str)
+int main()
 {
-	int len = 0;
-	// please write your code here.
-	int lenght = str.length();
-	map<char,int> mymap;
-	for (auto ch : str) {
-		mymap[ch]++;
-	}
-	return len;
+	std::vector<int> v{ 1,2,3,4,5,6};
+	Subsets sets;
+	bool flag = sets.PartitionKSubsets(v,3);
+	return 1;
 }
 
 
-int main(void) {
-	keyboard<int> temp;
-	string a{ "1234567.5123" };
-	string b{ "3214.58741" };
-	//string sumstr = temp.subtract(b, a);
-	string sumstr = temp.BigFloatNumAdd(a, b);
-	return 0;
-}
-
-//int main(void) {
-//	string mystr{"adsfaerwkeljfasodfjoqweirfaskdh"};
-//	//cin >> mystr;
-//
-//
-//	int len = calEncodeLen(mystr);
-//
-//	cout << len << endl;
-//	return 0;
-//}
 
