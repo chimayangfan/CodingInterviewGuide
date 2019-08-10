@@ -35,6 +35,7 @@ public:
 	bool PartitionTwoSubsets(vector<int> nums);					//题目3：Leetcode 416.分割等和子集(【动态规划】-分割等和子集)
 	bool PartitionKSubsets(vector<int> nums, int k);			//题目4：Leetcode 698.分割等和子集(【动态规划】-划分为k个相等的子集)
 	set<vector<int>> PermuteRecrusive(vector<int> ints);		//题目5：不重复数字序列的全排列集合
+	set<vector<int>> permuteUnique(vector<int> nums);			//题目6：带重复数字序列的全排列集合（集合元素有序）
 };
 //////////////////////////////////////////////////////////
 
@@ -282,6 +283,33 @@ set<vector<int>> Subsets::PermuteRecrusive(vector<int> ints)
 	PermuteHelper(ints, subset, resSet);
 	return resSet;
 }
+
+//题目6：带重复数字序列的全排列集合（集合元素有序）
+void backTracking(vector<int> ints, vector<int>& subset, set<vector<int>>& resSet, vector<bool> used) {
+	if (ints.size() == subset.size()) {
+		resSet.insert(subset);
+		return;
+	}
+	for (int i = 0; i < ints.size(); i++) {
+		if (used[i] || (i > 0 && ints[i] == ints[i - 1] && !used[i - 1]))
+			continue;
+		used[i] = true;
+		subset.push_back(ints[i]);
+		backTracking(ints, subset, resSet, used);
+		used[i] = false;
+		subset.pop_back();
+	}
+}
+set<vector<int>> Subsets::permuteUnique(vector<int> nums) {
+	int n = nums.size();
+	sort(nums.begin(), nums.end());
+	set<vector<int>> resSet;
+	vector<bool> used(n, false);
+	vector<int> subset;
+	backTracking(nums, subset, resSet, used);
+	return resSet;
+}
+
 #endif
 
 #endif
