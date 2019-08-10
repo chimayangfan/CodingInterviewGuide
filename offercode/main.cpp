@@ -746,6 +746,34 @@ int main()
 	bool flag = sets.PartitionKSubsets(v,3);
 	sets.permuteUnique(v);
 	return 1;
+
+#include<iostream>
+#include<cstdio>
+	using namespace std;
+
+	int main() {
+
+		int n, a[5010], dp[5010];
+		while (cin >> n) {
+			int MAX = 0;
+			for (int i = 1; i <= n; i++) {
+				cin >> a[i];
+			}
+			for (int i = 1; i <= n; i++) {
+				for (int j = 1; j<i; j++) {
+					if (a[j]<a[i]) {//"!="
+						dp[i] = max(dp[i], dp[j] + 1);
+						MAX = max(MAX, dp[i]);
+					}
+				}
+			}
+			cout << MAX + 1 << endl;
+		}
+	}
+	/*
+	6
+	1 1 1 1 10 7
+	*/
 }
 
 
