@@ -827,3 +827,132 @@ int main()
 //	return 0;
 //}
 
+//贝壳找房第一题
+//#include<iostream>
+//#include<cstdio>
+//
+//using namespace std;
+//
+//int main() {
+//	long n, m;
+//	cin >> n >> m;
+//	long var1 = 0, var2 = 0, abs = LONG_MAX;
+//	for (int i = 1; i < n; ++i) {
+//		long tmp;
+//		cin >> tmp;
+//		if (labs(tmp - m) < abs) {
+//			abs = labs(tmp - m);
+//			var1 = m;
+//			var2 = tmp;
+//		}
+//		m = tmp;
+//	}
+//	cout << var1 << " "<< var2 << endl;
+//	return 0;
+//}
+
+//贝壳找房第二题
+//#include<bits/stdc++.h>
+//
+//using namespace std;
+//
+//int main() {
+//	int n;
+//	while (cin >> n) {
+//		int MAX = 0;
+//		vector<int> input(n + 1, 0);
+//		vector<int> dp(n + 1, 0);
+//		for (int i = 1; i <= n; i++) {
+//			cin >> input[i];
+//		}
+//		for (int i = 1; i <= n; i++) {
+//			for (int j = 1; j<i; j++) {
+//				if (input[j]<input[i]) {
+//					dp[i] = max(dp[i], dp[j] + 1);
+//					MAX = max(MAX, dp[i]);
+//				}
+//			}
+//		}
+//		cout << MAX + 1 << endl;
+//	}
+//}
+
+//贝壳找房第三题
+//#include<bits/stdc++.h>
+//
+//using namespace std;
+//
+//vector<double> CindoubleVector(int n) {
+//	vector<double>nums;
+//	int num;
+//	for (int i = 0; i < n; ++i) {
+//		cin >> num;
+//		nums.push_back(num);
+//	}
+//
+//	return nums;
+//}
+//
+//int main() {
+//	int n;
+//	cin >> n;
+//	vector<double> vec = CindoubleVector(n);
+//	sort(vec.begin(), vec.end());
+//	int maxcout = 0;
+//
+//	for (int i = n - 1; i > 0; --i) {
+//		for (int j = i - 1; j >= 0; --j) {
+//			if (vec[j] >= vec[i] * 0.9)
+//				maxcout++;
+//			else
+//				break;
+//		}
+//	}
+//	cout << maxcout << endl;
+//	return 0;
+//}
+
+//贝壳找房第四题
+#include <bits/stdc++.h>
+
+using namespace std;
+
+vector<int> CinIntVector(int n) {
+	vector<int>nums;
+	int num;
+	for (int i = 0; i < n; ++i) {
+		cin >> num;
+		nums.push_back(num);
+	}
+}
+
+int main() {
+	int n;
+	cin >> n;
+	//n = 5;
+	if (n <= 2) {
+		cout << 0 << endl;
+		return 0;
+	}
+	vector<int> nums = CinIntVector(n);
+	//vector<int> nums{ 1,4,3,2,5 };
+	int Maxvar = -1;
+	int mbegin = 0;
+	for (int i = 0; i < n; ++i) {
+		if (nums[i] > nums[i + 1]) {
+			mbegin = i;
+			break;
+		}
+	}
+	int mend = n - 1;
+	for (int i = n - 1; i>0; --i) {
+		if (nums[i] > nums[i - 1]) {
+			mend = i;
+			break;
+		}
+	}
+	if (mbegin == mend) {
+		cout << 0 << endl;
+		return 0;
+	}
+}
