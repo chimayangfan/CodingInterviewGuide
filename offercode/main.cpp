@@ -739,38 +739,12 @@
 
 using namespace std;
 
-void backTracking(vector<int> ints, vector<int>& subset, set<vector<int>>& resSet, vector<bool> used) {
-	if (ints.size() == subset.size()) {
-		resSet.insert(subset);
-		return;
-	}
-	for (int i = 0; i < ints.size(); i++) {
-		if (used[i] || (i > 0 && ints[i] == ints[i - 1] && !used[i - 1]))
-			continue;
-		used[i] = true;
-		subset.push_back(ints[i]);
-		backTracking(ints, subset, resSet, used);
-		used[i] = false;
-		subset.pop_back();
-	}
-}
-
-set<vector<int>> permuteUnique(vector<int> nums) {
-	int n = nums.size();
-	sort(nums.begin(),nums.end());
-	set<vector<int>> resSet;
-	vector<bool> used(n, false);
-	vector<int> subset;
-	backTracking(nums, subset, resSet, used);
-	return resSet;
-}
-
 int main()
 {
 	std::vector<int> v{ 1,1,3};
 	Subsets sets;
 	bool flag = sets.PartitionKSubsets(v,3);
-	permuteUnique(v);
+	sets.permuteUnique(v);
 	return 1;
 }
 
