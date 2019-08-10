@@ -739,42 +739,53 @@
 
 using namespace std;
 
-int main()
-{
-	std::vector<int> v{ 1,1,3};
-	Subsets sets;
-	bool flag = sets.PartitionKSubsets(v,3);
-	sets.permuteUnique(v);
-	return 1;
+int main(String[] args) {
+	Scanner sc = new Scanner(System.in);
+	int n = sc.nextInt();
+	int[] nums = new int[n];
 
-#include<iostream>
-#include<cstdio>
-	using namespace std;
-
-	int main() {
-
-		int n, a[5010], dp[5010];
-		while (cin >> n) {
-			int MAX = 0;
-			for (int i = 1; i <= n; i++) {
-				cin >> a[i];
-			}
-			for (int i = 1; i <= n; i++) {
-				for (int j = 1; j<i; j++) {
-					if (a[j]<a[i]) {//"!="
-						dp[i] = max(dp[i], dp[j] + 1);
-						MAX = max(MAX, dp[i]);
-					}
-				}
-			}
-			cout << MAX + 1 << endl;
+	for (int i = 0; i < n; i++) {
+		nums[i] = sc.nextInt();
+	}
+	int l = 0, h = n - 1;
+	int minleft = 0, minright = 0;
+	for (int i = 0; i < n; i++) {
+		if (i != 0 && nums[i] < nums[i - 1]) {
+			l = i;
+			minleft = nums[i - 1];
+			break;
 		}
 	}
-	/*
-	6
-	1 1 1 1 10 7
-	*/
+	for (int i = n - 1; i >= 0; i--) {
+		if (i != n - 1 && nums[i] < nums[i + 1]) {
+			h = i;
+			minright = nums[i + 1];
+			break;
+		}
+	}
+	System.out.println(minleft + " " + minright);
+	int re = Integer.MAX_VALUE;
+	for (int i = l; i <= h; i++) {
+		int sum = 0;
+		int max = Math.max(minleft + (i - 1 - l), minright + (h + 1 - i));
+		for (int j = l; j <= h; j++) {
+			if (j == i) {
+				sum += max - nums[j];
+			}
+			else if (j < i) {
+				sum += minleft + j - l + 1 - nums[j];
+
+			}
+			else {
+				sum += minright + h + 1 - j - nums[j];
+			}
+		}
+		System.out.println(sum);
+		re = Math.min(re, sum);
+	}
+	System.out.print(re);
 }
+
 
 
 
