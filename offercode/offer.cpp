@@ -957,36 +957,36 @@ int main() {
 	}
 }
 
-
-#include<bits/stdc++.h>
-#include<unordered_map>
-using namespace std;
-
-vector<int> CinIntVector(int n) {
-	vector<int>nums;
-	int num;
-	for (int i = 0; i < n; ++i) {
-		cin >> num;
-		nums.push_back(num);
-	}
-	return nums;
-}
-
-int main() {
-	int n = 10, m = 6, num;
-	for (int i = 0; i < n; ++i) {
-		unordered_map<int, int> res;
-		cin >> m;
-		for (int j = 0; j < m; ++j) {
-			cin >> num;
-			bitset<32> bits(num);
-			int count = bits.count();
-			res.insert(make_pair(count, num));
-		}
-		cout << res.size() << endl;
-	}
-	return 0;
-}
+//网易互娱第一题，ac
+//#include<bits/stdc++.h>
+//#include<unordered_map>
+//using namespace std;
+//
+//vector<int> CinIntVector(int n) {
+//	vector<int>nums;
+//	int num;
+//	for (int i = 0; i < n; ++i) {
+//		cin >> num;
+//		nums.push_back(num);
+//	}
+//	return nums;
+//}
+//
+//int main() {
+//	int n = 10, m = 6, num;
+//	for (int i = 0; i < n; ++i) {
+//		unordered_map<int, int> res;
+//		cin >> m;
+//		for (int j = 0; j < m; ++j) {
+//			cin >> num;
+//			bitset<32> bits(num);
+//			int count = bits.count();
+//			res.insert(make_pair(count, num));
+//		}
+//		cout << res.size() << endl;
+//	}
+//	return 0;
+//}
 
 //网易互娱第二题，没ac
 //#include<bits/stdc++.h>
