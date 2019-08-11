@@ -46,8 +46,8 @@ class Backpack {
 public:
 	Backpack() {};//构造
 	~Backpack() {};//析构
-	vector<int> ZeroOneBackpack(vector<pair<int, int>> items, int limit);			//题目1：01背包问题
-
+	vector<int> ZeroOneBackpack(vector<pair<int, int>> items, int limit);			//题目1：01背包问题|动态规划(二维数组)
+	int ZeroOneBackpack1(vector<pair<int, int>> items, int limit);			//题目1：01背包问题|动态规划(一维数组)
 };
 //////////////////////////////////////////////////////////
 
@@ -330,14 +330,14 @@ set<vector<int>> Subsets::permuteUnique(vector<int> nums) {
 
 /// \题目1：01背包问题(二维 动态规划解法)
 /// \vector<pair<int,int>> items 总物品(pair.first = 物品价值，pair.second = 物品重量)
-/// \param c2 参数2
-/// \return 返回说明
+/// \limit 最大承重
+/// \return vector<int>最大价值物品选取路径
 vector<int> Backpack::ZeroOneBackpack(vector<pair<int,int>> items, int limit) {
 	int n = items.size();//物品数
 	vector<int> resvec;
 	vector<vector<int>> dp(n + 1, vector<int>(limit + 1, 0));
-	for (int i = 1; i <= n; i++)//第i个物品
-		for (int j = limit; j >= 0; j--)//剩余空间j
+	for (int i = 1; i <= n; ++i)//第i个物品
+		for (int j = limit; j >= 0; --j)//剩余空间j
 		{
 			//cout << "i:" << i << " j:" << j << endl;
 			//assert(i >= 0 || i <= 7 || j >= 0 || j <= 13);
@@ -356,7 +356,7 @@ vector<int> Backpack::ZeroOneBackpack(vector<pair<int,int>> items, int limit) {
 	//}
 	//回溯法记录路径
 	vector<bool> used(n, false);
-	for (int i = n; i >= 1; i--)
+	for (int i = n; i >= 1; --i)
 	{
 		if (dp[i][limit] == dp[i - 1][limit])
 			used[i - 1] = false;
@@ -370,6 +370,32 @@ vector<int> Backpack::ZeroOneBackpack(vector<pair<int,int>> items, int limit) {
 	}
 	//cout << endl;
 	return resvec;
+}
+
+/// \题目1：01背包问题(二维 动态规划解法)
+/// \vector<pair<int,int>> items 总物品(pair.first = 物品价值，pair.second = 物品重量)
+/// \limit 最大承重
+/// \return vector<int>最大价值物品选取路径
+int Backpack::ZeroOneBackpack1(vector<pair<int, int>> items, int limit) {
+	int n = items.size();//物品数
+	//vector<int> resvec;
+	vector<int> dp(limit + 1, 0);
+	for (int i = 1; i <= n; ++i)//第i个物品
+		for (int j = limit; j >= 1; --j)//剩余空间j
+		{
+			//cout << "i:" << i << " j:" << j << endl;
+			//assert(i >= 0 || i <= 7 || j >= 0 || j <= 13);
+			if (j - items[i - 1].second >= 0 && dp[j] <= dp[j - items[i - 1].second] + items[i - 1].first)//二维数组变一维数组
+				dp[j] = dp[j - items[i - 1].second] + items[i - 1].first;//如果值得改变并且j的空间还装得下就赋新值
+		}
+
+	////路径矩阵
+	for (int i = 1; i <= limit; ++i) {
+		printf("%2d ", dp[i]);
+	}
+
+	//cout << endl;
+	return dp[limit];
 }
 
 

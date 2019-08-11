@@ -764,7 +764,7 @@ int main() {
 		items[i].second = second[i];
 	}
 	Backpack bag;
-	vector<int> res = bag.ZeroOneBackpack(items, 12);
+	int res = bag.ZeroOneBackpack1(items, 12);
 
 
 	return 0;
