@@ -956,3 +956,170 @@ int main() {
 		return 0;
 	}
 }
+
+
+#include<bits/stdc++.h>
+#include<unordered_map>
+using namespace std;
+
+vector<int> CinIntVector(int n) {
+	vector<int>nums;
+	int num;
+	for (int i = 0; i < n; ++i) {
+		cin >> num;
+		nums.push_back(num);
+	}
+	return nums;
+}
+
+int main() {
+	int n = 10, m = 6, num;
+	for (int i = 0; i < n; ++i) {
+		unordered_map<int, int> res;
+		cin >> m;
+		for (int j = 0; j < m; ++j) {
+			cin >> num;
+			bitset<32> bits(num);
+			int count = bits.count();
+			res.insert(make_pair(count, num));
+		}
+		cout << res.size() << endl;
+	}
+	return 0;
+}
+
+//网易互娱第二题，没ac
+//#include<bits/stdc++.h>
+//using namespace std;
+//
+//int main() {
+//	int n = 5;
+//	//cin >> n;
+//	//vector<int> m(n, 0);
+//	//vector<int> t(n, 0);
+//	//vector<int> m1(n, 0);
+//	//vector<int> t1(n, 0);
+//	//vector<int> m2(n, 0);
+//	//vector<int> t2(n, 0);
+//	vector<int> cap(n, 0);
+//	vector<int> m{ 10,10,10,10,10 };
+//	vector<int> t{ 2,2,2,100,1000 };
+//	vector<int> m1{ 1,10,3,3,10 };
+//	vector<int> t1{ 5,5,5,4,5 };
+//	vector<int> m2{ 2,2,2,4,5 };
+//	vector<int> t2{ 5,5,5,3,3 };
+//
+//	//for (int i = 0; i < n; ++i) {
+//	//	cin >> m[i] >> t[i] >> m1[i] >> t1[i] >> m2[i] >> t2[i];
+//	//}
+//	for (int i = 0; i < n; ++i) {
+//		int water = 0;
+//		for (int time=0; time < t[i]; ++time) {
+//			if ((time / t1[i] % 2) == 0) {
+//				water += m1[i];
+//				if (water > m[i]) {
+//					water = m[i];
+//				}
+//			}
+//			if ((time / t2[i] % 2) == 0) {
+//				water -= m2[i];
+//				if (water < 0) {
+//					water = 0;
+//				}
+//			}
+//		}
+//		cap[i] = water;
+//	}
+//	for (auto e : cap) {
+//		cout << e << endl;
+//	}
+//	return 0;
+//}
+
+//网易互娱第三题，没ac
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<int> CinIntVector(int n) {
+	vector<int>nums;
+	int num;
+	for (int i = 0; i < n; ++i) {
+		cin >> num;
+		nums.push_back(num);
+	}
+	return nums;
+}
+
+int characterReplacement(string s, int k) {
+	int max_count = 0, l = 0, r;
+	vector<int> count(128, 0);
+	for (r = 0; r<s.size(); r++)
+	{
+		max_count = max(max_count, ++count[s[r]]);
+		if (r - l + 1 - max_count>k)
+			count[s[l++]]--;
+	}
+	return r - l;
+}
+
+int main() {
+	int n = 3;
+	vector<string> strvec(n);
+	vector<int> same;
+	vector<int> dif;
+	int a = 0, b = 0;
+	for (int i = 0; i < n; ++i) {
+		cin >> strvec[i];
+		cout << characterReplacement(strvec[i], 2) << endl;
+	}
+	return 0;
+}
+
+//网易互娱第四题，没ac
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<int> CinIntVector(int n) {
+	vector<int>nums;
+	int num;
+	for (int i = 0; i < n; ++i) {
+		cin >> num;
+		nums.push_back(num);
+	}
+	return nums;
+}
+
+int main() {
+	int n = 10, m = 6;
+	vector<int> arr{ 6,12,20,14,15,15,7,19,16,13 };
+	vector<int> flood{ 15,24,19,6,17,24 };
+	//cin >> n;
+	//vector<int> arr = CinIntVector(n);
+	//vector<int> flood = CinIntVector(m);
+	vector<int> res;
+
+	for (int i = 0; i < m; ++i) {
+		vector<vector<int>> out;
+		vector<int> tower;
+		for (int j = 0; j < n; ++j) {
+			if (arr[j] > flood[i]) {
+				tower.push_back(arr[j]);
+			}
+			else {
+				if (tower.size() != 0)
+					out.push_back(tower);
+				tower.clear();
+			}
+			if (j == n - 1 && tower.size() > 0) {
+				out.push_back(tower);
+				tower.clear();
+			}
+		}
+		res.push_back(out.size());
+	}
+	for (auto e : res) {
+		cout << e << endl;
+	}
+	return 0;
+}
+
