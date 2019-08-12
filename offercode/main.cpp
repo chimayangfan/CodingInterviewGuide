@@ -623,113 +623,27 @@
 //	return 0;
 //}
 
-//#include<bits/stdc++.h>
-//
-//using namespace std;
-//
-//struct emoji{
-//	int x, y;
-//};
-//
-//int main() {
-//	int W, XE, YE, XC, YC, PX, PY;
-//	cin >> W >> XE >> YE >> XC >> YC >> PX >> PY;
-//	vector<emoji> emojiVec(20);
-//	for (int i = 0; i < 20; ++i) {
-//		cin >> emojiVec[i].x >> emojiVec[i].y;
-//	}
-//	int row = 0, col = 0;
-//	int x = 0, y = 0;
-//	bool rflag = false;//转义符标志位
-//	bool emo = false;//10~19表情标志
-//	string str;
-//	cin >> str;
-//	for (int i = 0; i < str.length(); i += 2) {
-//		//换行
-//		if (x >= W) {
-//			x -= W;
-//			row ++;
-//		}
-//		string temp = str.substr(i, 2);
-//		if (rflag) {
-//			int num = stoi(temp);
-//			//"#"
-//			if (temp == "23") {
-//				rflag = true;
-//				continue;
-//			}
-//			//表情
-//			if (rflag && 31 == num) {
-//				emo = true;
-//			}
-//			else if (emo = true && 30 <= num && num <= 39) {
-//				x += emojiVec[num - 20].x;
-//			}
-//			else if (rflag && 30 <= num && num <= 39) {
-//				x += XC;
-//			}
-//		}
-//		//汉字
-//		else if (temp[0] == 'E') {
-//			x += XC;
-//			i += 4;
-//		}
-//		else {
-//			x += XE;
-//		}
-//	}
-//
-//	return 0;
-//}
+#include<bits/stdc++.h>
+#include"Subset.h"
 
-//#include<bits/stdc++.h>
-//
-//using namespace std;
-//
-//bool greater_cmp(pair<int, int> a, pair<int, int> b) {
-//	double ave1 = (double)a.first / (double)a.second;
-//	double ave2 = (double)b.first / (double)b.second;
-//	return  ave1 > ave2;  //降序
-//};
-//
-//int main() {
-//	int n;
-//	cin >> n;
-//	pair<int, int> game;
-//	for (int i = 0; i < n; ++i) {
-//		int N, X;
-//		//cin >> N >> X;
-//		N = 3, X = 4;
-//		vector<pair<int, int>> vec(N);
-//		for (int j = 0; j < N; ++j) {
-//			cin >> game.first >> game.second;
-//			vec[j] = game;
-//		}
-//		sort(vec.begin(), vec.end(), greater_cmp);
-//		int sum = 0;
-//		for (auto it = vec.begin(); it != vec.end(); ++it) {
-//			if (it->second <= X) {
-//				sum += it->first;
-//				X -= it->second;
-//			}
-//			else{
-//				sum += (it->first / it->second) * X;
-//			}
-//		}
-//		cout << sum << endl;
-//	}
-//	return 0;
-//}
+using namespace std;
 
 
-//int main(void) {
-//	Subsets myset;
-//	vector<int> vec{ 1, 2, 3, 4 };
-//	//set<vector<int>> subset = myset.Allsubsets1(vec);
-//	//set<vector<int>> subset = myset.SubsetSum(vec, 5);
-//
-//	return 0;
-//}
+
+int main() {
+	Backpack bag;
+	vector<pair<int,int>> arr{ {1,5},{2,4},{3,3},{4,2},{5,1} };
+	vector<item> arr1{ { 2,3,4 },{ 3,4,3 },{ 4,5,2 } };
+	bag.MultiplePack(arr1, 15);
+	vector<int> P{ 2,3,4 };
+	vector<int> V{ 3,4,5 };
+	vector<int> M{ 4,3,2 };
+
+	SlideWindow win;
+	string str = win.minWindow("ADOBECODEBANC", "ABC");
+	//vector<int> vec = bag.FullBackpack(arr, 10);
+	return 0;
+}
 
 
 
