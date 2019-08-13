@@ -565,7 +565,7 @@ vector<int> Backpack::MultiplePack1(const vector<int>& P, const vector<int>& V, 
 }
 #endif
 
-//class Subsets成员函数定义
+//class SlideWindow成员函数定义
 #ifndef SlideWindowClass 
 #define SubsetsClassClass
 

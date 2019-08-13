@@ -45,6 +45,9 @@ public:
 };
 //////////////////////////////////////////////////////////
 
+//class Chapter1成员函数定义
+#ifndef Chapter1Class 
+#define Chapter1Class
 //设计一个有getMin功能的栈
 class GetMinStack {
 private:
@@ -290,6 +293,7 @@ int Chapter1::getNum(vector<int> arr, int k) {
 	}
 	return res;
 }
+#endif
 
 //*************************************************************************//
 //							第2章 链表问题
@@ -366,6 +370,10 @@ public:
 	void relocate(Node* &head);									//题目18：按照左右半区的方式重新组合单链表
 };
 ////////////////////////////////////////////////////////////////
+
+//class Chapter2成员函数定义
+#ifndef Chapter2Class 
+#define Chapter2Class
 //利用动态数组构造链表
 Chapter2::Chapter2(int* &table, int n)
 {
@@ -1373,6 +1381,7 @@ void Chapter2::relocate(Node* &head) {
 	}
 	left->next = right;
 }
+#endif
 
 //*************************************************************************//
 //							第3章 二叉树问题
@@ -1426,6 +1435,10 @@ protected:
 
 };
 /////////////////////////////////////////////////////////
+
+//class Chapter3成员函数定义
+#ifndef Chapter3Class 
+#define Chapter3Class
 //构造函数
 Chapter3::Chapter3(const int* a, size_t size, const int& invalid)//有参构造函数	
 	:root(NULL)
@@ -2007,7 +2020,7 @@ struct Record {
 	int r;
 	Record(int left, int right) : l(left), r(right) {}
 };
-
+#endif
 
 //*************************************************************************//
 //							第4章 递归和动态规划问题
@@ -2049,7 +2062,11 @@ public:
 	bool isMatch(string str, string exp);				//题目20：字符串匹配(通配)问题|方式1：暴力递归											   
 	bool isMatchdp(string A, string B);					//题目20：字符串匹配(通配)问题|方式2：动态规划
 };
+/////////////////////////////////////////////////////////
 
+//class Chapter5成员函数定义
+#ifndef Chapter5Class 
+#define Chapter5Class
 //题目1：判断两个字符串是否互为变形词
 bool Chapter5::isDeformation(string str1, string str2) {
 	int len1 = str1.length();
@@ -2875,6 +2892,7 @@ bool Chapter5::isMatchdp(string A, string B)
 	}
 	return dp[lena][lenb];
 }
+#endif
 
 //*************************************************************************//
 //							第7章 位运算
@@ -2891,7 +2909,11 @@ public:
 	int getOddTimeNum(int* arr, int len);	//题目4：在其他数都出现偶数次的数组中找到出现奇数次的数
 	int getOnceNum(int* arr, int len, int k);//题目5：在其他数都出现k 次的数组中找到只出现一次的数
 };
+/////////////////////////////////////////////////////////
 
+//class Chapter7成员函数定义
+#ifndef Chapter7Class 
+#define Chapter7Class
 int flip(int n) {
 	return n ^ 1;
 }
@@ -3028,6 +3050,7 @@ int Chapter7::getOnceNum(int* arr, int len, int k) {
 	}
 	return getFromKSysNum(eo, len, k);
 }
+#endif
 
 
 

@@ -120,10 +120,12 @@
   <ItemGroup>
     <ClInclude Include="BigNum.h" />
     <ClInclude Include="BinaryTree.h" />
+    <ClInclude Include="CustomizeClass.h" />
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="Linklist.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="map.h" />
+    <ClInclude Include="match.h" />
     <ClInclude Include="sort.h" />
     <ClInclude Include="Subset.h" />
     <ClInclude Include="Zuochengyun.h" />

@@ -625,20 +625,29 @@
 
 #include<bits/stdc++.h>
 #include"Subset.h"
+#include"Zuochengyun.h"
+#include"match.h"
 
 using namespace std;
-
-
 
 int main() {
 	Backpack bag;
 	vector<pair<int,int>> arr{ {1,5},{2,4},{3,3},{4,2},{5,1} };
 	vector<item> arr1{ { 2,3,4 },{ 3,4,3 },{ 4,5,2 } };
-	bag.MultiplePack(arr1, 15);
+	//bag.MultiplePack(arr1, 15);
 	vector<int> P{ 2,3,4 };
 	vector<int> V{ 3,4,5 };
 	vector<int> M{ 4,3,2 };
 
+	Node* node = new Node[10]{ 1,2,3,4,5,6,7,8,9,10 };
+	for (int i = 0; i < 9; ++i) {
+		node[i].next = &node[i + 1];
+	}
+	Chapter2 Chapter;
+	//Chapter.reverseNodeList(node);
+
+	Stringmatch strmatch;
+	int index = strmatch.KMP("ABABABAABABAAABABAA", "ABABAAABABAA");
 	SlideWindow win;
 	string str = win.minWindow("ADOBECODEBANC", "ABC");
 	//vector<int> vec = bag.FullBackpack(arr, 10);
