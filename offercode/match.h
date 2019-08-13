@@ -37,7 +37,7 @@ public:
 //求next数组
 vector<int> getNextvec(const string& match){
 	if (match.length() == 1) {
-		return vector<int>(-1);
+		return vector<int>();
 	}
 	vector<int> next(match.length());
 	next[0] = -1, next[1] = 0;

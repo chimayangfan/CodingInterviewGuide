@@ -647,7 +647,7 @@ int main() {
 	//Chapter.reverseNodeList(node);
 
 	Stringmatch strmatch;
-	int index = strmatch.KMP("ABABABAABABAAABABAA", "ABABAAABABAA");
+	int index = strmatch.KMP("ABABABAABABAAABABAA", "A");
 	SlideWindow win;
 	string str = win.minWindow("ADOBECODEBANC", "ABC");
 	//vector<int> vec = bag.FullBackpack(arr, 10);
