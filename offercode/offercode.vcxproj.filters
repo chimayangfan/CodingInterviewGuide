@@ -55,6 +55,12 @@
     <ClInclude Include="Subset.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CustomizeClass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="match.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Readme.txt">

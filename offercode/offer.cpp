@@ -1123,3 +1123,56 @@ int main() {
 	return 0;
 }
 
+//字节跳动8.11第三题，ac
+#include<bits/stdc++.h>
+
+using namespace std;
+
+void fun(vector<int> vec, vector<int> &arr, int index) {
+	while (index > 0 && vec[index] < vec[index - 1]) {
+		arr[index - 1] += 100;
+		index--;
+	}
+	return;
+}
+
+vector<int> CinIntVector(int n) {
+	vector<int>nums;
+	int num;
+	for (int i = 0; i < n; ++i) {
+		cin >> num;
+		nums.push_back(num);
+	}
+	return nums;
+}
+
+
+int main() {
+	int n;
+	cin >> n;
+	vector<int> vec = CinIntVector(n);
+	vector<int> wage{ 100 };
+
+	for (int i = 1; i < n; ++i) {
+		if (vec[i] > vec[i - 1]) {
+			wage.push_back(wage[i - 1] + 100);
+		}
+		else if (vec[i] == vec[i - 1]) {
+			wage.push_back(wage[i - 1]);
+		}
+		else {
+			wage.push_back(100);
+		}
+		fun(vec, wage, i);
+	}
+	for (int i = 1; i < n - 1; ++i) {
+		if (wage[i] > wage[i - 1] && wage[i] > wage[i + 1]) {
+			wage[i] = wage[i - 1] > wage[i + 1] ? (wage[i - 1] + 100) : (wage[i + 1] + 100);
+		}
+	}
+	for (auto e : wage) {
+		cout << e << " ";
+	}
+	return 0;
+}
+

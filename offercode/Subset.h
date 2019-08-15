@@ -5,7 +5,9 @@
 *   @author:    汪亮
 *   @date:      2019.8
 *   @remark:    子集问题与全排列问题
-*   @note:      包含：子集和问题、背包问题
+*   @note:      Part1 子集问题
+*				Part2 背包问题
+*				Part3 滑动窗口问题
 ****************************************************************************/
 #include<string>
 #include<vector>
@@ -46,8 +48,23 @@ class Backpack {
 public:
 	Backpack() {};//构造
 	~Backpack() {};//析构
-	vector<int> ZeroOneBackpack(vector<pair<int, int>> items, int limit);			//题目1：01背包问题|动态规划(二维数组)
-	int ZeroOneBackpack1(vector<pair<int, int>> items, int limit);			//题目1：01背包问题|动态规划(一维数组)
+	friend class item;//声明友元类，用于访问item中的私有成员
+	vector<int> ZeroOneBackpack(vector<pair<int, int>> items, int limit);				//题目1：01背包问题|动态规划(二维数组)
+	int ZeroOneBackpack1(vector<pair<int, int>> items, int limit);						//题目1：01背包问题|动态规划(一维数组)
+	vector<int> FullBackpack(vector<pair<int, int>> items, int limit);					//题目2：完全背包问题|动态规划(一维数组)
+	vector<int> MultiplePack(vector<item> items, int limit);							//题目3：多重背包问题|动态规划(二维数组)
+	vector<int> MultiplePack1(const vector<int>& P, const vector<int>& V, const vector<int>& M, int limit);//题目3：多重背包问题|动态规划(二维数组)|简化输入参数列表
+};
+//////////////////////////////////////////////////////////
+
+//*************************************************************************//
+//							Part3 滑动窗口问题
+//*************************************************************************//
+class SlideWindow {
+public:
+	SlideWindow() {};//构造
+	~SlideWindow() {};//析构
+	string minWindow(string s, string t);			//题目1：给定一个字符串 S 和一个字符串 T，请在 S 中找出包含 T 所有字母的最小子串
 };
 //////////////////////////////////////////////////////////
 
@@ -329,8 +346,8 @@ set<vector<int>> Subsets::permuteUnique(vector<int> nums) {
 #define BackpackClass
 
 /// \题目1：01背包问题(二维 动态规划解法)
-/// \vector<pair<int,int>> items 总物品(pair.first = 物品价值，pair.second = 物品重量)
-/// \limit 最大承重
+/// \param1: vector<pair<int,int>> items 总物品(pair.first = 物品价值，pair.second = 物品重量)
+/// \param2: limit 最大承重
 /// \return vector<int>最大价值物品选取路径
 vector<int> Backpack::ZeroOneBackpack(vector<pair<int,int>> items, int limit) {
 	int n = items.size();//物品数
@@ -373,8 +390,8 @@ vector<int> Backpack::ZeroOneBackpack(vector<pair<int,int>> items, int limit) {
 }
 
 /// \题目1：01背包问题(二维 动态规划解法)
-/// \vector<pair<int,int>> items 总物品(pair.first = 物品价值，pair.second = 物品重量)
-/// \limit 最大承重
+/// \param1: vector<pair<int,int>> items 总物品(pair.first = 物品价值，pair.second = 物品重量)
+/// \param2: limit 最大承重
 /// \return vector<int>最大价值物品选取路径
 int Backpack::ZeroOneBackpack1(vector<pair<int, int>> items, int limit) {
 	int n = items.size();//物品数
@@ -398,6 +415,213 @@ int Backpack::ZeroOneBackpack1(vector<pair<int, int>> items, int limit) {
 	return dp[limit];
 }
 
+/// \题目2：完全背包问题|动态规划(一维数组)
+/// \param1: vector<pair<int,int>> items 总物品(pair.first = 物品价值，pair.second = 物品重量)
+/// \param2: limit 最大承重
+/// \return vector<int>最大价值物品选取路径
+vector<int> Backpack::FullBackpack(vector<pair<int, int>> items, int limit) {
+	int n = items.size();//物品数
+	vector<int> resvec;
+	vector<int> dp(limit + 1, 0);//记录最优值
+	vector<vector<bool>> path(n + 1, vector<bool>(limit + 1,false));  // 记录路径
+	for (int i = 0; i < 5; i++)
+		for (int j = items[i].second; j <= limit; j++) {
+			if (j - items[i].second >= 0 && dp[j] < dp[j - items[i].second] + items[i].first) {
+				path[i][j] = true;
+				dp[j] = dp[j - items[i].second] + items[i].first;
+			}
+		}
+	//输出路径
+	while (n >= 1 && limit >= 0) {
+		if (path[n-1][limit] == true) {
+			cout << items[n-1].second << " ";
+			resvec.push_back(items[n - 1].second);
+			limit -= items[n - 1].second;
+		}
+		else {
+			n--;
+			//cout<<0<<"\t";
+		}
+	}
+
+	return resvec;
+}
+
+/// \题目3：多重背包问题|动态规划(二维数组)
+/// \param1: vector<item> items
+/// \param2: limit 最大承重
+/// \return vector<int>最大价值物品选取路径
+class item {
+public:
+	item(int va, int vo, int nu) :value(va), volume(vo), num(nu) {};
+	int getvalue() {
+		return this->value;
+	}
+	int getvolume() {
+		return this->volume;
+	}
+	int getnum() {
+		return this->num;
+	}
+private:
+	int value;//价值
+	int volume;//体积
+	int num;//数量
+};
+vector<int> Backpack::MultiplePack(vector<item> items, int limit) {
+	int n = items.size();//物品数
+	vector<int> resvec;
+	vector<vector<int>> dp(n + 1, vector<int>(limit + 1, 0));  // 记录最优值
+	vector<vector<bool>> path(n + 1, vector<bool>(limit + 1, false));  // 记录价值路径
+	for (int i = 0; i < n; ++i) {
+		for (int j = 0; j <= limit; ++j) {
+			for (int k = 0; k <= items[i].getnum() && k * items[i].getvolume() <= j; ++k) {
+				if (dp[i + 1][j] < dp[i][j - k * items[i].getvolume()] + k * items[i].getvalue()) {
+					dp[i + 1][j] = dp[i][j - k * items[i].getvolume()] + k * items[i].getvalue();
+					path[i + 1][j] = true;
+				}
+			}
+		}
+	}
+	////路径矩阵
+	//for (int i = 1; i <= n; ++i) {
+	//	for (int j = 1; j <= limit; ++j) {
+	//		printf("%2d ", dp[i][j]);
+	//	}
+	//	cout << endl;
+	//}
+	//cout << dp[n][limit] << endl;
+	//回溯法记录路径
+	//输出路径
+	vector<int> count(n);
+	for (int i = 0; i < n; ++i) {
+		count[i] = items[i].getnum();
+	}
+	while (n > 0 && limit > 0)
+	{
+		if (path[n][limit] == true && count[n-1] > 0)
+		{
+			cout << items[n - 1].getvolume() << ' ';
+			resvec.push_back(items[n - 1].getvalue());
+			limit -= items[n-1].getvolume();
+			count[n - 1]--;
+		}
+		else
+			n--;
+	}
+
+	return resvec;
+}
+
+/// \完全背包问题(二维 动态规划解法)|简化输入参数列表
+/// \param1: vector<int> P 价值
+/// \param2: vector<int> W 重量
+/// \param3: vector<int> M 数量
+/// \param4: limit 最大承重
+/// \return vector<int>最大价值物品选取路径
+vector<int> Backpack::MultiplePack1(const vector<int>& P, const vector<int>& V, const vector<int>& M, int limit) {
+	int n = P.size();//物品数
+	vector<int> resvec;
+	vector<vector<int>> dp(n + 1, vector<int>(limit + 1, 0));  // 记录最优值
+	vector<vector<bool>> path(n + 1, vector<bool>(limit + 1, false));  // 记录价值路径
+	for (int i = 0; i < n; ++i) {
+		for (int j = 0; j <= limit; ++j) {
+			for (int k = 0; k <= M[i] && k * V[i] <= j; ++k) {
+				if (dp[i + 1][j] < dp[i][j - k * V[i]] + k * P[i]) {
+					dp[i + 1][j] = dp[i][j - k * V[i]] + k * P[i];
+					path[i + 1][j] = true;
+				}
+			}
+		}
+	}
+	//路径矩阵
+	for (int i = 1; i <= n; ++i) {
+		for (int j = 1; j <= limit; ++j) {
+			printf("%2d ", dp[i][j]);
+		}
+		cout << endl;
+	}
+	cout << dp[n][limit] << endl;
+
+	//输出路径
+	vector<int> count(n);
+	for (int i = 0; i < n; ++i) {
+		count[i] = M[i];
+	}
+	while (n > 0 && limit > 0)
+	{
+		if (path[n][limit] == true && count[n - 1] > 0)
+		{
+			cout << V[n - 1] << ' ';
+			resvec.push_back(P[n - 1]);
+			limit -= V[n - 1];
+			count[n - 1]--;
+		}
+		else
+			n--;
+	}
+
+	return resvec;
+}
+#endif
+
+//class SlideWindow成员函数定义
+#ifndef SlideWindowClass 
+#define SubsetsClassClass
+
+/// \题目1：最小窗口子字符串
+/// \描述：给定一个字符串 S 和一个字符串 T，请在 S 中找出包含 T 所有字母的最小子串
+/// \解题思路：首尾双指针，尾指针右移扩张找到包含目标字符的子串，首指针右移收缩使字串最小。
+/// \param1: string s 原字符串
+/// \param2: string t 搜索字符串
+/// \return string s中包含t所有字符的最小子字符串
+string SlideWindow::minWindow(string s, string t) {
+	if (s.length()<t.length() || s.length() == 0 || t.length() == 0)
+		return "";
+
+	//模拟哈希表，存储目标字符串的各个字符的个数
+	vector<int> map(255);
+	for (int i = 0; i<t.length(); i++) {
+		map[t[i]]++;
+	}
+
+	//双指针遍历源字符串s
+	int begin = 0, end = 0;
+	//最小字符串的起点
+	int minBegin = 0;
+	//最小字符串的长度
+	int res = INT_MAX;
+	//用来记录匹配到字符的个数，如果count == t.length()意味着找到一个匹配的字串
+	int count = 0;
+
+	//遍历
+	while (end < s.length()) {
+		//这里可理解为缺失字符的个数，==0时则表示 这个字符匹配够了，==1则表示仍需要再匹配一个该字符
+		if (map[s[end]]>0)
+			count++;
+		//不需要匹配的字符，其值此时小于0
+		map[s[end]]--;
+		//尾指针右移
+		end++;
+		//匹配到一个字串
+		while (count == t.length()) {
+			//比较字串长度，更新字串信息
+			if (end - begin < res) {
+				res = end - begin;
+				minBegin = begin;
+			}
+			//如果首指针对应字符是目标字符之一，则跳出循环
+			if (map[s[begin]] == 0)
+				count--;
+			//首指针对应字符的哈希值还原
+			map[s[begin]]++;
+			//首指针右移
+			begin++;
+		}
+	}
+
+	return res == INT_MAX ? "" : s.substr(minBegin, minBegin + res);
+}
 
 #endif
 

@@ -846,6 +846,130 @@ int main(void) {
 //	return 0;
 //}
 
+#include<bits/stdc++.h>
+
+using namespace std;
+
+vector<int> CinIntVector(int n) {
+	vector<int>nums;
+	int num;
+	for (int i = 0; i < n; ++n) {
+		cin >> num;
+		nums.push_back(num);
+	}
+
+	return nums;
+}
+int surfaceArea(vector<vector<int>> grid) {
+	int* dr = new int[4]{ 0, 1, 0, -1 };
+	int* dc = new int[4]{ 1, 0, -1, 0 };
+
+	int N = grid.size();
+	int ans = 0;
+
+	for (int r = 0; r < N; ++r)
+		for (int c = 0; c < N; ++c)
+			if (grid[r][c] > 0) {
+				ans += 2;
+				for (int k = 0; k < 4; ++k) {
+					int nr = r + dr[k];
+					int nc = c + dc[k];
+					int nv = 0;
+					if (0 <= nr && nr < N && 0 <= nc && nc < N)
+						nv = grid[nr][nc];
+
+					ans += max(grid[r][c] - nv, 0);
+				}
+			}
+
+	return ans;
+}
+
+int main(void) {
+	int N = 2, M = 2;
+	vector<vector<int>> input(N, vector<int>(M, 0));
+	for (int i = 0; i < N; ++i) {
+		for (int j = 0; j < M; ++j)
+			cin >> input[i][j];
+	}
+	cout << surfaceArea(input);
+
+	return 0;
+}
+
+//int main(void) {
+//	int n = 5;
+//	char w=65;
+//	cout << w;
+//	//cin >> n;
+//	vector<int> vec{ 1, 2, 3, 4 };
+//	//set<vector<int>> subset = myset.Allsubsets1(vec);
+//	//set<vector<int>> subset = myset.SubsetSum(vec, 5);
+//
+//	return 0;
+//}
+
+int main()
+{
+	int N, M;
+	cin >> N >> M;
+
+	vector<vector<int>> contain;
+	int number;
+	int sum = 0;
+	for (int n = 0; n < N; n++)
+	{
+		vector<int> temp;
+		for (int m = 0; m < M; m++)
+		{
+			cin >> number;
+			temp.push_back(number);
+		}
+		contain.push_back(temp);
+	}
+
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			if (contain[i][j] == 1)
+				sum += 6;
+			else if (contain[i][j] > 1)
+				sum += 6 + (contain[i][j] - 1) * 4;
+
+			if (i + 1 < N && contain[i + 1][j] != 0)
+			{
+				int big = contain[i + 1][j] > contain[i][j] ? contain[i][j] : contain[i + 1][j];
+				sum -= big;
+				cout << big << "   ";
+			}
+			if (i - 1 >= 0 && contain[i - 1][j] != 0)
+			{
+				int big = contain[i - 1][j] > contain[i][j] ? contain[i][j] : contain[i - 1][j];
+				sum -= big;
+				cout << big << "   ";
+			}
+			if (j + 1 < M && contain[i][j + 1] != 0)
+			{
+				int big = contain[i][j + 1] > contain[i][j] ? contain[i][j] : contain[i][j + 1];
+				sum -= big;
+				cout << big << "   ";
+			}
+			if (j - 1 >= 0 && contain[i][j - 1] != 0)
+			{
+				int big = contain[i][j - 1] > contain[i][j] ? contain[i][j] : contain[i][j - 1];
+				sum -= big;
+				cout << big << "   ";
+			}
+			cout << "*****************" << endl;
+		}
+
+	}
+	cout << sum << endl;
+	int x;
+	cin >> x;
+}
+
 
 
 
