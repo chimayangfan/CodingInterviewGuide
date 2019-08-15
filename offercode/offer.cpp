@@ -1176,3 +1176,61 @@ int main() {
 	return 0;
 }
 
+//360第一题
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+	int N, M;
+	cin >> N >> M;
+
+	vector<vector<int>> contain;
+	int num;
+	int sum = 0;
+	for (int n = 0; n < N; n++)
+	{
+		vector<int> temp;
+		for (int m = 0; m < M; m++)
+		{
+			cin >> num;
+			temp.push_back(num);
+		}
+		contain.push_back(temp);
+	}
+
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			if (contain[i][j] == 1)
+				sum += 6;
+			else if (contain[i][j] > 1)
+				sum += 6 + (contain[i][j] - 1) * 4;
+
+			if (i + 1 < N && contain[i + 1][j] != 0)
+			{
+				int small = contain[i + 1][j] > contain[i][j] ? contain[i][j] : contain[i + 1][j];
+				sum -= small;
+			}
+			if (i - 1 >= 0 && contain[i - 1][j] != 0)
+			{
+				int small = contain[i - 1][j] > contain[i][j] ? contain[i][j] : contain[i - 1][j];
+				sum -= small;
+			}
+			if (j + 1 < M && contain[i][j + 1] != 0)
+			{
+				int small = contain[i][j + 1] > contain[i][j] ? contain[i][j] : contain[i][j + 1];
+				sum -= small;
+			}
+			if (j - 1 >= 0 && contain[i][j - 1] != 0)
+			{
+				int small = contain[i][j - 1] > contain[i][j] ? contain[i][j] : contain[i][j - 1];
+				sum -= small;
+			}
+		}
+
+	}
+	cout << sum << endl;
+}
