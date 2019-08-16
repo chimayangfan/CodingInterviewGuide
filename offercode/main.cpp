@@ -772,23 +772,16 @@ int surfaceArea(vector<vector<int>> grid) {
 //	return 0;
 //}
 #include<bits/stdc++.h>
+#include"Subset.h"
 
 using namespace std;
 
 int main() {
 	int n = 5, m = 5;
-	map<int, int> map1;
-	map<int, int> map2;
-	int num;
-	for (int i = 0; i < n; ++i) {
-		cin >> num;
-		map1[num]++;
-	}
-	for (int i = 0; i < n; ++i) {
-		cin >> num;
-		map2[num]++;
-	}
-	vector<int> vec(n, 0);
+	vector<int> pushed{ 10,9,2,5,3,7,10,18,15 };
+	SlideWindow win;
+	vector<int> popped = win.lengthOfLIS(pushed);
+
 
 	return 0;
 }

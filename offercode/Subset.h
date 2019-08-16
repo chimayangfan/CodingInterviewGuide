@@ -64,7 +64,8 @@ class SlideWindow {
 public:
 	SlideWindow() {};//构造
 	~SlideWindow() {};//析构
-	string minWindow(string s, string t);			//题目1：给定一个字符串 S 和一个字符串 T，请在 S 中找出包含 T 所有字母的最小子串
+	string minWindow(string s, string t);			//题目1：最小窗口子字符串 | 给定一个字符串 S 和一个字符串 T，请在 S 中找出包含 T 所有字母的最小子串
+	vector<int> lengthOfLIS(vector<int>& nums);		//题目2：最长上升子序列 | 给定一个无序的整数数组，找到其中最长上升子序列的长度。
 };
 //////////////////////////////////////////////////////////
 
@@ -621,6 +622,38 @@ string SlideWindow::minWindow(string s, string t) {
 	}
 
 	return res == INT_MAX ? "" : s.substr(minBegin, minBegin + res);
+}
+
+/// \题目2：最长上升子序列
+/// \描述：给定一个无序的整数数组，找到其中最长上升子序列。
+/// \解题思路：首尾双指针，尾指针右移扩张找到包含目标字符的子串，首指针右移收缩使字串最小。
+/// \param1: vector<int>& nums 原序列 | 例：[10,9,2,5,3,7,101,18]
+/// \return vector<int> 最长上升子序列 | 输出：[2,3,7,101]
+vector<int> SlideWindow::lengthOfLIS(vector<int>& nums) {
+	int len = nums.size();
+	vector<int> dp(len, 1);
+	int maxlen = 1,index = 0;
+	for (int i = 0; i<len; ++i) {
+		int temp = maxlen;
+		for (int j = 0; j<i; ++j) {
+			if (nums[i] > nums[j])
+				dp[i] = max(dp[i], dp[j] + 1);
+		}
+	}
+	//return maxlen;
+	for (int i = 0; i < len; ++i) {
+		index = maxlen == dp[i] ? index : i;//子序列末尾元素索引
+		maxlen = maxlen > dp[i] ? maxlen : dp[i];//最长子序列长度
+	}
+	vector<int> LIS(maxlen);
+	LIS[--maxlen] = nums[index];
+	for (int i = index; i >= 0; --i) {
+		if (nums[i] < nums[index] && dp[i] == dp[index] - 1) {
+			LIS[--maxlen] = nums[i];
+			index = i;
+		}
+	}
+	return LIS;
 }
 
 #endif
