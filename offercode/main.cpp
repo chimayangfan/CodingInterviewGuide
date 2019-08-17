@@ -741,7 +741,32 @@ int main() {
 	//vector<int> arr = CinIntVector(n);
 
 	vector<int> vec{ 10,9,2,5,3,7,10,18,15 };
+	while (int i = 0) {
+		i--;
+		cout << i;
+	}
 
+	vector<int> res;
+	if (array.size() < 2) return res;
+	int a = 0, b = 1;
+	int index = 0;
+	while (a < b)
+	{
+		a = array[index];
+		for (int i = index + 1; i<array.size(); ++i)
+		{
+			b = array[i];
+			if (sum == (a + b))
+			{
+				res.push_back(a);
+				res.push_back(b);
+				return res;
+			}
+		}
+		index++;
+	}
+	return res;
+}
 
 	return 0;
 }
