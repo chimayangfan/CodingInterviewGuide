@@ -728,59 +728,19 @@ using namespace std;
 vector<int> CinIntVector(int n) {
 	vector<int>nums;
 	int num;
-	for (int i = 0; i < n; ++n) {
+	for (int i = 0; i < n; ++i) {
 		cin >> num;
 		nums.push_back(num);
 	}
-
 	return nums;
 }
-int surfaceArea(vector<vector<int>> grid) {
-	int* dr = new int[4] {0, 1, 0, -1};
-	int* dc = new int[4] {1, 0, -1, 0};
-
-	int N = grid.size();
-	int ans = 0;
-
-	for (int r = 0; r < N; ++r)
-		for (int c = 0; c < N; ++c)
-			if (grid[r][c] > 0) {
-				ans += 2;
-				for (int k = 0; k < 4; ++k) {
-					int nr = r + dr[k];
-					int nc = c + dc[k];
-					int nv = 0;
-					if (0 <= nr && nr < N && 0 <= nc && nc < N)
-						nv = grid[nr][nc];
-
-					ans += max(grid[r][c] - nv, 0);
-				}
-			}
-
-	return ans;
-}
-
-//int main(void) {
-//	int n = 5;
-//	char w=65;
-//	cout << w;
-//	//cin >> n;
-//	vector<int> vec{ 1, 2, 3, 4 };
-//	//set<vector<int>> subset = myset.Allsubsets1(vec);
-//	//set<vector<int>> subset = myset.SubsetSum(vec, 5);
-//
-//	return 0;
-//}
-#include<bits/stdc++.h>
-#include"Subset.h"
-
-using namespace std;
 
 int main() {
 	int n = 5, m = 5;
-	vector<int> pushed{ 10,9,2,5,3,7,10,18,15 };
-	SlideWindow win;
-	vector<int> popped = win.lengthOfLIS(pushed);
+	//cin >> n;
+	//vector<int> arr = CinIntVector(n);
+
+	vector<int> vec{ 10,9,2,5,3,7,10,18,15 };
 
 
 	return 0;
