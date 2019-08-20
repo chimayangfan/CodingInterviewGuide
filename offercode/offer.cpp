@@ -1234,3 +1234,116 @@ int main()
 	}
 	cout << sum << endl;
 }
+
+//Zoom第一题：两数之和等于目标值
+#include<bits/stdc++.h>
+
+using namespace std;
+
+vector<int> CinIntVector(int n) {
+	vector<int>nums;
+	int num;
+	for (int i = 0; i < n; ++i) {
+		cin >> num;
+		nums.push_back(num);
+	}
+	return nums;
+}
+
+vector<int> findnumssum(const vector<int> &arr, int target) {
+	vector<int> res;
+	if (arr.size() < 2) return res;
+	int a = 0, b = 1;
+	int index = 0;
+	while (a < b)
+	{
+		a = arr[index];
+		for (int i = index + 1; i<arr.size(); ++i)
+		{
+			b = arr[i];
+			if (target == (a + b))
+			{
+				res.push_back(index);
+				res.push_back(i);
+				return res;
+			}
+		}
+		index++;
+	}
+	return res;
+}
+
+int main() {
+	int tar = 9, n = 4;
+	//cin >> tar >> n;
+	vector<int> arr = CinIntVector(n);
+	vector<int> back = findnumssum(arr, tar);
+	for (auto e : back) {
+		cout << e << " ";
+	}
+
+	return 0;
+}
+
+
+//Zoom第二题：没看懂
+#include<bits/stdc++.h>
+
+using namespace std;
+typedef int KeyType;
+
+typedef struct qNode {
+	KeyType val;
+	struct qNode *next;
+}qNode, *Linkqueue;
+
+typedef struct {
+	int size;
+	Linkqueue rear;
+}que;
+
+int enqueue(que* q, KeyType new_elem)
+{
+	qNode* p;
+	p = (qNode*)malloc(sizeof(qNode));
+	if (!p)
+		return 0;
+	p->val = new_elem;
+	if (q->rear) {
+		p->next = q->rear->next;
+		//(___)
+		q->rear->next = p;
+	}
+	else {
+		p->next = p;
+	}
+	//(__)
+	q->size++;
+	return 1;
+}
+
+//int dequeue(que*q, KeyType*elem)
+//{
+//	 qNode*p;
+//	if (0 == q ->size)
+//		return 0;
+//	//p = (__)
+//	*elem = p ->val;
+//	q ->rear ->next = (__)
+//	if (__)
+//		q ->rear = NULL;
+//	free(p);
+//	q ->size--;
+//	return 1;
+//}
+
+int main(void)
+{
+	int n, m;
+	cin >> n >> m;
+	que test_q;
+	test_q.size = 0;
+	test_q.rear = NULL;
+	enqueue(&test_q, 3);
+
+}
