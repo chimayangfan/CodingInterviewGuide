@@ -127,6 +127,7 @@
     <ClInclude Include="map.h" />
     <ClInclude Include="match.h" />
     <ClInclude Include="sort.h" />
+    <ClInclude Include="string.h" />
     <ClInclude Include="Subset.h" />
     <ClInclude Include="Zuochengyun.h" />
   </ItemGroup>

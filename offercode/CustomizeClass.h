@@ -8,7 +8,7 @@
 *   @remark:    面试常见功能实现设计
 *   @note:      Part1 LRU缓存数据结构
 *				Part2 智能指针的实现
-*				Part3 
+*				Part3 union-find算法(并查集)
 ****************************************************************************/
 #include<list>
 #include<map>
@@ -117,5 +117,58 @@ public:
 private:
 	PtrCount<SmartPtr, Type> *ptrCnt;
 };
+
+//*************************************************************************//
+//							Part3 union-find算法(并查集)
+//*************************************************************************//
+//解决动态连通性一类问题的一种算法，使用到了一种叫做并查集的数据结构，称为Union-Find
+
+template<typename T>
+class Union_find{
+public:
+	//Union_find(int N);			//以整数标识（0到N-1）初始化N个触点
+	//void unionline(int p, int q);	//在p和q之间添加一条连接
+	//int find(int p);				//p（0到N-1）所在的分量的标识符
+	//bool connected(int p, int q);	//如果p和q存在于同一个分量中则返回true
+	//int count();					//联通分量的数量
+
+	Union_find(int N)
+	{
+		// Initialize component id array.
+		nums = N;
+		id = new T[N];
+		for (int i = 0; i < N; i++)
+			id[i] = i;
+	}
+
+	void unionline(T p, T q)
+	{
+		// 获得p和q的组号
+		T pID = find(p);
+		T qID = find(q);
+		// 如果两个组号相等，直接返回
+		if (pID == qID) return;
+		// 遍历一次，改变组号使他们属于一个组
+		for (int i = 0; i < nums; i++)
+			if (id[i] == pID) id[i] = qID;
+		nums--;
+	}
+	T find(T p)
+	{
+		return id[p];
+	}
+	bool connected(T p, T q)
+	{
+		return find(p) == find(q);
+	}
+	int count()
+	{
+		return nums;
+	}
+private:
+	T* id;	// 触点id
+	int nums;	// 联通分量的数量
+};
+
 
 #endif

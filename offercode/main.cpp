@@ -722,33 +722,35 @@
 //}
 
 #include <iostream>
+#include <vector>
+#include "CustomizeClass.h"
+
 using namespace std;
-void qs(int* &arr, int l, int h) {
-	if (l < h) {
-		int i = l, j = h, x = arr[i];
-		while (i<j) {
-			while (i<j && arr[j] >= x)
-				j--;
-			if (i<j)
-				arr[i++] = arr[j];
-			while (i<j && arr[i] < x)
-				i++;
-			if (i<j)
-				arr[j--] = arr[i];
-		}
-		arr[i] = x;
-		qs(arr, l, i - 1);
-		qs(arr, i + 1, h);
-	}
-}
+
 int main()
 {
-	int* arr = new int[10]{ 8,4,3,7,5,1,6,4,9,2 };
-	qs(arr, 0, 9);
-	for (int i = 0; i<10; ++i)
-		cout << arr[i] << " ";
+	Union_find<string> uf(10);
+
+	char* src = "hello world!";
+	char dest[20];
+	strcpy(dest, src);
+	string* arr = new string[6]{ "a","b","c","d","e","f"};
+	string* arr1 = new string[4]{ "a","b","c","d"};
+	string* arr2 = new string[2]{ "b","e"};
+	string* arr3 = new string[2]{ "a","f"};
+
+	for (int i = 0; i < 3; ++i) {
+
+		if (uf.connected(arr1[i], arr1[i + 1]))
+			continue;
+		uf.unionline(arr1[i], arr1[i + 1]);
+	}
+		cout << uf.count() << " ";
 	return 0;
 }
+
+
+
 
 
 
