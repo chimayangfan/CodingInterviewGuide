@@ -721,24 +721,32 @@
 //	return 0;
 //}
 
-#include<bits/stdc++.h>
-
+#include <iostream>
 using namespace std;
-
-vector<int> CinIntVector(int n) {
-	vector<int>nums;
-	int num;
-	for (int i = 0; i < n; ++i) {
-		cin >> num;
-		nums.push_back(num);
+void qs(int* &arr, int l, int h) {
+	if (l < h) {
+		int i = l, j = h, x = arr[i];
+		while (i<j) {
+			while (i<j && arr[j] >= x)
+				j--;
+			if (i<j)
+				arr[i++] = arr[j];
+			while (i<j && arr[i] < x)
+				i++;
+			if (i<j)
+				arr[j--] = arr[i];
+		}
+		arr[i] = x;
+		qs(arr, l, i - 1);
+		qs(arr, i + 1, h);
 	}
-	return nums;
 }
-
-int main() {
-	int N = 4;
-
-
+int main()
+{
+	int* arr = new int[10]{ 8,4,3,7,5,1,6,4,9,2 };
+	qs(arr, 0, 9);
+	for (int i = 0; i<10; ++i)
+		cout << arr[i] << " ";
 	return 0;
 }
 

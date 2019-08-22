@@ -1347,3 +1347,82 @@ int main(void)
 	enqueue(&test_q, 3);
 
 }
+
+//华为第一题
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int main() {
+	int N;
+	cin >> N;
+	string input, str, output;
+	for (int i = 0; i < N; ++i) {
+		cin >> str;
+		input = input + str + " ";
+	}
+	map<string, string> hexmap{ { "A","12 34" },{ "B","AB CD" } };
+	int index = 0;
+	int count = N;
+	bool flag = true;
+	for (int i = 0; i < input.length(); ++i) {
+		if (input[i] == ' ') {
+			string temp = input.substr(index, i - index);
+			if (hexmap.find(temp) != hexmap.end()) {
+				output = output + " " + hexmap[temp];
+				count++;
+			}
+			else
+				output = output + " " + temp;
+			index = i + 1;
+		}
+	}
+
+	cout << setiosflags(ios::uppercase) << hex << count;
+	cout << output << endl;
+
+	return 0;
+}
+
+//华为第三题
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int main() {
+	string name;
+	cin >> name;
+	int N;
+	cin >> N;
+	vector<set<string>> namevec;
+	set<string> res;
+
+	for (int i = 0; i < N; ++i) {
+		set<string> namelist;
+		string list;
+		cin >> list;
+		list += ',';
+		int index = 0;
+		for (int j = 0; j < list.length(); j++) {
+			if (list[j] == ',') {
+				namelist.insert(list.substr(index, j - index));
+				index = j + 1;
+			}
+		}
+		if (namelist.find(name) != namelist.end())
+			res.insert(namelist.begin(), namelist.end());
+		namevec.push_back(namelist);
+	}
+	for (int i = 0; i < N; ++i) {
+		for (auto it = namevec[i].begin(); it != namevec[i].end(); ++it) {
+			if (res.find(*it) != res.end()) {
+				for (auto it = namevec[i].begin(); it != namevec[i].end(); ++it) {
+					res.insert(*it);
+				}
+			}
+		}
+	}
+	cout << res.size() << endl;
+
+	return 0;
+}
