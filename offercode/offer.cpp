@@ -1426,3 +1426,76 @@ int main() {
 
 	return 0;
 }
+
+//完美世界第一题 | 有向图的最短距离
+#include<iostream>
+#include <vector>
+using namespace std;
+const int inf = 999999;
+const int n = 6;
+int L[n][n] = { 0,  1,  12,inf,inf, inf,
+inf,  0, 9, 3,inf,inf,
+inf, inf,  0,  inf,  5, inf,
+inf, inf,  4,   0,  13, 15,
+inf, inf, inf, inf,  0,  9,
+inf, inf, inf, inf,  inf,  0
+};               //存储图中的路径
+int dis[n];        //存储源点到各个顶点的最短路径
+
+vector<int> path[n];
+int main()
+{
+	//for (int i = 0; i < 6; ++i)
+	//	for (int j = 0; j < 6; ++j)
+	//		cin >> L[i][j];
+	for (int i = 0; i < n; i++)              //初始化
+	{
+		dis[i] = L[0][i];
+		path[i].push_back(1);
+		path[i].push_back(i + 1);
+	}
+	for (int i = 1; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			//dis[i] = min(dis[i],dis[j] + L[j][i]);
+			if (dis[i] > dis[j] + L[j][i])               //求源点到节点的最短路径，利用现有的L矩阵
+			{
+				dis[i] = dis[j] + L[j][i];
+
+				path[i].clear();                         //保存并更新路径
+				path[i].insert(path[i].end(), path[j].begin(), path[j].end());
+				path[i].push_back(i + 1);
+			}
+
+		}
+		for (int m = 0; m < i; m++)              //更新节点最短路径
+		{
+			for (int j = 0; j < n; j++)
+			{
+				if (dis[m] > dis[j] + L[j][m])
+				{
+					dis[m] = dis[j] + L[j][m];
+					path[m].clear();                     //保存并更新路径
+					path[m].insert(path[m].end(), path[j].begin(), path[j].end());
+					path[m].push_back(m + 1);
+				}
+			}
+		}
+	}
+	//vector<int>::iterator ite;
+	for (int i = 1; i < n; i++)
+	{
+		cout << dis[i] << endl;
+		//cout << "V1到V" << i + 1 << "的最短路径长度：" << dis[i] << endl << "Path：";
+		//for (ite = path[i].begin(); ite != path[i].end(); ++ite) {
+		//	if (ite == path[i].begin())
+		//		cout << *ite;
+		//	else
+		//		cout << "->" << *ite;
+		//}
+		//cout << endl;
+	}
+
+	return 0;
+}

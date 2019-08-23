@@ -721,33 +721,7 @@
 //	return 0;
 //}
 
-#include <iostream>
-#include <vector>
-#include "CustomizeClass.h"
 
-using namespace std;
-
-int main()
-{
-	Union_find<string> uf(10);
-
-	char* src = "hello world!";
-	char dest[20];
-	strcpy(dest, src);
-	string* arr = new string[6]{ "a","b","c","d","e","f"};
-	string* arr1 = new string[4]{ "a","b","c","d"};
-	string* arr2 = new string[2]{ "b","e"};
-	string* arr3 = new string[2]{ "a","f"};
-
-	for (int i = 0; i < 3; ++i) {
-
-		if (uf.connected(arr1[i], arr1[i + 1]))
-			continue;
-		uf.unionline(arr1[i], arr1[i + 1]);
-	}
-		cout << uf.count() << " ";
-	return 0;
-}
 
 
 
