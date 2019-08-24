@@ -9,6 +9,8 @@
 *   @note:      Part1 LRU缓存数据结构
 *				Part2 智能指针的实现
 *				Part3 union-find算法(并查集)
+*				Part4 环形队列
+*				Part5 模板函数举例（找出两个数据较大值）
 ****************************************************************************/
 #include<list>
 #include<map>
@@ -170,5 +172,80 @@ private:
 	int nums;	// 联通分量的数量
 };
 
+//*************************************************************************//
+//							Part4 环形队列
+//*************************************************************************//
+template <class T>
+class cycleQueue
+{
+private:
+	unsigned int m_size;//最大容量m_size-1
+	int m_front;//
+	int m_rear;
+	T*  m_data;
+public:
+	//构造函数
+	cycleQueue(unsigned size)
+		:m_size(size),
+		m_front(0),
+		m_rear(0)
+	{
+		m_data = new T[size];
+	}
+	//析构函数
+	~cycleQueue()
+	{
+		delete[] m_data;
+	}
+	//空队时rear等于front，满队时必须空一个位置
+	bool isEmpty()
+	{
+		return m_front == m_rear;
+	}
+	//空队时rear等于front，满队时必须空一个位置
+	bool isFull()
+	{
+		return m_front == (m_rear + 1) % m_size;
+	}
+	//入队
+	void push(T ele)throw(bad_exception)
+	{
+		if (isFull())
+		{
+			throw bad_exception();
+		}
+		m_data[m_rear] = ele;
+		m_rear = (m_rear + 1) % m_size;
+	}
+	//出队
+	T pop() throw(bad_exception)
+	{
+		if (isEmpty())
+		{
+			throw bad_exception();
+		}
+		T tmp = m_data[m_front];
+		m_front = (m_front + 1) % m_size;
+		return tmp;
+	}
+	//全部出队
+	void popAll() throw(bad_exception)
+	{
+		while (!isEmpty())
+		{
+			pop();
+		}
+	}
+};
+
+//*************************************************************************//
+//							Part5 模板函数举例（找出两个数据较大值）
+//*************************************************************************//
+template <typename T>
+inline T const& max(T const& a, T const& b)
+{
+	// if a < b then use b else use a 
+	return a<b ? b : a;
+}
 
 #endif

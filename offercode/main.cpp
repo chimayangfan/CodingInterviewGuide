@@ -721,6 +721,24 @@
 //	return 0;
 //}
 
+#include<iostream>
+#include"CustomizeClass.h"
+using namespace std;
+
+int main() {
+	cycleQueue<int> que(10);
+	int i = 1;
+	while (!que.isFull()) {
+		que.push(i);
+		++i;
+	}
+	que.popAll();
+	int n[][3] = { 10,20,30,40,50,60 };
+	int(*p)[3];
+	p = n;
+	cout << p[0][0] << "," << *(p[0] + 1) << "," << (*p)[2] << endl;
+	return 0;
+}
 
 
 
