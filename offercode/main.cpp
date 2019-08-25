@@ -726,7 +726,6 @@
 using namespace std;
 
 int fun(int n) {
-	int sum = 0;
 	if (n == 0)
 		return 0;
 	if (n == 2)
@@ -736,184 +735,17 @@ int fun(int n) {
 	else if (n == 6)
 		return 5;
 	else {
-		sum += 2 * fun(n - 2);
-		n -= 2;
-		int m = n;
-		while (n > 2) {
-			n -= 2;
-			sum = sum + fun(n) * fun(m - n);
-		}
 		return sum;
 	}
 }
 
 int main() {
 	int n;
-	while(cin >> n)
+	while (cin >> n)
 		cout << fun(n);
 	return 0;
 }
 
-int main()
-{
-	int dir;
-	cin >> dir;
-	int arr[4][4];
-	for (int i = 0; i < 4; ++i)
-	{
-		cin >> arr[i][0] >> arr[i][1] >> arr[i][2] >> arr[i][3];
-	}
-	int output[4][4];
-
-	bool flag = false;
-	if (dir == 1)
-	{
-		for (int j = 0; j < 4; ++j)
-		{
-			for (int i = 0; i < 3; ++i)
-			{
-				if (arr[i][j] != 0 && arr[i][j] == arr[i + 1][j])
-				{
-					arr[i][j] = arr[i + 1][j] * 2;
-					arr[i + 1][j] = 0;
-					flag = true;
-				}
-			}
-			//调整位置
-			if (flag)
-			{
-				for (int i = 0; i < 4; ++i)
-				{
-					if (arr[i][j] == 0)
-					{
-						for (int k = i + 1; k < 4; ++k)
-						{
-							if (arr[k][j] != 0)
-							{
-								arr[i][j] = arr[k][j];
-								arr[k][j] = 0;
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	else if (dir == 2)//下
-	{
-		for (int j = 0; j < 4; ++j)
-		{
-			for (int i = 3; i >0; --i)
-			{
-				if (arr[i][j] != 0 && arr[i][j] == arr[i - 1][j])
-				{
-					arr[i][j] = arr[i][j] * 2;
-					arr[i - 1][j] = 0;
-					flag = true;
-				}
-			}
-			//调整位置
-			if (flag)
-			{
-				for (int i = 3; i >= 0; --i)
-				{
-					if (arr[i][j] == 0)
-					{
-						for (int k = i - 1; k >= 0; --k)
-						{
-							if (arr[k][j] != 0)
-							{
-								arr[i][j] = arr[k][j];
-								arr[k][j] = 0;
-								break;
-							}
-						}
-					}
-				}
-			}
-
-		}
-	}
-	else if (dir == 3)//左
-	{
-		for (int i = 0; i < 4; ++i)
-		{
-			for (int j = 0; j < 3; ++j)
-			{
-				if (arr[i][j] != 0 && arr[i][j] == arr[i][j + 1])
-				{
-					arr[i][j] = arr[i][j] * 2;
-					arr[i][j + 1] = 0;
-					flag = true;
-				}
-			}
-			//调整位置
-			if (flag)
-			{
-				for (int j = 0; j < 4; ++j)
-				{
-					if (arr[i][j] == 0)
-					{
-						for (int k = j + 1; k < 4; ++k)
-						{
-							if (arr[i][k] != 0)
-							{
-								arr[i][j] = arr[i][k];
-								arr[i][k] = 0;
-								break;
-							}
-						}
-					}
-				}
-			}
-
-		}
-	}
-	else if (dir == 4)// 右
-	{
-		for (int i = 0; i < 4; ++i)
-		{
-			for (int j = 3; j >0; --j)
-			{
-				if (arr[i][j] != 0 && arr[i][j] == arr[i][j - 1])
-				{
-					arr[i][j] = arr[i][j] * 2;
-					arr[i][j - 1] = 0;
-					flag = true;
-				}
-			}
-			//调整位置
-			if (flag)
-			{
-				for (int j = 3; j >= 0; --j)
-				{
-					if (arr[i][j] == 0)
-					{
-						for (int k = j - 1; k >= 4; --k)
-						{
-							if (arr[i][k] != 0)
-							{
-								arr[i][j] = arr[i][k];
-								arr[i][k] = 0;
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	for (int i = 0; i < 4; ++i)
-	{
-		cout << arr[i][0] << " ";
-		cout << arr[i][1] << " ";
-		cout << arr[i][2] << " ";
-		cout << arr[i][3] << " " << endl;
-	}
-	return 0;
-}
 
 
 
