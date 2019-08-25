@@ -721,28 +721,57 @@
 //	return 0;
 //}
 
-#include<bits/stdc++.h>
+#include<cstdio>
 
-using namespace std;
-
-vector<int> CinIntVector(int n) {
-	vector<int>nums;
-	int num;
-	for (int i = 0; i < n; ++i) {
-		cin >> num;
-		nums.push_back(num);
+void dfs(int y, vector<int>& label, int N, vector<vector<int>>& input)
+{
+	for (int i = 0; i < N; i++)
+	{
+		if (label[i] == 0 && input[y][i] > 3)
+		{
+			label[i] = 1;
+			dfs(i, label, N, input);
+		}
 	}
-	return nums;
 }
 
-int main() {
-	int n=6;
-	vector<int> arr = CinIntVector(n);
 
+
+int main()
+{
+	vector<vector<int>> input;
+	int N;
+
+	cin >> N;
+	int i, j, data;
+	for (i = 0; i < N; i++)
+	{
+		vector<int> temp;
+		for (j = 0; j < N; j++)
+		{
+			cin >> data;
+			temp.push_back(data);
+		}
+		input.push_back(temp);
+	}
+
+
+
+	int sum = 0;
+	vector<int> label(N, 0);
+	for (int k = 0; k < N; k++)
+	{
+		if (label[k] == 0)
+		{
+			sum++;
+			label[k] = 1;
+			dfs(k, label, N, input);
+		}
+	}
+	cout << sum << endl;
+	system("pause");
 	return 0;
 }
-
-
 
 
 
