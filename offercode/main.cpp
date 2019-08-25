@@ -721,57 +721,40 @@
 //	return 0;
 //}
 
-#include<cstdio>
+#include<bits/stdc++.h>
 
-void dfs(int y, vector<int>& label, int N, vector<vector<int>>& input)
-{
-	for (int i = 0; i < N; i++)
-	{
-		if (label[i] == 0 && input[y][i] > 3)
-		{
-			label[i] = 1;
-			dfs(i, label, N, input);
+using namespace std;
+
+int fun(int n) {
+	int sum = 0;
+	if (n == 0)
+		return 0;
+	if (n == 2)
+		return 1;
+	else if (n == 4)
+		return 2;
+	else if (n == 6)
+		return 5;
+	else {
+		sum += 2 * fun(n - 2);
+		n -= 2;
+		int m = n;
+		while (n > 2) {
+			n -= 2;
+			sum = sum + fun(n) * fun(m - n);
 		}
+		return sum;
 	}
 }
 
-
-
-int main()
-{
-	vector<vector<int>> input;
-	int N;
-
-	cin >> N;
-	int i, j, data;
-	for (i = 0; i < N; i++)
-	{
-		vector<int> temp;
-		for (j = 0; j < N; j++)
-		{
-			cin >> data;
-			temp.push_back(data);
-		}
-		input.push_back(temp);
-	}
-
-
-
-	int sum = 0;
-	vector<int> label(N, 0);
-	for (int k = 0; k < N; k++)
-	{
-		if (label[k] == 0)
-		{
-			sum++;
-			label[k] = 1;
-			dfs(k, label, N, input);
-		}
-	}
-	cout << sum << endl;
-	system("pause");
+int main() {
+	int n;
+	while(cin >> n)
+		cout << fun(n);
 	return 0;
 }
+
+
 
 
 

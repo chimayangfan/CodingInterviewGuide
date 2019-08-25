@@ -1499,3 +1499,57 @@ int main()
 
 	return 0;
 }
+
+#include<bits/stdc++.h>
+
+using namespace std;
+
+void dfs(int y, vector<int>& label, int N, vector<vector<int>>& input)
+{
+	for (int i = 0; i < N; i++)
+	{
+		if (label[i] == 0 && input[y][i] > 3)
+		{
+			label[i] = 1;
+			dfs(i, label, N, input);
+		}
+	}
+}
+
+
+
+int main()
+{
+	vector<vector<int>> input;
+	int N;
+
+	cin >> N;
+	int i, j, data;
+	for (i = 0; i < N; i++)
+	{
+		vector<int> temp;
+		for (j = 0; j < N; j++)
+		{
+			cin >> data;
+			temp.push_back(data);
+		}
+		input.push_back(temp);
+	}
+
+
+
+	int sum = 0;
+	vector<int> label(N, 0);
+	for (int k = 0; k < N; k++)
+	{
+		if (label[k] == 0)
+		{
+			sum++;
+			label[k] = 1;
+			dfs(k, label, N, input);
+		}
+	}
+	cout << sum << endl;
+	system("pause");
+	return 0;
+}
