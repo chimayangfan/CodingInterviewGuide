@@ -1500,6 +1500,7 @@ int main()
 	return 0;
 }
 
+//字节跳动第一题
 #include<bits/stdc++.h>
 
 using namespace std;
@@ -1515,8 +1516,6 @@ void dfs(int y, vector<int>& label, int N, vector<vector<int>>& input)
 		}
 	}
 }
-
-
 
 int main()
 {
@@ -1554,7 +1553,54 @@ int main()
 	return 0;
 }
 
+//字节跳动第二题
+#include<bits/stdc++.h>
 
+using namespace std;
+
+long long sum = 0;
+long long i = 1;
+
+long long fun(long long n) {
+	if (n == 0)
+		return 0;
+	else if (n == 2)
+		return 1;
+	else if (n == 4)
+		return 2;
+	else if (n == 6)
+		return 5;
+	else if (n == 8)
+		return 14;
+	else if (n == 10)
+		return 42;
+	else {
+		sum += 2 * fun(n - 2);
+		n -= 2;
+		while (n > 2) {
+			sum += fun(n - 2) * fun(2 * i);
+			n -= 2;
+			i++;
+		}
+		return sum;
+	}
+}
+
+int main() {
+	long long n;
+	while (cin >> n) {
+		if (n % 2 != 0) {
+			cout << 0 << endl;
+		}
+		else {
+			cout << fun(n);
+		}
+	}
+
+	return 0;
+}
+
+//字节跳动第三题
 int main()
 {
 	int dir;
@@ -1713,5 +1759,109 @@ int main()
 		cout << arr[i][2] << " ";
 		cout << arr[i][3] << " " << endl;
 	}
+	return 0;
+}
+
+//字节跳动第四题
+int gcd(int data1, int data2)
+{
+	if (data1 == data2)
+	{
+		return data1;
+	}
+	if (data1 < data2)											//为了保证较大的数始终在前面，减少了代码
+	{
+		gcd(data2, data1);
+	}
+	else
+	{															//与1操作是为了判断奇偶
+		if (!(data1 & 1) && !(data2 & 1))						//两数都是偶数
+		{
+			return gcd(data1 >> 1, data2 >> 1) << 1;
+		}
+		else if (!(data1 & 1) && (data2 & 1))					//data1为偶数，data2为奇数
+		{
+			return gcd(data1 >> 1, data2);
+		}
+		else if ((data1 & 1) && !(data2 & 1))					//data1为奇数，data2为偶数
+		{
+			return gcd(data1, data2 >> 1);
+		}
+		else                                                   //当两个数都为奇数时，应用更相减损法
+		{
+			return gcd(data2, data1 - data2);
+		}
+	}
+}
+
+
+
+
+
+
+void dfs(int y, vector<int>& label, int N, vector<vector<int>>& input, int& sum)
+{
+	for (int i = 0; i < N; i++)
+	{
+		if (label[i] == 0 && input[y][i] > 1)
+		{
+			label[i] = 1;
+			sum++;
+			dfs(i, label, N, input, sum);
+		}
+	}
+}
+
+
+
+int main()
+{
+	vector<int> data_vector;
+	vector<vector<int>> input;
+	int N;
+
+	cin >> N;
+	int i, j, data, factorize;
+	for (i = 0; i < N; i++)
+	{
+		cin >> data;
+		data_vector.push_back(data);
+	}
+
+
+	for (i = 0; i < N; i++)
+	{
+		vector<int> temp;
+		for (j = 0; j < N; j++)
+		{
+			temp.push_back(0);
+		}
+		input.push_back(temp);
+	}
+	for (i = 0; i < N; i++)
+	{
+		vector<int> temp;
+		for (j = i + 1; j < N; j++)
+		{
+			factorize = gcd(data_vector[i], data_vector[j]);
+			input[i][j] = factorize;
+			input[j][i] = factorize;
+		}
+	}
+
+
+
+	int sum = 0;
+	vector<int> label(N, 0);
+	for (int k = 0; k < N; k++)
+	{
+		if (label[k] == 0)
+		{
+			label[k] = 1;
+			dfs(k, label, N, input, sum);
+		}
+	}
+	cout << sum << endl;
+	//system("pause");
 	return 0;
 }
