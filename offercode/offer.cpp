@@ -1600,6 +1600,36 @@ int main() {
 	return 0;
 }
 
+#include<iostream>
+#include<algorithm>
+using namespace std;
+
+int main()
+{
+	int n;
+	cin >> n;
+	if (n == 2)
+	{
+		cout << 1;
+		return 0;
+	}
+	long long* num = new long long[1001]();
+	num[0] = 1;
+	for (int i = 2; i <= n; i = i + 2)
+	{
+		for (int j = 2; j <= i; j = j + 2)
+		{
+			long long temp = (num[j - 2] * num[i - j]) % 1000000007;
+
+			num[i] = (num[i] + temp) % 1000000007;
+		}
+
+	}
+	cout << num[n];
+
+	return 0;
+}
+
 //字节跳动第三题
 int main()
 {

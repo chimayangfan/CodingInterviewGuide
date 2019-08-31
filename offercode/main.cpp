@@ -724,46 +724,45 @@
 #include<bits/stdc++.h>
 
 using namespace std;
-
-long long sum = 0;
-long long i = 1;
-
-long long fun(long long n) {
-	if (n == 0)
-		return 0;
-	else if (n == 2)
-		return 1;
-	else if (n == 4)
-		return 2;
-	else if (n == 6)
-		return 5;
-	else if (n == 8)
-		return 14;
-	else if (n == 10)
-		return 42;
-	else {
-		sum += 2 * fun(n - 2);
-		n -= 2;
-		while (n > 2) {
-			sum += fun(n - 2) * fun(2 * i);
-			n -= 2;
-			i++;
+const int maxn = 1e5;
+int Next[maxn];
+void BuildNext(string P) {
+	int m = P.length();
+	int t = Next[0] = -1;
+	int j = 0;
+	while (j < m - 1) {
+		if (t < 0 || P[j] == P[t]) {
+			j++;
+			t++;
+			Next[j] = P[j] != P[t] ? t : Next[t];
 		}
-		return sum;
+		else t = Next[t];
 	}
 }
-
-int main() {
-	long long n;
-	while (cin >> n) {
-		if (n % 2 != 0) {
-			cout << 0 << endl;
-		}
-		else {
-			cout << fun(n);
-		}
+int KMP(string a, string b) {
+	BuildNext(b);
+	int n = a.length();
+	int m = b.length();
+	int i = 0, j = 0;
+	while (j < m && i < n) {
+		if (j < 0 || a[i] == b[j])
+			i++, j++;
+		else j = Next[j];
 	}
-
+	return i - j;
+}
+int main()
+{
+	string a, b;
+	cin >> a;
+	cin >> b;
+	int pos;
+	if (b.length() > a.length())	pos = -1;
+	else pos = KMP(a, b);
+	if (pos >= 0)	
+		printf("%d\n", pos);
+	else 
+		puts("NO");
 	return 0;
 }
 
