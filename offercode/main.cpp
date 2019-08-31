@@ -724,47 +724,48 @@
 #include<bits/stdc++.h>
 
 using namespace std;
-const int maxn = 1e5;
-int Next[maxn];
-void BuildNext(string P) {
-	int m = P.length();
-	int t = Next[0] = -1;
-	int j = 0;
-	while (j < m - 1) {
-		if (t < 0 || P[j] == P[t]) {
-			j++;
-			t++;
-			Next[j] = P[j] != P[t] ? t : Next[t];
-		}
-		else t = Next[t];
+
+void isFirstPoint(vector<int>&D, int index, int currentPos, vector <bool>&output)
+{
+	if (currentPos<0 || currentPos >= D.size()) return;
+	if (index >= D.size())
+	{
+		output[currentPos - 1] = true;
 	}
+	//向前走
+	isFirstPoint(D, index + 1, currentPos + D[index], output);
+	//向后走
+	isFirstPoint(D, index + 1, currentPos - D[index], output);
 }
-int KMP(string a, string b) {
-	BuildNext(b);
-	int n = a.length();
-	int m = b.length();
-	int i = 0, j = 0;
-	while (j < m && i < n) {
-		if (j < 0 || a[i] == b[j])
-			i++, j++;
-		else j = Next[j];
-	}
-	return i - j;
-}
+
 int main()
 {
-	string a, b;
-	cin >> a;
-	cin >> b;
-	int pos;
-	if (b.length() > a.length())	pos = -1;
-	else pos = KMP(a, b);
-	if (pos >= 0)	
-		printf("%d\n", pos);
-	else 
-		puts("NO");
+	int N, M;
+	cin >> N >> M;
+	vector<int>D;
+	vector<bool>output;
+	for (int i = 0; i < M; ++i)
+	{
+		int temp;
+		cin >> temp;
+		D.push_back(temp);
+		output.push_back(false);
+	}
+	for (int i = 0; i < N; ++i)
+	{
+		isFirstPoint(D, 0, i, output);
+	}
+	int count = 0;
+	for (int i = 0; i < output.size(); ++i)
+	{
+		if (output[i])
+			count++;
+	}
+
+	cout << count << endl;
 	return 0;
 }
+
 
 
 
