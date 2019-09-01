@@ -721,53 +721,58 @@
 //	return 0;
 //}
 
-#include<iostream>
+#include<bits/stdc++.h>
 using namespace std;
 
+int findKthValue(int rows, int cols, int k) {
+	int i, j;
+	int min = 1;
+	//int minOfRows[rows];
+	vector<int> minOfRows;
+	minOfRows.resize(rows);
 
+	for (i = 0; i < rows; i++)
+		minOfRows[i] = 0;
 
-class Dice {
-	int m;//骰子的面数
-	int n;//投掷的次数
-public:
-	Dice() {
-		cout << "请输入骰子的面数：";
-		cin >> this->m;
-		cout << "请输入投掷的次数:";
-		cin >> this->n;
+	//记录寻找过程中，各行最小值的所在列
+	minOfRows[0] = 1;
+
+	int r;
+	//找k个数
+	for (i = 1; i < k; i++)
+	{
+		min = INT_MAX;
+		//找到最小值所在的行，每次执行都能找到一个最小值，并且记录最小值所在行
+		for (j = 0; j < rows; j++)
+		{
+			if (minOfRows[j] < cols)
+			{
+				if ((j + 1) * (minOfRows[j] + 1) < min)
+				{
+					min = (j + 1) * (minOfRows[j] + 1);
+					r = j;
+				}
+			}
+		}
+		minOfRows[r]++;  //最小值在该行，下次访问时从下一值开始
 	}
-	int getm() { return this->m; }//获得投掷的面数
-	int getn() { return this->n; }//获得投掷的次数
-};//并没有必要写类，脑洞有点大
-
-
-
-double Expect(int m, int n, int max = 1) {//求期望值
-	double E = 1;//最后一次掷得得值为m
-	if (n != 1) {//不止掷一次
-		for (int i = 1; i < max; i++) {
-			E += (1.0 / m)*Expect(m, n - 1, max);//最后一次掷得的骰子数为1--max
-		}
-		for (int j = max; j < m; j++) {
-			E += (1.0 / m)*Expect(m, n - 1, j);//最后一次掷得的骰子数为max--m-1
-		}
-	}
-	else {//掷一次，这也是给递归赋了一个初值
-		for (int i = 1; i < max; i++) {
-			E += (1.0 / m)*max;
-		}
-		for (int j = max; j < m; j++) {
-			E += (1.0 / m)*j;
-		}
-	}
-	return E;
+	return min;
 }
-int main() {
-	Dice d;
-	cout << Expect(d.getm(), d.getn(), 1);
-	cout << endl;
+
+
+int main()
+{
+	int n, m, k;
+	while (cin >> n >> m >> k)
+	{
+		int number = n * m + 1 - k;
+		int kth = findKthValue(m, n, number);
+
+		cout << kth << endl;
+	}
 	return 0;
 }
+
 
 
 
