@@ -1959,3 +1959,72 @@ int main()
 	cout << count << endl;
 	return 0;
 }
+
+#include<bits/stdc++.h>
+
+using namespace std;
+//字符串分割
+vector<string> split(string str, string pattern) {
+	string::size_type pos;
+	vector<string> result;
+	str += pattern;//扩展字符串以方便操作
+	int size = str.size();
+
+	for (int i = 0; i<size; i++)
+	{
+		pos = str.find(pattern, i);//从位置i开始，返回第一个pattern子串索引
+		if (pos<size)
+		{
+			string s = str.substr(i, pos - i);
+			result.push_back(s);
+			i = pos + pattern.size() - 1;
+		}
+	}
+	return result;
+}
+//按奇偶排序
+void sortarr(vector<int> &A, vector<int> &even, vector<int> &odd) {
+	for (int i = 0; i < A.size(); ++i) {
+		if (A[i] % 2 != 0) {
+			odd.push_back(A[i]);
+		}
+		else {
+			even.push_back(A[i]);
+		}
+	}
+	sort(even.begin(), even.end(), greater<int>());
+	sort(odd.begin(), odd.end(), greater<int>());
+}
+
+int main() {
+	string str = "555503,772867,756893,339138,399447,40662,859037,628085,855723,974471,599631,636153,581541,174761,948135,411485,554033,858627,402833,546467,574367,360461,566480,755523,222921,164287,420256,40043,977167,543295,944841,917125,331763,188173,353275,175757,950417,284578,617621,546561,913416,258741,260569,630583,252845;10";
+	//cin >> str;
+	vector<string> arr = split(str, ";");
+	vector<string> num = split(arr[0], ",");
+
+	int N = stoi(arr[1]);
+	vector<int> vec;
+	for (auto e : num) {
+		vec.push_back(stoi(e));
+	}
+	vector<int> even;
+	vector<int> odd;
+	sortarr(vec, even, odd);
+	string out;
+	for (int i = 0; i < N; ++i) {
+		if (i < even.size() && i != N - 1) {
+			cout << even[i] << ",";
+		}
+		else if (i < even.size() && i == N - 1) {
+			cout << even[i] << endl;
+		}
+		else if (i != N - 1) {
+			cout << odd[i - even.size()] << ",";
+		}
+		else {
+			cout << odd[i - even.size()] << endl;
+		}
+	}
+
+	return 0;
+}

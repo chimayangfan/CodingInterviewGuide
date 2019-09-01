@@ -721,31 +721,9 @@
 //	return 0;
 //}
 
-#include<bits/stdc++.h>
 
-using namespace std;
 
-int main() {
 
-	return 0;
-}
-
-int i = 0; int j = A.length - 1;
-int[] B = new int[A.length];
-for (int x = 0; x<A.length; x++)
-{
-	if (A[x] % 2 == 0)
-	{
-		B[i] = A[x];
-		i++;
-	}
-	else
-	{
-		B[j] = A[x];
-		j--;
-	}
-}
-return B;
 
 
 
