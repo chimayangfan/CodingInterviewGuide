@@ -1896,6 +1896,7 @@ int main()
 	return 0;
 }
 
+//360第一题
 #include<bits/stdc++.h>
 
 using namespace std;
@@ -1913,5 +1914,48 @@ int main()
 		maxcount = maxcount > it->second ? maxcount : it->second;
 	}
 	cout << maxcount << endl;
+	return 0;
+}
+
+//360第二题
+#include<bits/stdc++.h>
+
+using namespace std;
+
+void isOrigin(vector<int>&vecD, int Index, int currentPos, vector <bool>&flag)
+{
+	if (currentPos<0 || currentPos >= vecD.size()) return;
+	if (Index >= vecD.size())
+	{
+		flag[currentPos - 1] = true;
+	}
+	//向前走
+	isOrigin(vecD, Index + 1, currentPos + vecD[Index], flag);
+	//向后走
+	isOrigin(vecD, Index + 1, currentPos - vecD[Index], flag);
+}
+
+int main()
+{
+	int N, M;
+	cin >> N >> M;
+	vector<int>vecD(M);
+	vector<bool>flag(M, false);
+	for (int i = 0; i < M; ++i)
+	{
+		cin >> vecD[i];
+	}
+	for (int i = 0; i < N; ++i)
+	{
+		isOrigin(vecD, 0, i, flag);
+	}
+	int count = 0;
+	for (int i = 0; i < flag.size(); ++i)
+	{
+		if (flag[i])
+			count++;
+	}
+
+	cout << count << endl;
 	return 0;
 }
