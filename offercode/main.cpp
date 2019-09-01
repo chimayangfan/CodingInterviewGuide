@@ -730,7 +730,21 @@ int main() {
 	return 0;
 }
 
-
+int head = 0;
+int tail = A.size() - 1;
+while (head != tail)
+{
+	while (A[head] % 2 == 0 && head != tail) //前面找到奇数停下
+	{
+		head++;
+	}
+	while (A[tail] % 2 == 1 && head != tail) //后面找到偶数停下
+	{
+		tail--;
+	}
+	swap(A[head], A[tail]);
+}
+return A;
 
 
 
