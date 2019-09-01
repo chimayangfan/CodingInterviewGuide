@@ -721,24 +721,20 @@
 //	return 0;
 //}
 
-#include<iostream>
+#include<bits/stdc++.h>
 using namespace std;
-
-
 
 class Dice {
 	int m;//骰子的面数
 	int n;//投掷的次数
 public:
 	Dice() {
-		cout << "请输入骰子的面数：";
 		cin >> this->m;
-		cout << "请输入投掷的次数:";
 		cin >> this->n;
 	}
 	int getm() { return this->m; }//获得投掷的面数
 	int getn() { return this->n; }//获得投掷的次数
-};//并没有必要写类，脑洞有点大
+};
 
 
 
@@ -763,8 +759,14 @@ double Expect(int m, int n, int max = 1) {//求期望值
 	return E;
 }
 int main() {
-	Dice d;
-	cout << Expect(d.getm(), d.getn(), 1);
+	int N;
+	cin >> N;
+	vector<int> X(N);
+	float Exp = 1.0f;
+	for (int i = 0; i < N; ++i) {
+		cin >> X[i];
+		Exp *= Expect(X[i], 1, 1);
+	}
 	cout << endl;
 	return 0;
 }

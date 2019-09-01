@@ -2028,3 +2028,54 @@ int main() {
 
 	return 0;
 }
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+class Dice {
+	int m;//骰子的面数
+	int n;//投掷的次数
+public:
+	Dice() {
+		cin >> this->m;
+		cin >> this->n;
+	}
+	int getm() { return this->m; }//获得投掷的面数
+	int getn() { return this->n; }//获得投掷的次数
+};
+
+
+
+double Expect(int m, int n, int max = 1) {//求期望值
+	double E = 1;//最后一次掷得得值为m
+	if (n != 1) {//不止掷一次
+		for (int i = 1; i < max; i++) {
+			E += (1.0 / m)*Expect(m, n - 1, max);//最后一次掷得的骰子数为1--max
+		}
+		for (int j = max; j < m; j++) {
+			E += (1.0 / m)*Expect(m, n - 1, j);//最后一次掷得的骰子数为max--m-1
+		}
+	}
+	else {//掷一次，这也是给递归赋了一个初值
+		for (int i = 1; i < max; i++) {
+			E += (1.0 / m)*max;
+		}
+		for (int j = max; j < m; j++) {
+			E += (1.0 / m)*j;
+		}
+	}
+	return E;
+}
+int main() {
+	int N;
+	cin >> N;
+	vector<int> X(N);
+	float Exp = 1.0f;
+	for (int i = 0; i < N; ++i) {
+		cin >> X[i];
+		Exp *= Expect(X[i], 1, 1);
+	}
+	cout << endl;
+	return 0;
+}
