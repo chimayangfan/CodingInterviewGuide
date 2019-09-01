@@ -1895,3 +1895,23 @@ int main()
 	//system("pause");
 	return 0;
 }
+
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+	string str;
+	cin >> str;
+	int maxcount = INT_MIN;
+	map<char, int> mymap;
+	for (int i = 0; i < str.length(); ++i) {
+		mymap[str[i]]++;
+	}
+	for (auto it = mymap.begin(); it != mymap.end(); ++it) {
+		maxcount = maxcount > it->second ? maxcount : it->second;
+	}
+	cout << maxcount << endl;
+	return 0;
+}

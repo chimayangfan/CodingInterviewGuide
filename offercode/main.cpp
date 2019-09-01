@@ -367,17 +367,17 @@
 //
 //	vector<int> A{ 4,3,7,9,10};
 //	vector<int> B{ 2,1,5,8,9 };
-//	int index = -1, min, max = INT_MIN;
+//	int Index = -1, min, max = INT_MIN;
 //	for (int i = 1; i < A.size(); ++i) {
 //		if (A[i] > A[i-1]) {
-//			index = i;
+//			Index = i;
 //			min = A[i - 1];
 //			if (i < A.size() - 1)
 //				max = A[i + 1];
 //			break;
 //		}
 //	}
-//	if (index == -1) {
+//	if (Index == -1) {
 //		cout << "NO";
 //		return 0;
 //	}
@@ -390,7 +390,7 @@
 //		}
 //	}
 //	if (flag) {
-//		A[index] = max;
+//		A[Index] = max;
 //		for (auto e : A) {
 //			cout << e << " ";
 //		}
@@ -725,40 +725,37 @@
 
 using namespace std;
 
-void isFirstPoint(vector<int>&D, int index, int currentPos, vector <bool>&output)
+void isOrigin(vector<int>&vecD, int Index, int currentPos, vector <bool>&flag)
 {
-	if (currentPos<0 || currentPos >= D.size()) return;
-	if (index >= D.size())
+	if (currentPos<0 || currentPos >= vecD.size()) return;
+	if (Index >= vecD.size())
 	{
-		output[currentPos - 1] = true;
+		flag[currentPos - 1] = true;
 	}
 	//向前走
-	isFirstPoint(D, index + 1, currentPos + D[index], output);
+	isOrigin(vecD, Index + 1, currentPos + vecD[Index], flag);
 	//向后走
-	isFirstPoint(D, index + 1, currentPos - D[index], output);
+	isOrigin(vecD, Index + 1, currentPos - vecD[Index], flag);
 }
 
 int main()
 {
 	int N, M;
 	cin >> N >> M;
-	vector<int>D;
-	vector<bool>output;
+	vector<int>vecD(M);
+	vector<bool>flag(M,false);
 	for (int i = 0; i < M; ++i)
 	{
-		int temp;
-		cin >> temp;
-		D.push_back(temp);
-		output.push_back(false);
+		cin >> vecD[i];
 	}
 	for (int i = 0; i < N; ++i)
 	{
-		isFirstPoint(D, 0, i, output);
+		isOrigin(vecD, 0, i, flag);
 	}
 	int count = 0;
-	for (int i = 0; i < output.size(); ++i)
+	for (int i = 0; i < flag.size(); ++i)
 	{
-		if (output[i])
+		if (flag[i])
 			count++;
 	}
 
