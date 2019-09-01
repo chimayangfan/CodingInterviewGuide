@@ -730,23 +730,22 @@ int main() {
 	return 0;
 }
 
-int head = 0;
-int tail = A.size() - 1;
-while (head != tail)
+int i = 0; int j = A.length - 1;
+int[] B = new int[A.length];
+for (int x = 0; x<A.length; x++)
 {
-	while (A[head] % 2 == 0 && head != tail) //前面找到奇数停下
+	if (A[x] % 2 == 0)
 	{
-		head++;
+		B[i] = A[x];
+		i++;
 	}
-	while (A[tail] % 2 == 1 && head != tail) //后面找到偶数停下
+	else
 	{
-		tail--;
+		B[j] = A[x];
+		j--;
 	}
-	swap(A[head], A[tail]);
 }
-return A;
-
-
+return B;
 
 
 
