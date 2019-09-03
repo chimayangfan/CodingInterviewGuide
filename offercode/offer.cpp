@@ -1055,7 +1055,9 @@ int characterReplacement(string s, int k) {
 	vector<int> count(128, 0);
 	for (r = 0; r<s.size(); r++)
 	{
+		//双指针范围内重复字符数
 		max_count = max(max_count, ++count[s[r]]);
+		//双指针范围内-重复字符数 > 可修改字符数
 		if (r - l + 1 - max_count>k)
 			count[s[l++]]--;
 	}
@@ -1960,6 +1962,7 @@ int main()
 	return 0;
 }
 
+//pdd第1题
 #include<bits/stdc++.h>
 
 using namespace std;
@@ -2029,41 +2032,55 @@ int main() {
 	return 0;
 }
 
-
+//pdd第2题
 #include<bits/stdc++.h>
 using namespace std;
 
-class Dice {
-	int m;//骰子的面数
-	int n;//投掷的次数
-public:
-	Dice() {
-		cin >> this->m;
-		cin >> this->n;
+int main() {
+	int N;
+	cin >> N;
+	while (N--) {
+		bool flag = false;
+		string mei, bai;
+		cin >> mei >> bai;
+		cout << "{" << endl;
+		for (int i = 0; i < bai.length(); ++i) {
+			if (mei.find(bai[i]) == mei.npos) {
+				cout << "}" << endl;
+				flag = true;
+				break;
+			}
+		}
+		if (!flag) {
+
+		}
 	}
-	int getm() { return this->m; }//获得投掷的面数
-	int getn() { return this->n; }//获得投掷的次数
-};
 
+	return 0;
+}
 
+//pdd第4题
+#include<bits/stdc++.h>
+using namespace std;
 
-double Expect(int m, int n, int max = 1) {//求期望值
+double Expect(vector<int> m, int n, int max = 1, int index = 0) {//求期望值
 	double E = 1;//最后一次掷得得值为m
 	if (n != 1) {//不止掷一次
 		for (int i = 1; i < max; i++) {
-			E += (1.0 / m)*Expect(m, n - 1, max);//最后一次掷得的骰子数为1--max
+			E += (1.0 / m[index])*Expect(m, n - 1, max, index);//最后一次掷得的骰子数为1--max
 		}
-		for (int j = max; j < m; j++) {
-			E += (1.0 / m)*Expect(m, n - 1, j);//最后一次掷得的骰子数为max--m-1
+		for (int j = max; j < m[index]; j++) {
+			E += (1.0 / m[index])*Expect(m, n - 1, j, index);//最后一次掷得的骰子数为max--m-1
 		}
 	}
 	else {//掷一次，这也是给递归赋了一个初值
 		for (int i = 1; i < max; i++) {
-			E += (1.0 / m)*max;
+			E += (1.0 / m[index])*max;
 		}
-		for (int j = max; j < m; j++) {
-			E += (1.0 / m)*j;
+		for (int j = max; j < m[index]; j++) {
+			E += (1.0 / m[index])*j;
 		}
+		index++;
 	}
 	return E;
 }
@@ -2074,8 +2091,62 @@ int main() {
 	float Exp = 1.0f;
 	for (int i = 0; i < N; ++i) {
 		cin >> X[i];
-		Exp *= Expect(X[i], 1, 1);
+		//Exp *= Expect(X[i], 1, 1);
 	}
+	cout << Expect(X, N, 1, 0);
 	cout << endl;
+	return 0;
+}
+
+//pdd第4题
+#include<bits/stdc++.h>
+using namespace std;
+
+int findKthValue(int rows, int cols, int k) {
+	int i, j;
+	int min = 1;
+	//int minOfRows[rows];
+	vector<int> minOfRows;
+	minOfRows.resize(rows);
+
+	for (i = 0; i < rows; i++)
+		minOfRows[i] = 0;
+
+	//记录寻找过程中，各行最小值的所在列
+	minOfRows[0] = 1;
+
+	int r;
+	//找k个数
+	for (i = 1; i < k; i++)
+	{
+		min = INT_MAX;
+		//找到最小值所在的行，每次执行都能找到一个最小值，并且记录最小值所在行
+		for (j = 0; j < rows; j++)
+		{
+			if (minOfRows[j] < cols)
+			{
+				if ((j + 1) * (minOfRows[j] + 1) < min)
+				{
+					min = (j + 1) * (minOfRows[j] + 1);
+					r = j;
+				}
+			}
+		}
+		minOfRows[r]++;  //最小值在该行，下次访问时从下一值开始
+	}
+	return min;
+}
+
+
+int main()
+{
+	int n, m, k;
+	while (cin >> n >> m >> k)
+	{
+		int number = n * m + 1 - k;
+		int kth = findKthValue(m, n, number);
+
+		cout << kth << endl;
+	}
 	return 0;
 }

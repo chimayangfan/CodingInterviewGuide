@@ -11,7 +11,8 @@
 *				Part3 union-find算法(并查集)
 *				Part4 环形队列
 *				Part5 模板函数举例（找出两个数据较大值）
-*				Part5 KMP算法
+*				Part6 KMP算法
+*				Part7 继承类模板
 ****************************************************************************/
 #include<list>
 #include<map>
@@ -33,12 +34,16 @@ using namespace std;
 //hash_map存储key-value，并在get不到数据时，put一下即可。
 class LRUCache {
 private:
+	typename pair<int, int> a;
 	//LRU数据结构
 	struct Node {
 		int key;
 		int value;
 		Node(int k, int v) :key(k), value(v) {}
 	};
+	int capacity;
+	list<Node> cacheList;
+	unordered_map<int, list<Node>::iterator> cacheMap;
 public:
 	LRUCache(int c) :capacity(c) {}
 
@@ -70,10 +75,6 @@ public:
 			cacheMap[key] = cacheList.begin();
 		}
 	}
-private:
-	int capacity;
-	list<Node> cacheList;
-	unordered_map<int, list<Node>::iterator> cacheMap;
 };
 
 
@@ -258,5 +259,47 @@ inline T const& max(T const& a, T const& b)
 	// if a < b then use b else use a 
 	return a<b ? b : a;
 }
+
+//*************************************************************************//
+//							Part7 继承类模板
+//*************************************************************************//
+class ClassA
+{
+public:
+	ClassA() { cout << "ClassA::ClassA()" << endl; }
+	virtual ~ClassA() { cout << "ClassA::~ClassA()" << endl; }
+
+	void func1() { cout << "ClassA::func1()" << endl; }
+	void func2() { cout << "ClassA::func2()" << endl; }
+
+	virtual void vfunc1() { cout << "ClassA::vfunc1()" << endl; }
+	virtual void vfunc2() { cout << "ClassA::vfunc2()" << endl; }
+private:
+	int aData;
+};
+
+class ClassB : public ClassA
+{
+public:
+	ClassB() { cout << "ClassB::ClassB()" << endl; }
+	virtual ~ClassB() { cout << "ClassB::~ClassB()" << endl; }
+
+	void func1() { cout << "ClassB::func1()" << endl; }
+	virtual void vfunc1() { cout << "ClassB::vfunc1()" << endl; }
+private:
+	int bData;
+};
+
+class ClassC : public ClassB
+{
+public:
+	ClassC() { cout << "ClassC::ClassC()" << endl; }
+	virtual ~ClassC() { cout << "ClassC::~ClassC()" << endl; }
+
+	void func2() { cout << "ClassC::func2()" << endl; }
+	virtual void vfunc2() { cout << "ClassC::vfunc2()" << endl; }
+private:
+	int cData;
+};
 
 #endif

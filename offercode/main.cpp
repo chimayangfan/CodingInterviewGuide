@@ -721,58 +721,15 @@
 //	return 0;
 //}
 
+//网易互娱第三题，没ac
 #include<bits/stdc++.h>
+#include<unordered_map>
 using namespace std;
 
-int findKthValue(int rows, int cols, int k) {
-	int i, j;
-	int min = 1;
-	//int minOfRows[rows];
-	vector<int> minOfRows;
-	minOfRows.resize(rows);
+int main() {
 
-	for (i = 0; i < rows; i++)
-		minOfRows[i] = 0;
-
-	//记录寻找过程中，各行最小值的所在列
-	minOfRows[0] = 1;
-
-	int r;
-	//找k个数
-	for (i = 1; i < k; i++)
-	{
-		min = INT_MAX;
-		//找到最小值所在的行，每次执行都能找到一个最小值，并且记录最小值所在行
-		for (j = 0; j < rows; j++)
-		{
-			if (minOfRows[j] < cols)
-			{
-				if ((j + 1) * (minOfRows[j] + 1) < min)
-				{
-					min = (j + 1) * (minOfRows[j] + 1);
-					r = j;
-				}
-			}
-		}
-		minOfRows[r]++;  //最小值在该行，下次访问时从下一值开始
-	}
-	return min;
-}
-
-
-int main()
-{
-	int n, m, k;
-	while (cin >> n >> m >> k)
-	{
-		int number = n * m + 1 - k;
-		int kth = findKthValue(m, n, number);
-
-		cout << kth << endl;
-	}
 	return 0;
 }
-
 
 
 
