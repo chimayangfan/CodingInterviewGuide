@@ -15,6 +15,7 @@
 #include<map>
 #include<iostream>
 #include<algorithm>
+#include <functional>//仿函数
 
 #define max(a, b) ((a) > (b) ? (a) : (b))
 #define min(a,b) ((a) < (b) ? (a) : (b))
@@ -3052,7 +3053,247 @@ int Chapter7::getOnceNum(int* arr, int len, int k) {
 }
 #endif
 
+//*************************************************************************//
+//							第7章 位运算
+//*************************************************************************//
+class Chapter8 {
+public:
+	void printMatrix(vector<vector<int>>& matrix);				//题目1：旋转打印数组
+	void rotate(vector<vector<int>>& matrix);					//题目2：将正方形矩阵顺时针转动90°
+	void printMatrixZigZag(vector<vector<int>>& matrix);		//题目3："之"字形打印矩阵
+	vector<int> getKMin(vector<int>& arr, int k);				//题目4：找到无序数组中最小的K个数|方式1：利用堆排序，时间复杂度O(NlogK)
+	int getMinLength(vector<int>& arr);							//题目5：需要排序的最短子数组长度
+};
+/////////////////////////////////////////////////////////
 
+//class Chapter7成员函数定义
+#ifndef Chapter8Class 
+#define Chapter8Class
+
+//题目1：旋转打印数组
+void printEdge(vector<vector<int>>& matrix, int tR, int tC, int dR, int dC) {
+	if (tR == dR) {
+		// 只剩最后一行
+		for (int i = tC; i <= dC; ++i) {
+			cout << matrix[tR][i] << " ";
+		}
+	}
+	else if (tC == dC) {
+		// 只剩最后一列
+		for (int i = tR; i <= dR; ++i) {
+			cout << matrix[i][tC] << " ";
+		}
+	}
+	else {
+		// 一般情况
+		int curC = tC;
+		int curR = tR;
+		while (curC < dC) {
+			// 从左到右打印
+			cout << matrix[tR][curC] << " ";
+			curC++;
+		}
+		while (curR < dR) {
+			// 从上到下打印
+			cout << matrix[curR][dC] << " ";
+			curR++;
+		}
+		while (curC > tC) {
+			// 从右到左打印
+			cout << matrix[dR][curC] << " ";
+			curC--;
+		}
+		while (curR > tR) {
+			// 从下到上打印
+			cout << matrix[curR][tC] << " ";
+			curR--;
+		}
+	}
+
+}
+
+void Chapter8::printMatrix(vector<vector<int>>& matrix) {
+	int tR = 0;
+	int tC = 0;
+	int dR = matrix.size() - 1;
+	int dC = matrix[0].size() - 1;
+	while (tR <= dR && tC <= dC) {
+		printEdge(matrix, tR++, tC++, dR--, dC--);
+	}
+}
+
+//题目2：将正方形矩阵顺时针转动90°
+void rotateEdge(vector<vector<int>>& matrix, int tR, int dR, int tC, int dC) {
+	int times = dC - tC;
+	int temp = 0;
+	for (int i = 0; i < times; i++) {
+		temp = matrix[tR][tC + i];
+		matrix[tR][tC + i] = matrix[dR - i][tC];
+		matrix[dR - i][tC] = matrix[dR][dC - i];
+		matrix[dR][dC - i] = matrix[tR + i][dC];
+		matrix[tR + i][dC] = temp;
+	}
+}
+
+void Chapter8::rotate(vector<vector<int>>& matrix) {
+	int tR = 0;
+	int tC = 0;
+	int dR = matrix.size() - 1;
+	int dC = matrix[0].size() - 1;
+	while (tR < dR) {
+		rotateEdge(matrix, tR++, dR--, tC++, dC--);
+	}
+}
+
+//题目3："之"字形打印矩阵
+void printZigZag(vector<vector<int>>& matrix, bool UToD, int tR, int dR, int tC, int dC) {
+	if (UToD) {
+		while (tR != dR + 1) {
+			cout << matrix[tR++][tC--] << " ";
+		}
+	}
+	else {
+		while (tR != dR + 1) {
+			cout << matrix[dR--][dC++] << " ";
+		}
+	}
+	cout << endl;
+}
+
+void Chapter8::printMatrixZigZag(vector<vector<int>>& matrix) {
+	int tR = 0;
+	int tC = 0;
+	int dR = 0;
+	int dC = 0;
+	int endR = matrix.size() - 1;
+	int endC = matrix[0].size() - 1;
+	bool UToD = false;
+	while (tR <= endR) {
+		printZigZag(matrix, UToD, tR, dR, tC, dC);
+		tR = tC == endC ? tR + 1 : tR;
+		tC = tC == endC ? tC : tC + 1;
+		dC = dR == endR ? dC + 1 : dC;
+		dR = dR == endR ? dR : dR + 1;
+		UToD = !UToD;
+	}
+}
+
+//题目4：找到无序数组中最小的K个数
+//方式1：利用堆排序，时间复杂度O（NlogK）
+void swap(vector<int>& arr, int a, int b) {
+	int temp = arr[a];
+	arr[a] = arr[b];
+	arr[b] = temp;
+}
+//堆初始化
+void headInsert(vector<int>& arr, int index) {
+	int parent = (index - 1) / 2;
+	while (index > 0) {
+		if (arr[parent] < arr[index]) {
+			swap(arr, parent, index);
+			index = parent;
+		}
+		else {
+			break;
+		}
+	}
+}
+//堆排序
+void heapify(vector<int>& arr, int index, int heapSize) {
+	int left = 2 * index + 1;
+	int right = 2 * index + 2;
+	int largest = index;
+	while (left < heapSize) {
+		if (arr[left] > arr[index]) {
+			largest = left;
+		}
+		else if (right < heapSize && arr[left] > arr[right]) {
+			largest = right;
+		}
+		else {
+			break;
+		}
+		swap(arr, largest, index);
+		index = largest;
+		left = 2 * index + 1;
+		right = 2 * index + 2;
+	}
+
+}
+//使用堆排序
+vector<int> Chapter8::getKMin(vector<int>& arr, int k) {
+	if (k > arr.size()) {
+		return vector<int>{-1};
+	}
+	vector<int> res(k);
+	//手动建堆
+	for (int i = 0; i < k; i++) {
+		res[i] = arr[i];
+		headInsert(res, i);
+	}
+	//堆调整
+	for (int i = k; i < arr.size(); i++) {
+		if (arr[i] < res[0]) {
+			res[0] = arr[i];
+			heapify(arr, 0, k);
+		}
+	}
+	////利用优先队列
+	//priority_queue<int, vector<int>> heap;
+	////priority_queue<int, vector<int>> heap(less<int>(), arr);//默认大顶堆
+	////priority_queue<int, vector<int>， greater<int>()> heap(greater<int>(), arr);//小顶堆
+	//for (int i = 0; i < k; i++) {
+	//	heap.push(arr[i]);
+	//}
+	////堆调整
+	//for (int i = k; i < arr.size(); i++) {
+	//	if (arr[i] < heap.top()) {
+	//		heap.pop();
+	//		heap.push(arr[i]);
+	//	}
+	//}
+	//vector<int> res;
+	//while (!heap.empty()) {
+	//	res.push_back(heap.top());
+	//	heap.pop();
+	//}
+
+	return res;
+}
+
+//题目5：需要排序的最短子数组长度
+int Chapter8::getMinLength(vector<int>& arr) {
+	if (arr.size() < 2) {
+		return 0;
+	}
+	int minIndex = -1;
+	int minval = arr[arr.size() - 1];
+	for (int i = arr.size() - 2; i > -1; i--) {
+		if (arr[i] > minval) {
+			minIndex = i;
+		}
+		else {
+			minval = min(minval, arr[i]);
+		}
+	}
+	if (minIndex == -1) {
+		return 0;
+	}
+	int maxIndex = -1;
+	int maxval = arr[0];
+	for (int i = 1; i < arr.size(); i++) {
+		if (arr[i] < maxval) {
+			maxIndex = i;
+		}
+		else {
+			maxval = max(maxval, arr[i]);
+		}
+	}
+	return maxIndex - minIndex + 1;
+}
+
+
+#endif
 
 #endif
 
