@@ -2150,3 +2150,17 @@ int main()
 	}
 	return 0;
 }
+
+//云从第3题
+#include<stdio.h>
+
+int strlen(const char*IpszBuffer) {
+	return *IpszBuffer ? (strlen(++IpszBuffer) + 1) : 0;
+}
+
+int main() {
+	char str[1000];
+	gets(str);
+	int len = strlen(str);
+	printf("%d", len);
+}

@@ -723,21 +723,27 @@
 
 //网易互娱第三题，没ac
 #include<bits/stdc++.h>
-#include<unordered_map>
-#include"Zuochengyun.h"
+
 using namespace std;
 
-int main() {
-	Chapter8 c;
-	vector<vector<int>> vec(4,vector<int>(4));
-	for (int i = 0; i < 4; ++i) {
-		for (int j = 0; j < 4; ++j) {
-			vec[i][j] = i * 4 + j + 1;
-		}
+vector<int> CinIntVector(int n) {
+	vector<int>nums;
+	int num;
+	for (int i = 0; i < n; ++i) {
+		cin >> num;
+		nums.push_back(num);
 	}
-	vector<int> arr{ 5,8,1,2,47,5,3,4,1 };
-	c.getKMin(arr,3);
-	return 0;
+	return nums;
+}
+
+int main() {
+	int n, k, ms, me;
+	cin >> n >> k >> ms >> me;
+	vector<int> sleep = CinIntVector(n);
+	vector<int> eat = CinIntVector(n);
+	for (int i = 0; i < n; ++i) {
+
+	}
 }
 
 
