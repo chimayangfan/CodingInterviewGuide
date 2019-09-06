@@ -739,55 +739,18 @@ vector<int> CinIntVector(int n) {
 int main() {
 	int n, k, ms, me;
 	cin >> n >> k >> ms >> me;
-	vector<int> sleep = CinIntVector(n);
-	vector<int> eat = CinIntVector(n);
-	vector<int> minus(n);
-	int absmax = 0, index = 0;
-	for (int i = 0; i < n; ++i) {
-		minus[i] = sleep[i] - eat[i];
-		absmax = absmax > abs(minus[i]) ? absmax : abs(minus[i]);
-	}
+	//vector<int> sleep = CinIntVector(n);
+	//vector<int> eat = CinIntVector(n);
+	vector<int> sleep{4,8,6,2,2};
+	vector<int> eat{4,6,9,6,0};
 
-}
+	cout << happyval << endl;
+	cout << str;
 
-void minDistance(vector<int>X, vector<int>cur, const int m, int&min, int index)
-{
-	if (cur.size() == m)
-	{
-		int dis = INT_MAX;
-		//求当前位置的最小距离
-		for (int i = 0; i < cur.size() - 1; ++i)
-		{
-			int temp = cur[i + 1] - cur[i];
-			dis = dis < temp ? dis : temp;
-		}
-		min = min < dis ? dis : min;
-		return;
-	}
-	if (index >= X.size()) return;
-	minDistance(X, cur, m, min, index + 1);
-	cur.push_back(X[index]);
-	minDistance(X, cur, m, min, index + 1);
-}
-
-int main() {
-
-
-	int n, m;
-	cin >> n >> m;
-	vector<int>x(n);
-	for (int i = 0; i < n; ++i)
-	{
-		cin >> x[i];
-	}
-	sort(x.begin(), x.end());
-
-	vector<int>cur;
-	int output = 0;
-	minDistance(x, cur, m, output, 0);
-	cout << output << endl;
 	return 0;
 }
+
+
 
 
 

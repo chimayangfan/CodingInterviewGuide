@@ -2151,20 +2151,65 @@ int main()
 	return 0;
 }
 
-//云从第3题
-#include<stdio.h>
+//云从第1题
+#include<bits/stdc++.h>
 
-int strlen(const char*IpszBuffer) {
-	return *IpszBuffer ? (strlen(++IpszBuffer) + 1) : 0;
+using namespace std;
+
+vector<int> CinIntVector(int n) {
+	vector<int>nums;
+	int num;
+	for (int i = 0; i < n; ++i) {
+		cin >> num;
+		nums.push_back(num);
+	}
+	return nums;
+}
+
+bool queright(queue<bool> que, int me, int ms) {
+	int counts = 0, counte = 0;
+	while (!que.empty) {
+		if (que.front() == true) {
+			counts++;
+		}
+		if (que.front() == false) {
+			counte++;
+		}
+		if (counts > ms || counte > me) {
+			return false;
+		}
+	}
+	return true;
 }
 
 int main() {
-	char str[1000];
-	gets(str);
-	int len = strlen(str);
-	printf("%d", len);
-}
+	int n, k, ms, me;
+	cin >> n >> k >> ms >> me;
+	//vector<int> sleep = CinIntVector(n);
+	//vector<int> eat = CinIntVector(n);
+	vector<int> sleep{ 4,8,6,2,2 };
+	vector<int> eat{ 4,6,9,6,0 };
+	vector<int> minus(n);
+	queue<bool> que;
+	vector<bool> choose(n, false);
+	int happyval = 0;
+	string str;
+	for (int i = 0; i < n; ++i) {
+		if (sleep[i] > eat[i] && ) {
+			happyval += sleep[i];
+			str += "S";
+		}
+		else {
+			happyval += eat[i];
+			str += "E";
+		}
+	}
+	cout << happyval << endl;
+	cout << str;
 
+	return 0;
+}
+//云从第2题
 void minDistance(vector<int>X, vector<int>cur, const int m, int&min, int index)
 {
 	if (cur.size() == m)
@@ -2186,6 +2231,8 @@ void minDistance(vector<int>X, vector<int>cur, const int m, int&min, int index)
 }
 
 int main() {
+
+
 	int n, m;
 	cin >> n >> m;
 	vector<int>x(n);
@@ -2201,3 +2248,35 @@ int main() {
 	cout << output << endl;
 	return 0;
 }
+
+int happyval = 0;
+int counte = 0, counts = 0;
+int index = 0;
+for (int i = 0; i < n; ++i) {
+	if (sleep[i] > eat[i]) {
+		happyval += sleep[i];
+		choose[i] = true;
+		if (que.size() < 4) {
+			que.push(choose[i]);
+		}
+
+	}
+	else if (sleep[i] < eat[i]) {
+		happyval += eat[i];
+	}
+}
+
+//云从第3题
+#include<stdio.h>
+
+int strlen(const char*IpszBuffer) {
+	return *IpszBuffer ? (strlen(++IpszBuffer) + 1) : 0;
+}
+
+int main() {
+	char str[1000];
+	gets(str);
+	int len = strlen(str);
+	printf("%d", len);
+}
+
