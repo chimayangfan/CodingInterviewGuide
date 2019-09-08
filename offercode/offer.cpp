@@ -2280,3 +2280,95 @@ int main() {
 	printf("%d", len);
 }
 
+//爱奇艺 36%
+#include<bits/stdc++.h>
+#include<algorithm>
+
+using namespace std;
+
+int main() {
+	int n, res = 0;
+	cin >> n;
+	if (n <= 1 || n > 1000)
+		return 0;
+	vector<int>A(n - 1), B(n);
+	for (int i = 0; i < n - 1; ++i) {
+		B[i] = i + 1;
+		cin >> A[i];
+	}
+	B[n - 1] = n;
+	do {
+		int numb = 1;
+		for (int i = 0; i < n - 1; ++i) {
+			if ((A[i] == 1) && B[i] > B[i + 1] || !((A[i] == 0 && B[i] < B[i + 1]))) {
+				numb = 0;
+				break;
+			}
+		}
+	} while (next_permutation(B.begin(), B.end()));
+	int out = pow(10, 9) + 7;
+	cout << res % out;
+	return 0;
+}
+
+//爱奇艺 45%
+#include<bits/stdc++.h>
+
+using namespace std;
+
+void backTracking(vector<int> ints, vector<int>& subset, set<vector<int>>& resSet, vector<bool> used) {
+	if (ints.size() == subset.size()) {
+		resSet.insert(subset);
+		return;
+	}
+	for (int i = 0; i < ints.size(); i++) {
+		if (used[i] || (i > 0 && ints[i] == ints[i - 1] && !used[i - 1]))
+			continue;
+		used[i] = true;
+		subset.push_back(ints[i]);
+		backTracking(ints, subset, resSet, used);
+		used[i] = false;
+		subset.pop_back();
+	}
+}
+set<vector<int>> permuteUnique(vector<int> nums) {
+	int n = nums.size();
+	sort(nums.begin(), nums.end());
+	set<vector<int>> resSet;
+	vector<bool> used(n, false);
+	vector<int> subset;
+	backTracking(nums, subset, resSet, used);
+	return resSet;
+}
+
+int main() {
+	int Red, Blue;
+	////cin >> Red >> Blue;
+	Red = 1, Blue = 1;
+
+	vector<int> nums(Red + Blue);
+	for (int i = 0; i < Red + Blue; ++i) {
+		if (i < Red)
+			nums[i] = 1;
+		else
+			nums[i] = 0;
+	}
+	set<vector<int>> vec = permuteUnique(nums);
+	int count = 0;
+	for (auto it = vec.begin(); it != vec.end(); ++it) {
+		for (int i = 0; i < nums.size(); ++i) {
+			if (i % 3 == 0 && *(it->begin() + i) == 1) {
+				count++;
+				break;
+			}
+			if (i % 3 == 1 && *(it->begin() + i) == 1) {
+				break;
+			}
+		}
+	}
+
+	float Awin = (float)count / (float)vec.size();
+	cout << setprecision(5) << Awin;
+
+	return 0;
+}

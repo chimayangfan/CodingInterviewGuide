@@ -723,62 +723,13 @@
 
 //网易互娱第三题，没ac
 #include<bits/stdc++.h>
+#include<algorithm>
 
 using namespace std;
 
-void backTracking(vector<int> ints, vector<int>& subset, set<vector<int>>& resSet, vector<bool> used) {
-	if (ints.size() == subset.size()) {
-		resSet.insert(subset);
-		return;
-	}
-	for (int i = 0; i < ints.size(); i++) {
-		if (used[i] || (i > 0 && ints[i] == ints[i - 1] && !used[i - 1]))
-			continue;
-		used[i] = true;
-		subset.push_back(ints[i]);
-		backTracking(ints, subset, resSet, used);
-		used[i] = false;
-		subset.pop_back();
-	}
-}
-set<vector<int>> permuteUnique(vector<int> nums) {
-	int n = nums.size();
-	sort(nums.begin(), nums.end());
-	set<vector<int>> resSet;
-	vector<bool> used(n, false);
-	vector<int> subset;
-	backTracking(nums, subset, resSet, used);
-	return resSet;
-}
-
 int main() {
-	int Red, Blue;
-	////cin >> Red >> Blue;
-	Red = 3, Blue = 4;
-
-	vector<int> nums(Red+Blue);
-	for (int i = 0; i < Red + Blue; ++i) {
-		if (i < Red)
-			nums[i] = 1;
-		else
-			nums[i] = 0;
-	}
-	set<vector<int>> vec = permuteUnique(nums);
-	int count = 0;
-	for (auto it = vec.begin(); it != vec.end(); ++it) {
-		for (int i = 0; i < nums.size(); ++i) {
-			if (i % 3 == 0 && *(it->begin()+i) == 1) {
-				count++;
-				break;
-			}
-			if (i % 3 == 1 && *(it->begin() + i) == 1) {
-				break;
-			}
-		}
-	}
-
-	float Awin = (float)count / (float)vec.size();
-	cout << setprecision(5) <<Awin;
+	int n, res = 0;
+	cin >> n;
 
 	return 0;
 }
