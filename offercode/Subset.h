@@ -38,6 +38,7 @@ public:
 	bool PartitionKSubsets(vector<int> nums, int k);			//题目4：Leetcode 698.分割等和子集(【动态规划】-划分为k个相等的子集)
 	set<vector<int>> PermuteRecrusive(vector<int> ints);		//题目5：不重复数字序列的全排列集合
 	set<vector<int>> permuteUnique(vector<int> nums);			//题目6：带重复数字序列的全排列集合（集合元素有序）
+	set<vector<int>> permutation(vector<int> nums);				//题目6：带重复数字序列的全排列集合（集合元素有序）|使用stl算法库
 };
 //////////////////////////////////////////////////////////
 
@@ -339,6 +340,20 @@ set<vector<int>> Subsets::permuteUnique(vector<int> nums) {
 	backTracking(nums, subset, resSet, used);
 	return resSet;
 }
+
+//题目6：带重复数字序列的全排列集合（集合元素有序）|使用stl算法库
+set<vector<int>> Subsets::permutation(vector<int> nums) {
+	set<vector<int>> resSet;
+	sort(nums.begin(), nums.end());
+	do {
+		vector<int> temp(nums.size());
+		for (int i = 0; i<nums.size(); i++)
+			temp[i] = nums[i];
+		resSet.insert(temp);
+	} while (next_permutation(nums.begin(), nums.end()));
+	return resSet;
+}
+
 
 #endif
 
