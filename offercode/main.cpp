@@ -727,26 +727,68 @@
 
 using namespace std;
 
-const char* g_str1 = 0;
-const char* g_str2 = 0;
+struct TreeNode {
+	int val;
+	struct TreeNode* left;
+	struct TreeNode* right;
+	TreeNode(int x) :
+		val(x), left(NULL), right(NULL) {
+	}
+};
 
-static void  foo1(void) {
-	g_str1 = "hello1";
+TreeNode* _CreatBinaryTree(vector<int>& a, size_t size, const int& invalid, size_t& index)
+{
+	TreeNode*  cur = NULL;
+	if (index < size && a[index] != invalid)//不能越界
+	{
+		if (a[index] == '#')return NULL;
+
+		cur = new TreeNode(a[index]);//新建一个根结点
+
+		size_t lnode = 2 * index + 1;
+		size_t rnode = 2 * index + 2;
+
+		if (lnode > size - 1) cur->left = NULL;
+		else cur->left = _CreatBinaryTree(a, size, invalid, lnode);
+
+		if (rnode > size - 1) cur->right = NULL;
+		else cur->right = _CreatBinaryTree(a, size, invalid, rnode);
+	}
+	return cur;
 }
 
-static void  foo2(void) {
-	char p[] = "hello2";
-	g_str2 = p;
+void _InOrder(TreeNode* root)
+{
+	if (root == NULL)
+	{
+		return;
+	}
+
+	_InOrder(root->left);
+	cout << root->val << endl;
+	_InOrder(root->right);
+}
+
+vector<int> CinIntVector(int n) {
+	vector<int>nums;
+	int num;
+	for (int i = 0; i < n; ++i) {
+		cin >> num;
+		nums.push_back(num);
+	}
+	return nums;
 }
 
 int main() {
-	foo1(); foo2();
-	printf("foo1(%p): %s\n", g_str1, g_str1);
-	printf("foo2(%p): %s\n", g_str2, g_str2);
+	int n = 3, m = pow(2, n) - 1;
+	//cin >> n;
+	vector<int>  treearr = CinIntVector(m);
+	size_t index = 0;
+	TreeNode* tree = _CreatBinaryTree(treearr, treearr.size(), '#', index);
+	_InOrder(tree);
 
 	return 0;
 }
-
 
 
 
