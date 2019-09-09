@@ -727,8 +727,22 @@
 
 using namespace std;
 
+const char* g_str1 = 0;
+const char* g_str2 = 0;
+
+static void  foo1(void) {
+	g_str1 = "hello1";
+}
+
+static void  foo2(void) {
+	char p[] = "hello2";
+	g_str2 = p;
+}
+
 int main() {
-	int n;
+	foo1(); foo2();
+	printf("foo1(%p): %s\n", g_str1, g_str1);
+	printf("foo2(%p): %s\n", g_str2, g_str2);
 
 	return 0;
 }
