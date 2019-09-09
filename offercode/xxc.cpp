@@ -1,39 +1,43 @@
-﻿#include<iostream>
-#include<vector>
+﻿#include<bits/stdc++.h>
+
 using namespace std;
 
-void maxLove(vector<int>&mSize, vector<int>&mLove, int i, int curLove, int curWight, int& loveValue)
+void maxPrefenceVal(vector<int>&movieSize, vector<int>&moviePrefenceVal, int i, int curPrefenceVal, int curWight, int& PrefenceVal)
 {
-	if (i >= mSize.size() || curWight == 0)
+	if (i >= movieSize.size() || curWight == 0)
 	{
-		loveValue = loveValue > curLove ? loveValue : curLove;
+		PrefenceVal = PrefenceVal > curPrefenceVal ? PrefenceVal : curPrefenceVal;
 		return;
 	}
-	maxLove(mSize, mLove, i + 1, curLove, curWight, loveValue);
-	if (curWight - mSize[i] >= 0)
+	maxPrefenceVal(movieSize, moviePrefenceVal, i + 1, curPrefenceVal, curWight, PrefenceVal);
+	if (curWight - movieSize[i] >= 0)
 	{
-		curLove = curLove + mLove[i];
-		curWight = curWight - mSize[i];
-		maxLove(mSize, mLove, i + 1, curLove, curWight, loveValue);
+		curPrefenceVal = curPrefenceVal + moviePrefenceVal[i];
+		curWight = curWight - movieSize[i];
+		maxPrefenceVal(movieSize, moviePrefenceVal, i + 1, curPrefenceVal, curWight, PrefenceVal);
 	}
 }
-int main1()
+
+vector<int> CinIntVector(int n) {
+	vector<int>nums;
+	int num;
+	for (int i = 0; i < n; ++i) {
+		cin >> num;
+		nums.push_back(num);
+	}
+	return nums;
+}
+
+int main()
 {
 	int M, N;
-	cin >> M;
-	cin >> N;
-	vector<int>veSize(N);
-	vector<int>veLove(N);
-	for (int i = 0; i < N; ++i)
-	{
-		cin >> veSize[i];
-	}
-	for (int i = 0; i < N; ++i)
-	{
-		cin >> veLove[i];
-	}
-	int output = 0;
-	maxLove(veSize, veLove, 0, 0, M, output);
-	cout << output << endl;
+	cin >> M >> N;
+	vector<int> movieSize = CinIntVector(N);
+	vector<int> moviePrefenceVal = CinIntVector(N);
+
+	int res = 0;
+	maxPrefenceVal(movieSize, moviePrefenceVal, 0, 0, M, res);
+
+	cout << res << endl;
 	return 0;
 }

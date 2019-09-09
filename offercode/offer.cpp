@@ -2372,3 +2372,116 @@ int main() {
 
 	return 0;
 }
+
+//欢聚时代第1题 AC
+#include<bits/stdc++.h>
+
+using namespace std;
+
+void maxPrefenceVal(vector<int>&movieSize, vector<int>&moviePrefenceVal, int i, int curPrefenceVal, int curWight, int& PrefenceVal)
+{
+	if (i >= movieSize.size() || curWight == 0)
+	{
+		PrefenceVal = PrefenceVal > curPrefenceVal ? PrefenceVal : curPrefenceVal;
+		return;
+	}
+	maxPrefenceVal(movieSize, moviePrefenceVal, i + 1, curPrefenceVal, curWight, PrefenceVal);
+	if (curWight - movieSize[i] >= 0)
+	{
+		curPrefenceVal = curPrefenceVal + moviePrefenceVal[i];
+		curWight = curWight - movieSize[i];
+		maxPrefenceVal(movieSize, moviePrefenceVal, i + 1, curPrefenceVal, curWight, PrefenceVal);
+	}
+}
+
+vector<int> CinIntVector(int n) {
+	vector<int>nums;
+	int num;
+	for (int i = 0; i < n; ++i) {
+		cin >> num;
+		nums.push_back(num);
+	}
+	return nums;
+}
+
+int main()
+{
+	int M, N;
+	cin >> M >> N;
+	vector<int> movieSize = CinIntVector(N);
+	vector<int> moviePrefenceVal = CinIntVector(N);
+
+	int res = 0;
+	maxPrefenceVal(movieSize, moviePrefenceVal, 0, 0, M, res);
+
+	cout << res << endl;
+	return 0;
+}
+
+//欢聚时代第2题 AC
+#include<bits/stdc++.h>
+
+using namespace std;
+
+struct TreeNode {
+	int val;
+	struct TreeNode* left;
+	struct TreeNode* right;
+	TreeNode(int x) :
+		val(x), left(NULL), right(NULL) {
+	}
+};
+
+TreeNode* _CreatBinaryTree(vector<int>& a, size_t size, const int& invalid, size_t& index)
+{
+	TreeNode*  cur = NULL;
+	if (index < size && a[index] != invalid)//不能越界
+	{
+		if (a[index] == '#')return NULL;
+
+		cur = new TreeNode(a[index]);//新建一个根结点
+
+		size_t lnode = 2 * index + 1;
+		size_t rnode = 2 * index + 2;
+
+		if (lnode > size - 1) cur->left = NULL;
+		else cur->left = _CreatBinaryTree(a, size, invalid, lnode);
+
+		if (rnode > size - 1) cur->right = NULL;
+		else cur->right = _CreatBinaryTree(a, size, invalid, rnode);
+	}
+	return cur;
+}
+
+void _InOrder(TreeNode* root)
+{
+	if (root == NULL)
+	{
+		return;
+	}
+
+	_InOrder(root->left);
+	cout << root->val << endl;
+	_InOrder(root->right);
+}
+
+vector<int> CinIntVector(int n) {
+	vector<int>nums;
+	int num;
+	for (int i = 0; i < n; ++i) {
+		cin >> num;
+		nums.push_back(num);
+	}
+	return nums;
+}
+
+int main() {
+	int n = 3, m = pow(2, n) - 1;
+	//cin >> n;
+	vector<int>  treearr = CinIntVector(m);
+	size_t index = 0;
+	TreeNode* tree = _CreatBinaryTree(treearr, treearr.size(), '#', index);
+	_InOrder(tree);
+
+	return 0;
+}
