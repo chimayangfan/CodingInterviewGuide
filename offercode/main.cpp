@@ -726,67 +726,13 @@
 
 using namespace std;
 
-//输入数组
-vector<int> split(string str, string pattern) {
-	string::size_type pos;
-	vector<int> result;
-	str += pattern;//扩展字符串以方便操作
-	int size = str.size();
-
-	for (int i = 0; i<size; i++)
-	{
-		pos = str.find(pattern, i);//从位置i开始，返回第一个pattern子串索引
-		if (pos<size)
-		{
-			string s = str.substr(i, pos - i);
-			result.push_back(atoi(s.c_str()));
-			i = pos + pattern.size() - 1;
-		}
-	}
-	return result;
-}
-
-//求最大子序列的和
-int maxSubval(vector<int>& arr) {
-	int len = arr.size();
-	vector<int> dp(len, 0);
-	if (len < 1)
-		return 0;
-	dp[0] = arr[0];
-	int maxval = dp[0];
-	for (int i = 1; i<len; ++i) {
-		dp[i] = max(dp[i - 1] + arr[i], arr[i]);
-		maxval = maxval > dp[i] ? maxval : dp[i];
-	}
-	return maxval;
-}
-
 int main() {
 	string str,temp;
-	do {
-		cin >> temp;
-		str += temp;
-	} while (getchar() != '\n');
-	
-	vector<int> arr = split(str, ",");
-	cout << maxSubval(arr);
+
 	return 0;
 }
 
-int maxSubArray(vector<int>& nums) {
-	int ans = nums[0];
-	int sum = 0;
-	for (int num : nums) {
-		if (sum > 0) {
-			sum += num;
-		}
-		else {
-			sum = num;
-		}
-		ans = max(ans, sum);
-	}
-	return ans;
-}
+
 
 
 

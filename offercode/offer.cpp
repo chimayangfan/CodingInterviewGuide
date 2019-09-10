@@ -2486,7 +2486,7 @@ int main() {
 	return 0;
 }
 
-
+//电信云第1题 AC
 #include<bits/stdc++.h>
 
 using namespace std;
@@ -2506,6 +2506,7 @@ int main() {
 	return 0;
 }
 
+//电信云第2题 AC
 #include<bits/stdc++.h>
 
 using namespace std;
@@ -2531,6 +2532,7 @@ int main() {
 	return 0;
 }
 
+//电信云第3题 40%（输入有问题）
 #include<bits/stdc++.h>
 
 using namespace std;
@@ -2570,10 +2572,29 @@ int maxSubval(vector<int>& arr) {
 	return maxval;
 }
 
+int maxSubArray(vector<int>& nums) {
+	int ans = nums[0];
+	int sum = 0;
+	for (int num : nums) {
+		if (sum > 0) {
+			sum += num;
+		}
+		else {
+			sum = num;
+		}
+		ans = max(ans, sum);
+	}
+	return ans;
+}
+
 int main() {
-	string str;
-	cin >> str;
+	string str, temp;
+	do {
+		cin >> temp;
+		str += temp;
+	} while (getchar() != '\n');
+
 	vector<int> arr = split(str, ",");
-	cout << maxSubval(arr);
+	cout << maxSubArray(arr);
 	return 0;
 }
