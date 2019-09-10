@@ -21,12 +21,12 @@
     <None Include="offer.cpp">
       <Filter>源文件</Filter>
     </None>
+    <None Include="xxc.cpp">
+      <Filter>源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="xxc.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
