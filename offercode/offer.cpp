@@ -2628,3 +2628,38 @@ int main() {
 
 	return 0;
 }
+
+#include<bits/stdc++.h>
+
+using namespace std;
+
+string minWindow(string str1, string str2) {
+	int count[256] = { 0 };
+	for (auto c : str2)
+		++count[c];
+	int len = 0, minLength = str1.length();
+	string res;
+	for (int l = 0, r = 0; r < str1.length(); ++r) {
+		count[str1[r]]--;
+		if (count[str1[r]] >= 0) ++len;
+		while (len == str2.length()) {
+			if (r - l + 1 <= minLength) {
+				minLength = r - l + 1;
+				res = str1.substr(l, r - l + 1);
+			}
+			count[str1[l]]++;
+			if (count[str1[l]] > 0) --len;
+			++l;
+		}
+	}
+	return res;
+}
+
+int main() {
+	string str1, str2;
+	cin >> str1 >> str2;
+
+	cout << minWindow(str1, str2) << endl;
+
+	return 0;
+}
