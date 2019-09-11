@@ -2372,3 +2372,229 @@ int main() {
 
 	return 0;
 }
+
+//欢聚时代第1题 AC
+#include<bits/stdc++.h>
+
+using namespace std;
+
+void maxPrefenceVal(vector<int>&movieSize, vector<int>&moviePrefenceVal, int i, int curPrefenceVal, int curWight, int& PrefenceVal)
+{
+	if (i >= movieSize.size() || curWight == 0)
+	{
+		PrefenceVal = PrefenceVal > curPrefenceVal ? PrefenceVal : curPrefenceVal;
+		return;
+	}
+	maxPrefenceVal(movieSize, moviePrefenceVal, i + 1, curPrefenceVal, curWight, PrefenceVal);
+	if (curWight - movieSize[i] >= 0)
+	{
+		curPrefenceVal = curPrefenceVal + moviePrefenceVal[i];
+		curWight = curWight - movieSize[i];
+		maxPrefenceVal(movieSize, moviePrefenceVal, i + 1, curPrefenceVal, curWight, PrefenceVal);
+	}
+}
+
+vector<int> CinIntVector(int n) {
+	vector<int>nums;
+	int num;
+	for (int i = 0; i < n; ++i) {
+		cin >> num;
+		nums.push_back(num);
+	}
+	return nums;
+}
+
+int main()
+{
+	int M, N;
+	cin >> M >> N;
+	vector<int> movieSize = CinIntVector(N);
+	vector<int> moviePrefenceVal = CinIntVector(N);
+
+	int res = 0;
+	maxPrefenceVal(movieSize, moviePrefenceVal, 0, 0, M, res);
+
+	cout << res << endl;
+	return 0;
+}
+
+//欢聚时代第2题 AC
+#include<bits/stdc++.h>
+
+using namespace std;
+
+struct TreeNode {
+	int val;
+	struct TreeNode* left;
+	struct TreeNode* right;
+	TreeNode(int x) :
+		val(x), left(NULL), right(NULL) {
+	}
+};
+
+TreeNode* _CreatBinaryTree(vector<int>& a, size_t size, const int& invalid, size_t& index)
+{
+	TreeNode*  cur = NULL;
+	if (index < size && a[index] != invalid)//不能越界
+	{
+		if (a[index] == '#')return NULL;
+
+		cur = new TreeNode(a[index]);//新建一个根结点
+
+		size_t lnode = 2 * index + 1;
+		size_t rnode = 2 * index + 2;
+
+		if (lnode > size - 1) cur->left = NULL;
+		else cur->left = _CreatBinaryTree(a, size, invalid, lnode);
+
+		if (rnode > size - 1) cur->right = NULL;
+		else cur->right = _CreatBinaryTree(a, size, invalid, rnode);
+	}
+	return cur;
+}
+
+void _InOrder(TreeNode* root)
+{
+	if (root == NULL)
+	{
+		return;
+	}
+
+	_InOrder(root->left);
+	cout << root->val << endl;
+	_InOrder(root->right);
+}
+
+vector<int> CinIntVector(int n) {
+	vector<int>nums;
+	int num;
+	for (int i = 0; i < n; ++i) {
+		cin >> num;
+		nums.push_back(num);
+	}
+	return nums;
+}
+
+int main() {
+	int n = 3, m = pow(2, n) - 1;
+	//cin >> n;
+	vector<int>  treearr = CinIntVector(m);
+	size_t index = 0;
+	TreeNode* tree = _CreatBinaryTree(treearr, treearr.size(), '#', index);
+	_InOrder(tree);
+
+	return 0;
+}
+
+//电信云第1题 AC
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int main() {
+	int n;
+	cin >> n;
+	vector<int> arr(n);
+	for (int i = 0; i < n; ++i) {
+		cin >> arr[i];
+	}
+	sort(arr.begin(), arr.end());
+	if (arr.size() % 2 == 1)
+		cout << arr[arr.size() / 2];
+	else
+		cout << arr[arr.size() / 2 - 1];
+	return 0;
+}
+
+//电信云第2题 AC
+#include<bits/stdc++.h>
+
+using namespace std;
+
+string intToRoman(int num) {
+	vector<int> val{ 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
+	vector<string> roman{ "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
+
+	string res;
+	for (int i = 0; i<13; ++i) {
+		while (num >= val[i]) {
+			num -= val[i];
+			res += roman[i];
+		}
+	}
+	return res;
+}
+
+int main() {
+	int n;
+	cin >> n;
+	cout << intToRoman(n);
+	return 0;
+}
+
+//电信云第3题 40%（输入有问题）
+#include<bits/stdc++.h>
+
+using namespace std;
+
+//输入数组
+vector<int> split(string str, string pattern) {
+	string::size_type pos;
+	vector<int> result;
+	str += pattern;//扩展字符串以方便操作
+	int size = str.size();
+
+	for (int i = 0; i<size; i++)
+	{
+		pos = str.find(pattern, i);//从位置i开始，返回第一个pattern子串索引
+		if (pos<size)
+		{
+			string s = str.substr(i, pos - i);
+			result.push_back(atoi(s.c_str()));
+			i = pos + pattern.size() - 1;
+		}
+	}
+	return result;
+}
+
+//求最大子序列的和
+int maxSubval(vector<int>& arr) {
+	int len = arr.size();
+	vector<int> dp(len, 0);
+	if (len < 1)
+		return 0;
+	dp[0] = arr[0];
+	int maxval = dp[0];
+	for (int i = 1; i<len; ++i) {
+		dp[i] = max(dp[i - 1] + arr[i], arr[i]);
+		maxval = maxval > dp[i] ? maxval : dp[i];
+	}
+	return maxval;
+}
+
+int maxSubArray(vector<int>& nums) {
+	int ans = nums[0];
+	int sum = 0;
+	for (int num : nums) {
+		if (sum > 0) {
+			sum += num;
+		}
+		else {
+			sum = num;
+		}
+		ans = max(ans, sum);
+	}
+	return ans;
+}
+
+int main() {
+	string str, temp;
+	do {
+		cin >> temp;
+		str += temp;
+	} while (getchar() != '\n');
+
+	vector<int> arr = split(str, ",");
+	cout << maxSubArray(arr);
+	return 0;
+}
