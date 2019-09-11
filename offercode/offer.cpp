@@ -2663,3 +2663,106 @@ int main() {
 
 	return 0;
 }
+
+#include<iostream>
+#include<string>
+#include<stack>
+using namespace std;
+
+/**
+* Welcome to vivo !
+*/
+
+int solution(string str)
+{
+	int sum = 0;
+
+	// TODO Write your code here
+	int n = str.length();
+	stack<char> stack;
+	for (int i = 0; i < n; i++) {
+		if (str[i] == '(') {
+			stack.push(str[i]);
+			sum++;
+		}
+		if (str[i] == ')') {
+			stack.pop();
+			sum--;
+		}
+		if (str[i] == '0') {
+			break;
+		}
+	}
+	return sum;
+}
+
+int main()
+{
+	string str("");
+	getline(cin, str);
+
+	int sum = solution(str);
+	cout << sum << endl;
+	return 0;
+}
+
+
+
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+#include <bits/stdc++.h>
+
+using namespace std;
+
+/**
+* Welcome to vivo !
+*/
+
+#define MAX_NUM 100
+
+int helper(int boxes[], int i, int j, int k, vector<vector<vector<int>>>& dp) {
+	if (i > j)
+		return 0;
+	if (dp[i][j][k] > 0)
+		return dp[i][j][k];
+	int res = (k + 1) * (k + 1) + helper(boxes, i + 1, j, 0, dp);
+	for (int m = i + 1; m <= j; m++) {
+		if (boxes[i] == boxes[m])
+			res = max(res, helper(boxes, i + 1, m - 1, 0, dp) + helper(boxes, m, j, k + 1, dp));
+	}
+	return dp[i][j][k] = res;
+}
+
+int solution(int boxs[], int N)
+{
+	// TODO Write your code here
+	vector<vector<vector<int>>> vec(100, vector<vector<int>>(100, vector<int>(100)));
+	return helper(boxs, 0, N - 1, 0, vec);
+}
+
+int main()
+{
+	string str("");
+	getline(cin, str);
+	int boxs[MAX_NUM];
+	int i = 0;
+	char *p;
+	int count = 0;
+
+	const char* strs = str.c_str();
+	p = strtok((char *)strs, " ");
+	while (p)
+	{
+		boxs[i] = atoi(p);
+		count++;
+		p = strtok(NULL, " ");
+		i++;
+		if (i >= MAX_NUM)
+			break;
+	}
+
+	int num = solution(boxs, count);
+	cout << num << endl;
+	return 0;
+}
