@@ -721,12 +721,12 @@
 //	return 0;
 //}
 
-//网易互娱第三题，没ac
 #include<bits/stdc++.h>
+#include<string>
 
 using namespace std;
 
-string removeDuplicates(string S) {
+void removeDuplicates(string& S) {
 	int top = 0;
 	for (char ch : S) {
 		if (top == 0 || S[top - 1] != ch) {
@@ -737,11 +737,18 @@ string removeDuplicates(string S) {
 		}
 	}
 	S.resize(top);
-	return S;
+	//return S;
 }
 
 int main() {
-	string str,temp;
+	string str;
+	cin >> str;
+	
+	removeDuplicates(str);
+	if (str.length() == 0)
+		cout << "no" << endl;
+	else
+		cout << str << endl;
 
 	return 0;
 }
