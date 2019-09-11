@@ -2598,3 +2598,33 @@ int main() {
 	cout << maxSubArray(arr);
 	return 0;
 }
+
+#include<bits/stdc++.h>
+
+using namespace std;
+
+void removeDuplicates(string& S) {
+	int top = 0;
+	for (char ch : S) {
+		if (top == 0 || S[top - 1] != ch) {
+			S[top++] = ch;
+		}
+		else {
+			top--;
+		}
+	}
+	S.resize(top);
+}
+
+int main() {
+	string str;
+	while (cin >> str) {
+		removeDuplicates(str);
+		if (str.length() == 0)
+			cout << "no" << endl;
+		else
+			cout << str << endl;
+	}
+
+	return 0;
+}
