@@ -777,6 +777,38 @@ int main() {
 	return 0;
 }
 
+#include<iostream>
+#include<algorithm>
+using namespace std;
+
+int n, v, m;
+const int N = 10000;
+int f[N][N];
+
+int main() {
+
+	int n = 4, v = 15, m = 10;
+	int a, b, c;
+	int data[4][3] = {
+		{ 2,3,3000 },
+		{ 5,2,15000 },
+		{ 10,4,16000 },
+		{ 5,1,1000 }
+	};
+
+	for (int i = 0; i < n; i++) {
+		a = data[i][0];
+		b = data[i][1];
+		c = data[i][2];
+		for (int j = v; j >= a; j--)
+			for (int k = m; k >= b; k--)
+				f[j][k] = max(f[j][k], f[j - a][k - b] + c);
+	}
+
+	cout << f[v][m] << endl;
+	return 0;
+}
+
 
 
 
