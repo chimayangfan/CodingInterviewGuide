@@ -764,6 +764,45 @@ public class LeastMovePass {
 	}
 }
 
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+	int t;
+	scanf("%d", &t);
+	while (t--)
+	{
+		int n;
+		scanf("%d", &n);
+		int a[n], b[n];
+		for (int i = 0; i<n; i++)
+		{
+			scanf("%d", &a[i]);
+			b[i] = a[i];
+		}
+
+		sort(b, b + n);//b数组已经排好序，作为参照；
+		int pa, pb, ans = 0;
+		for (pa = n - 1, pb = n - 1; pa >= 0;)//从后面开始比对，已经有序的就不要管了
+		{
+			if (a[pa] == b[pb])
+			{
+				pa--;
+				pb--;
+			}
+			else if (a[pa] != b[pb])
+			{
+				ans++;
+				pa--;
+			}
+			if (pa<0)
+				break;
+		}
+		printf("%d\n", ans);
+	}
+	return 0;
+}
+
 
 
 
