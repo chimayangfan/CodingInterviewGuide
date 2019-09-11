@@ -741,14 +741,10 @@ string minWindow(string s, string t) {
 }
 
 int main() {
-	string str;
-	cin >> str;
+	string str1, str2;
+	cin >> str1 >> str2;
 	
-	removeDuplicates(str);
-	if (str.length() == 0)
-		cout << "no" << endl;
-	else
-		cout << str << endl;
+	cout << minWindow(str1, str2) << endl;
 
 	return 0;
 }
