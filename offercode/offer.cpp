@@ -2766,3 +2766,53 @@ int main()
 	cout << num << endl;
 	return 0;
 }
+
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int main() {
+	int direction;
+	cin >> direction;
+	vector<vector<int>> array(4, vector<int>(4, 0));
+	//读取数据
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			cin >> array[i][j];
+		}
+	}
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			//求array[i][j]
+			for (int k = j; k < 4; k++) {
+				if (array[i][k] != 0) {
+					if (k < 3) {
+						if (array[i][k] != array[i][k + 1]) {
+							int temp = array[i][k];
+							array[i][k] = 0;
+							array[i][j] = temp;
+						}
+						else {
+							int temp = array[i][k] * 2;
+							array[i][k] = 0;
+							array[i][k + 1] = 0;
+							array[i][j] = temp;
+						}
+					}
+					else {
+						int temp = array[i][k];
+						array[i][k] = 0;
+						array[i][j] = temp;
+					}
+					break;
+				}
+			}
+		}
+	}
+	for (int i = 0; i < 4; i++) {
+		cout << endl;
+		for (int j = 0; j < 4; j++) {
+			cout << array[i][j] << " ";
+		}
+	}
+}
