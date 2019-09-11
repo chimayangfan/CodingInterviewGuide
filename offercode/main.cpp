@@ -721,104 +721,98 @@
 //	return 0;
 //}
 
+//#include<bits/stdc++.h>
+//
+//using namespace std;
+//
+//int main() {
+//	int n;
+//	cin >> n;
+//	vector<int> arr(n, 0);
+//	for (int i = 0; i < n; ++i) {
+//		cin >> arr[i];
+//	}
+//	 
+//
+//}
+//
+//public class LeastMovePass {
+//
+//	@SuppressWarnings("resource")
+//	public static void main(String[] args) {
+//
+//		Scanner scanner = new Scanner(System.in);
+//		int n = scanner.nextInt();
+//		int[] arr = new int[n];
+//		int[] sortArr = new int[n];
+//		for (int i = 0; i < n; i++) {
+//
+//			arr[i] = scanner.nextInt();
+//			sortArr[i] = arr[i];
+//		}
+//		Arrays.sort(sortArr);
+//		int count = 0;
+//		int j = 0;
+//		for (int i = 0; i < n; i++) {
+//
+//			if (arr[i] == sortArr[j]) {
+//				++count;
+//				++j;
+//			}
+//		}
+//		System.out.println(n - count);
+//	}
+//}
+//
+//#include<bits/stdc++.h>
+//using namespace std;
+//int main()
+//{
+//	int t;
+//	scanf("%d", &t);
+//	while (t--)
+//	{
+//		int n;
+//		scanf("%d", &n);
+//		int a[n], b[n];
+//		for (int i = 0; i<n; i++)
+//		{
+//			scanf("%d", &a[i]);
+//			b[i] = a[i];
+//		}
+//
+//		sort(b, b + n);//b数组已经排好序，作为参照；
+//		int pa, pb, ans = 0;
+//		for (pa = n - 1, pb = n - 1; pa >= 0;)//从后面开始比对，已经有序的就不要管了
+//		{
+//			if (a[pa] == b[pb])
+//			{
+//				pa--;
+//				pb--;
+//			}
+//			else if (a[pa] != b[pb])
+//			{
+//				ans++;
+//				pa--;
+//			}
+//			if (pa<0)
+//				break;
+//		}
+//		printf("%d\n", ans);
+//	}
+//	return 0;
+//}
+
 #include<bits/stdc++.h>
 
 using namespace std;
 
-int main() {
-	int n;
-	cin >> n;
-	vector<int> arr(n, 0);
-	for (int i = 0; i < n; ++i) {
-		cin >> arr[i];
-	}
-	 
 
-}
-
-public class LeastMovePass {
-
-	@SuppressWarnings("resource")
-	public static void main(String[] args) {
-
-		Scanner scanner = new Scanner(System.in);
-		int n = scanner.nextInt();
-		int[] arr = new int[n];
-		int[] sortArr = new int[n];
-		for (int i = 0; i < n; i++) {
-
-			arr[i] = scanner.nextInt();
-			sortArr[i] = arr[i];
-		}
-		Arrays.sort(sortArr);
-		int count = 0;
-		int j = 0;
-		for (int i = 0; i < n; i++) {
-
-			if (arr[i] == sortArr[j]) {
-				++count;
-				++j;
-			}
-		}
-		System.out.println(n - count);
-	}
-}
-
-#include<bits/stdc++.h>
-using namespace std;
-int main()
-{
-	int t;
-	scanf("%d", &t);
-	while (t--)
-	{
-		int n;
-		scanf("%d", &n);
-		int a[n], b[n];
-		for (int i = 0; i<n; i++)
-		{
-			scanf("%d", &a[i]);
-			b[i] = a[i];
-		}
-
-		sort(b, b + n);//b数组已经排好序，作为参照；
-		int pa, pb, ans = 0;
-		for (pa = n - 1, pb = n - 1; pa >= 0;)//从后面开始比对，已经有序的就不要管了
-		{
-			if (a[pa] == b[pb])
-			{
-				pa--;
-				pb--;
-			}
-			else if (a[pa] != b[pb])
-			{
-				ans++;
-				pa--;
-			}
-			if (pa<0)
-				break;
-		}
-		printf("%d\n", ans);
-	}
-	return 0;
-}
-
-#include <iostream>
-#include <algorithm>
-
-using namespace std;
-
-
-template <typename T>
-int GetMinimumSwapsForSorted(T seq[], int n)
+int GetMinimumSwapsForSorted(vector<int> seq, vector<int> sorted_seq, int n)
 {
 	bool* right_place_flag = new bool[n];
-	T* sorted_seq = new T[n];
 	int p, q;
 	////
-	copy(seq, seq + n, sorted_seq);
-	sort(sorted_seq, sorted_seq + n);    ////可采用效率更高的排序算法
-										 // 初始化bitarray
 	for (int i = 0; i < n; i++)
 	{
 		if (seq[i] != sorted_seq[i])
@@ -851,20 +845,24 @@ int GetMinimumSwapsForSorted(T seq[], int n)
 		minimumswap++;
 	}
 
-	delete[] sorted_seq;
 	delete[] right_place_flag;
 
 	return minimumswap;
 }
 
 
-int _tmain(int argc, _TCHAR* argv[])
+int main()
 {
-	int seq[] = { 3, 2, 1, 5, 6, 8, 4, 7 };//{2,3,1,5,6,4};//{2,3,2,4,7,6,3,5};
-	int n = sizeof(seq) / sizeof(int);
-	cout << "minimum swaps : " << GetMinimumSwapsForSorted(seq, n) << endl;
+	int n;
+	cin >> n;
+	vector<int> arr(n, 0), b(n,0);
+	for (int i = 0; i < n; ++i) {
+		cin >> arr[i];
+		b[i] = arr[i];
+	}
+	sort(b.begin(), b.end());
+	cout << GetMinimumSwapsForSorted(arr, b , n) << endl;
 
-	system("pause");
 	return 0;
 }
 

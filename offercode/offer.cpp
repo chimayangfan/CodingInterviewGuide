@@ -2767,6 +2767,7 @@ int main()
 	return 0;
 }
 
+//小米第2题 50%
 #include<bits/stdc++.h>
 
 using namespace std;
@@ -2815,4 +2816,68 @@ int main() {
 			cout << array[i][j] << " ";
 		}
 	}
+}
+
+//小米第2题 
+#include<bits/stdc++.h>
+
+using namespace std;
+
+
+int GetMinimumSwapsForSorted(vector<int> seq, vector<int> sorted_seq, int n)
+{
+	bool* right_place_flag = new bool[n];
+	int p, q;
+	////
+	for (int i = 0; i < n; i++)
+	{
+		if (seq[i] != sorted_seq[i])
+			right_place_flag[i] = false;
+		else
+			right_place_flag[i] = true;
+	}
+	////
+	p = 0;
+	int minimumswap = 0;
+	while (1)
+	{
+		while (right_place_flag[p])
+			p++;
+		q = p + 1;
+		// 在已排好序的数组中找到和未排好序的元素，此种找法只对无重复序列能得出minimum swaps
+		while (q < n)
+		{
+			if (!right_place_flag[q] && sorted_seq[q] == seq[p])
+				break;
+			q++;
+		}
+		if (q >= n || p >= n)
+			break;
+		right_place_flag[q] = true;
+		// 对调后正好在排好序数组的位置上，则bitarray中的那位也置为true
+		if (seq[q] == sorted_seq[p])
+			right_place_flag[p] = true;
+		swap(seq[p], seq[q]);
+		minimumswap++;
+	}
+
+	delete[] right_place_flag;
+
+	return minimumswap;
+}
+
+
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> arr(n, 0), b(n, 0);
+	for (int i = 0; i < n; ++i) {
+		cin >> arr[i];
+		b[i] = arr[i];
+	}
+	sort(b.begin(), b.end());
+	cout << GetMinimumSwapsForSorted(arr, b, n) << endl;
+
+	return 0;
 }
