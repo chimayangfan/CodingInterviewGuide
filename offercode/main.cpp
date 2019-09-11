@@ -727,17 +727,24 @@
 using namespace std;
 
 string minWindow(string s, string t) {
-	vector<int> map(128, 0);
-	for (auto c : t) map[c]++;
-	int counter = t.size(), begin = 0, end = 0, d = INT_MAX, head = 0;
-	while (end<s.size()) {
-		if (map[s[end++]]-- > 0) counter--; //in t
-		while (counter == 0) { //valid
-			if (end - begin < d)  d = end - (head = begin);
-			if (map[s[begin++]]++ == 0) counter++;  //make it invalid
+	int count[256] = { 0 };
+	for (auto c : t) ++count[c];
+	int len = 0, minLength = s.length();
+	string res;
+	for (int l = 0, r = 0; r < s.length(); ++r) {
+		count[s[r]]--;
+		if (count[s[r]] >= 0) ++len;
+		while (len == t.length()) {
+			if (r - l + 1 <= minLength) {
+				minLength = r - l + 1;
+				res = s.substr(l, r - l + 1);
+			}
+			count[s[l]]++;
+			if (count[s[l]] > 0) --len;
+			++l;
 		}
 	}
-	return d == INT_MAX ? "" : s.substr(head, d);
+	return res;
 }
 
 int main() {
