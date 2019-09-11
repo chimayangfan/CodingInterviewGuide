@@ -726,6 +726,20 @@
 
 using namespace std;
 
+string removeDuplicates(string S) {
+	int top = 0;
+	for (char ch : S) {
+		if (top == 0 || S[top - 1] != ch) {
+			S[top++] = ch;
+		}
+		else {
+			top--;
+		}
+	}
+	S.resize(top);
+	return S;
+}
+
 int main() {
 	string str,temp;
 
