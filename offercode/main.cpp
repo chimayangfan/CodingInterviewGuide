@@ -725,32 +725,151 @@
 
 using namespace std;
 
-int n, v, m;
-const int N = 10000;
-int f[N][N];
-
 int main() {
 
-	int n = 4, v = 15, m = 10;
-	int a, b, c;
-	int data[4][3] = {
-		{ 2,3,3000 },
-		{ 5,2,15000 },
-		{ 10,4,16000 },
-		{ 5,1,1000 }
-	};
-
-	for (int i = 0; i < n; i++) {
-		a = data[i][0];
-		b = data[i][1];
-		c = data[i][2];
-		for (int j = v; j >= a; j--)
-			for (int k = m; k >= b; k--)
-				f[j][k] = max(f[j][k], f[j - a][k - b] + c);
-	}
-
-	cout << f[v][m] << endl;
+	cout <<  << endl;
 	return 0;
+}
+
+public static void main(String[] args) {
+	Scanner sc = new Scanner(System.in);
+	int direction = sc.nextInt();
+	int[][] array = new int[4][4];
+	//读取数据
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			array[i][j] = sc.nextInt();
+		}
+	}
+	switch (direction) {
+	case 1://向上移动
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				//为每一array[j][i]赋值
+				for (int k = j; k < 4; k++) {
+					if (array[k][i] != 0) {
+						if (k < 3) {
+							if (array[k][i] != array[k + 1][i]) {
+								int temp = array[k][i];
+								array[k][i] = 0;
+								array[j][i] = temp;
+							}
+							else {
+								int temp = array[k][i] * 2;
+								array[k][i] = 0;
+								array[k + 1][i] = 0;
+								array[j][i] = temp;
+							}
+						}
+						else {
+							int temp = array[k][i];
+							array[k][i] = 0;
+							array[j][i] = temp;
+						}
+						break;
+					}
+				}
+			}
+		}
+		break;
+	case 2://向下移动
+		for (int i = 0; i < 4; i++) {
+			for (int j = 3; j >= 0; j--) {
+				//为array[j][i]赋值
+				for (int k = j; k >= 0; k--) {
+					if (array[k][i] != 0) {
+						if (k < 1) {
+							int temp = array[k][i];
+							array[k][i] = 0;
+							array[j][i] = temp;
+						}
+						else {
+							if (array[k][i] != array[k - 1][i]) {
+								int temp = array[k][i];
+								array[k][i] = 0;
+								array[j][i] = temp;
+							}
+							else {
+								int temp = array[k][i] * 2;
+								array[k][i] = 0;
+								array[k - 1][i] = 0;
+								array[j][i] = temp;
+							}
+						}
+						break;
+					}
+				}
+			}
+		}
+		break;
+	case 3://向左移动
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				//求array[i][j]
+				for (int k = j; k < 4; k++) {
+					if (array[i][k] != 0) {
+						if (k < 3) {
+							if (array[i][k] != array[i][k + 1]) {
+								int temp = array[i][k];
+								array[i][k] = 0;
+								array[i][j] = temp;
+							}
+							else {
+								int temp = array[i][k] * 2;
+								array[i][k] = 0;
+								array[i][k + 1] = 0;
+								array[i][j] = temp;
+							}
+						}
+						else {
+							int temp = array[i][k];
+							array[i][k] = 0;
+							array[i][j] = temp;
+						}
+						break;
+					}
+				}
+			}
+		}
+		break;
+	case 4://向右移动
+		for (int i = 0; i < 4; i++) {
+			for (int j = 3; j >= 0; j--) {
+				//求array[i][j]
+				for (int k = j; k >= 0; k--) {
+					if (array[i][k] != 0) {
+						if (k < 1) {
+							int temp = array[i][k];
+							array[i][k] = 0;
+							array[i][j] = temp;
+						}
+						else {
+							if (array[i][k] != array[i][k - 1]) {
+								int temp = array[i][k];
+								array[i][k] = 0;
+								array[i][j] = temp;
+							}
+							else {
+								int temp = array[i][k] * 2;
+								array[i][k] = 0;
+								array[i][k - 1] = 0;
+								array[i][j] = temp;
+							}
+							break;
+						}
+					}
+				}
+			}
+
+		}
+		break;
+	}
+	for (int i = 0; i < 4; i++) {
+		System.out.println();
+		for (int j = 0; j < 4; j++) {
+			System.out.print(array[i][j] + " ");
+		}
+	}
 }
 
 
