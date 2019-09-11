@@ -747,6 +747,23 @@ public static  int test(String s) {
 	return res;
 }
 
+public static int removeBoxes(int[] boxes) {
+	return helper(boxes, 0, boxes.length - 1, 0, new int[100][100][100]);
+}
+
+private static int helper(int[] boxes, int i, int j, int k, int[][][] dp) {
+	if (i > j)
+		return 0;
+	if (dp[i][j][k] > 0)
+		return dp[i][j][k];
+	int res = (k + 1) * (k + 1) + helper(boxes, i + 1, j, 0, dp);
+	for (int m = i + 1; m <= j; m++) {
+		if (boxes[i] == boxes[m])
+			res = Math.max(res, helper(boxes, i + 1, m - 1, 0, dp) + helper(boxes, m, j, k + 1, dp));
+	}
+	return dp[i][j][k] = res;
+}
+
 
 int main() {
 	string str1, str2;
