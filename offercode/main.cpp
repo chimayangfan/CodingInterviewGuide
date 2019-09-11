@@ -725,18 +725,44 @@
 
 using namespace std;
 
-void removeDuplicates(string& S) {
-	int top = 0;
-	for (char ch : S) {
-		if (top == 0 || S[top - 1] != ch) {
-			S[top++] = ch;
-		}
-		else {
-			top--;
+string minWindow(string s, string t) {
+	int count[256] = { 0 };
+	for (auto c : t) ++count[c];
+	int len = 0, minLength = s.length();
+	string res;
+	for (int l = 0, r = 0; r < s.length(); ++r) {
+		count[s[r]]--;
+		if (count[s[r]] >= 0) ++len;
+		while (len == t.length()) {
+			if (r - l + 1 <= minLength) {
+				minLength = r - l + 1;
+				res = s.substr(l, r - l + 1);
+			}
+			count[s[l]]++;
+			if (count[s[l]] > 0) --len;
+			++l;
 		}
 	}
 	S.resize(top);
 }
+
+public static int removeBoxes(int[] boxes) {
+	return helper(boxes, 0, boxes.length - 1, 0, new int[100][100][100]);
+}
+
+private static int helper(int[] boxes, int i, int j, int k, int[][][] dp) {
+	if (i > j)
+		return 0;
+	if (dp[i][j][k] > 0)
+		return dp[i][j][k];
+	int res = (k + 1) * (k + 1) + helper(boxes, i + 1, j, 0, dp);
+	for (int m = i + 1; m <= j; m++) {
+		if (boxes[i] == boxes[m])
+			res = Math.max(res, helper(boxes, i + 1, m - 1, 0, dp) + helper(boxes, m, j, k + 1, dp));
+	}
+	return dp[i][j][k] = res;
+}
+
 
 int main() {
 	string str;
