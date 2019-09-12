@@ -807,51 +807,6 @@
 
 using namespace std;
 
-void fun(vector<int> vec, vector<int> &arr, int index) {
-	while (index > 0 && vec[index] < vec[index - 1]) {
-		arr[index - 1] += 1;
-		index--;
-	}
-	return;
-}
-
-int main()
-{
-	int n=6;
-	//cin >> n;
-	//vector<int> biscuit(n);
-	//for (int i = 0; i < n; ++i) {
-	//	cin >> biscuit[i];
-	//}
-	vector<int> children{ 3,6,3,5,6,2 };
-	vector<int> biscuit{ 1 };
-
-	for (int i = 1; i < n; ++i) {
-		if (children[i] > children[i - 1]) {
-			biscuit.push_back(biscuit[i - 1] + 1);
-		}
-		else if (children[i] == children[i - 1]) {
-			biscuit.push_back(biscuit[i - 1]);
-		}
-		else {
-			biscuit.push_back(1);
-		}
-		fun(children, biscuit, i);
-	}
-	for (int i = 1; i < n - 1; ++i) {
-		if (biscuit[i] > biscuit[i - 1] && biscuit[i] > biscuit[i + 1]) {
-			biscuit[i] = biscuit[i - 1] > biscuit[i + 1] ? (biscuit[i - 1] + 1) : (biscuit[i + 1] + 1);
-		}
-	}
-	int sum = 0;
-	for (auto e : biscuit) {
-		sum += e;
-	}
-	cout << sum << endl;
-
-	return 0;
-}
-
 int minPathSum(vector<vector<int> > &grid) {
 	int m = grid.size();
 	if (m == 0)
@@ -873,6 +828,23 @@ int minPathSum(vector<vector<int> > &grid) {
 	return dp[m - 1][n - 1];
 
 }
+
+int main()
+{
+	int m,n;
+	cin >> m >> n;
+	vector<vector<int> > grid(m,vector<int>(n,0));
+	for (int i = 0; i < m; ++i) {
+		for (int j = 0; j < n; ++j) {
+			cin >> grid[i][j];
+		}
+	}
+	cout << minPathSum(grid) << endl;
+
+	return 0;
+}
+
+
 
 
 
