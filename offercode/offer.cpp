@@ -2881,3 +2881,38 @@ int main()
 
 	return 0;
 }
+
+//58同城第1题
+#include<bits/stdc++.h>
+
+using namespace std;
+
+set<string> split(string str, string pattern) {
+	string::size_type pos;
+	set<string> result;
+	str += pattern;//扩展字符串以方便操作
+	int size = str.size();
+
+	for (int i = 0; i<size; i++)
+	{
+		pos = str.find(pattern, i);//从位置i开始，返回第一个pattern子串索引
+		if (pos<size)
+		{
+			string s = str.substr(i, pos - i);
+			result.insert(s);
+			i = pos + pattern.size() - 1;
+		}
+	}
+	return result;
+}
+
+int main()
+{
+	string str;
+	cin >> str;
+
+	set<string> strset = split(str, ",");
+	cout << strset.size() << endl;
+
+	return 0;
+}
