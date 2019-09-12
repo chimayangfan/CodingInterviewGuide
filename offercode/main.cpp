@@ -809,7 +809,7 @@ using namespace std;
 
 void fun(vector<int> vec, vector<int> &arr, int index) {
 	while (index > 0 && vec[index] < vec[index - 1]) {
-		arr[index - 1] += 100;
+		arr[index - 1] += 1;
 		index--;
 	}
 	return;
@@ -817,37 +817,37 @@ void fun(vector<int> vec, vector<int> &arr, int index) {
 
 int main()
 {
-	int n;
+	int n=6;
 	//cin >> n;
 	//vector<int> biscuit(n);
 	//for (int i = 0; i < n; ++i) {
 	//	cin >> biscuit[i];
 	//}
-	vector<int> biscuit{ 3,6,3,5,6,2 };
-	vector<int> wage{ 1 };
+	vector<int> children{ 3,6,3,5,6,2 };
+	vector<int> biscuit{ 1 };
 
 	for (int i = 1; i < n; ++i) {
-		if (biscuit[i] > biscuit[i - 1]) {
-			wage.push_back(wage[i - 1] + 100);
+		if (children[i] > children[i - 1]) {
+			biscuit.push_back(biscuit[i - 1] + 1);
 		}
-		else if (biscuit[i] == biscuit[i - 1]) {
-			wage.push_back(wage[i - 1]);
+		else if (children[i] == children[i - 1]) {
+			biscuit.push_back(biscuit[i - 1]);
 		}
 		else {
-			wage.push_back(100);
+			biscuit.push_back(1);
 		}
-		fun(biscuit, wage, i);
+		fun(children, biscuit, i);
 	}
 	for (int i = 1; i < n - 1; ++i) {
-		if (wage[i] > wage[i - 1] && wage[i] > wage[i + 1]) {
-			wage[i] = wage[i - 1] > wage[i + 1] ? (wage[i - 1] + 100) : (wage[i + 1] + 100);
+		if (biscuit[i] > biscuit[i - 1] && biscuit[i] > biscuit[i + 1]) {
+			biscuit[i] = biscuit[i - 1] > biscuit[i + 1] ? (biscuit[i - 1] + 1) : (biscuit[i + 1] + 1);
 		}
 	}
-	for (auto e : wage) {
-		cout << e << " ";
+	int sum = 0;
+	for (auto e : biscuit) {
+		sum += e;
 	}
-	return 0;
-
+	cout << sum << endl;
 
 	return 0;
 }
