@@ -3010,6 +3010,54 @@ int main()
 	return 0;
 }
 
+//快手第1题
+#include <bits/stdc++.h>
+
+using namespace std;
+
+string legalIPAddress(string IP) {
+	istringstream is(IP);
+	string substr = "";
+	int count = 0;
+	//IPv4
+	if (IP.find(':') == string::npos) {
+		while (getline(is, substr, '.')) {
+			++count;
+			if (count > 4 || substr.empty() || (substr.size() > 1 && substr[0] == '0') || substr.size() > 3)
+				return "Neither";
+			for (char c : substr) {
+				if (c < '0' || c > '9')
+					return "Neither";
+			}
+			int val = stoi(substr);
+			if (val < 0 || val > 255)
+				return "Neither";
+		}
+		return (count == 4 && IP.back() != '.') ? "IPv4" : "Neither";
+	}
+	//IPv6
+	else {
+		while (getline(is, substr, ':')) {
+			++count;
+			if (count > 8 || substr.empty() || substr.size() > 4)
+				return "Neither";
+			for (char c : substr) {
+				if (!(c >= '0' && c <= '9') && !(c >= 'a' && c <= 'f') && !(c >= 'A' && c <= 'F'))
+					return "Neither";
+			}
+		}
+		return (count == 8 && IP.back() != ':') ? "IPv6" : "Neither";
+	}
+}
+
+int main() {
+	string IP;
+	cin >> IP;
+	cout << legalIPAddress(IP);
+
+	return 0;
+}
+
 //快手第2题
 #include <bits/stdc++.h>
 

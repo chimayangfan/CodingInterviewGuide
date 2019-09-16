@@ -807,44 +807,47 @@
 
 using namespace std;
 
-string validIPAddress(string IP) {
+string legalIPAddress(string IP) {
 	istringstream is(IP);
-	string t = "";
-	int cnt = 0;
-	if (IP.find(':') == string::npos) { // Check IPv4
-		while (getline(is, t, '.')) {
-			++cnt;
-			if (cnt > 4 || t.empty() || (t.size() > 1 && t[0] == '0') || t.size() > 3) return "Neither";
-			for (char c : t) {
-				if (c < '0' || c > '9') return "Neither";
+	string substr = "";
+	int count = 0;
+	//IPv4
+	if (IP.find(':') == string::npos) { 
+		while (getline(is, substr, '.')) {
+			++count;
+			if (count > 4 || substr.empty() || (substr.size() > 1 && substr[0] == '0') || substr.size() > 3) 
+				return "Neither";
+			for (char c : substr) {
+				if (c < '0' || c > '9') 
+					return "Neither";
 			}
-			int val = stoi(t);
-			if (val < 0 || val > 255) return "Neither";
+			int val = stoi(substr);
+			if (val < 0 || val > 255) 
+				return "Neither";
 		}
-		return (cnt == 4 && IP.back() != '.') ? "IPv4" : "Neither";
+		return (count == 4 && IP.back() != '.') ? "IPv4" : "Neither";
 	}
-	else { // Check IPv6
-		while (getline(is, t, ':')) {
-			++cnt;
-			if (cnt > 8 || t.empty() || t.size() > 4) return "Neither";
-			for (char c : t) {
-				if (!(c >= '0' && c <= '9') && !(c >= 'a' && c <= 'f') && !(c >= 'A' && c <= 'F')) return "Neither";
+	//IPv6
+	else { 
+		while (getline(is, substr, ':')) {
+			++count;
+			if (count > 8 || substr.empty() || substr.size() > 4) 
+				return "Neither";
+			for (char c : substr) {
+				if (!(c >= '0' && c <= '9') && !(c >= 'a' && c <= 'f') && !(c >= 'A' && c <= 'F')) 
+					return "Neither";
 			}
 		}
-		return (cnt == 8 && IP.back() != ':') ? "IPv6" : "Neither";
+		return (count == 8 && IP.back() != ':') ? "IPv6" : "Neither";
 	}
 }
 
 int main() {
-	int i = 0;
-	try { i++; return i; }
-	catch (Exception e) { i++; }
-	finally{
-		i++;
-	}
+	string IP;
+	cin >> IP;
+	cout << legalIPAddress(IP);
 
 	return 0;
-
 }
 
 
