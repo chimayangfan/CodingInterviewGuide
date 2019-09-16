@@ -807,17 +807,45 @@
 
 using namespace std;
 
-int longestArithSeqLength(vector<int>& A) {
-	if (A.size() <= 2) return A.size();
-	int res = 0;
-	vector<vector<int>> dp(A.size(), vector<int>(20001, 1));
-	for (int i = 1; i < A.size(); i++)
-		for (int j = 0; j < i; j++) {
-			int sub = A[i] - A[j] + 10000;
-			dp[i][sub] = max(dp[i][sub], dp[j][sub] + 1);
-			res = max(res, dp[i][sub]);
+int help(vector<int> nums)
+{
+	int n = nums.size();
+	if (n == 0)
+		return 0;
+	if (n == 1)
+		return nums[0];
+	int sum = 0;
+	for (int i = 0; i < n; i++)
+	{
+		sum += nums[i];
+	}
+	vector<vector<int>> s(n + 1, vector<int>(sum / 2 + 1, 0));
+	for (int i = 1; i <= n; i++)
+		for (int j = 1; j <= sum / 2; j++)
+		{
+			s[i][j] = s[i - 1][j];
+			if (nums[i - 1] <= j && s[i - 1][j - nums[i - 1]] + nums[i - 1] > s[i - 1][j]) {
+				s[i][j] = s[i - 1][j - nums[i - 1]] + nums[i - 1];
+			}
 		}
-	return res;
+	return sum - 2 * s[n][sum / 2];
+}
+int main()
+{
+	int n;
+	cin >> n;
+	int temp;
+	int ret;
+	vector<int> nums;
+	while (n--)
+	{
+		cin >> temp;
+		nums.push_back(temp);
+	}
+	ret = help(nums);
+	cout << ret;
+	system("pause");
+	return 0;
 }
 
 int main() {
