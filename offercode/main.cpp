@@ -807,45 +807,32 @@
 
 using namespace std;
 
-int help(vector<int> nums)
-{
-	int n = nums.size();
-	if (n == 0)
-		return 0;
-	if (n == 1)
-		return nums[0];
-	int sum = 0;
-	for (int i = 0; i < n; i++)
-	{
-		sum += nums[i];
+string validIPAddress(string IP) {
+	istringstream is(IP);
+	string t = "";
+	int cnt = 0;
+	if (IP.find(':') == string::npos) { // Check IPv4
+		while (getline(is, t, '.')) {
+			++cnt;
+			if (cnt > 4 || t.empty() || (t.size() > 1 && t[0] == '0') || t.size() > 3) return "Neither";
+			for (char c : t) {
+				if (c < '0' || c > '9') return "Neither";
+			}
+			int val = stoi(t);
+			if (val < 0 || val > 255) return "Neither";
+		}
+		return (cnt == 4 && IP.back() != '.') ? "IPv4" : "Neither";
 	}
-	vector<vector<int>> s(n + 1, vector<int>(sum / 2 + 1, 0));
-	for (int i = 1; i <= n; i++)
-		for (int j = 1; j <= sum / 2; j++)
-		{
-			s[i][j] = s[i - 1][j];
-			if (nums[i - 1] <= j && s[i - 1][j - nums[i - 1]] + nums[i - 1] > s[i - 1][j]) {
-				s[i][j] = s[i - 1][j - nums[i - 1]] + nums[i - 1];
+	else { // Check IPv6
+		while (getline(is, t, ':')) {
+			++cnt;
+			if (cnt > 8 || t.empty() || t.size() > 4) return "Neither";
+			for (char c : t) {
+				if (!(c >= '0' && c <= '9') && !(c >= 'a' && c <= 'f') && !(c >= 'A' && c <= 'F')) return "Neither";
 			}
 		}
-	return sum - 2 * s[n][sum / 2];
-}
-int main()
-{
-	int n;
-	cin >> n;
-	int temp;
-	int ret;
-	vector<int> nums;
-	while (n--)
-	{
-		cin >> temp;
-		nums.push_back(temp);
+		return (cnt == 8 && IP.back() != ':') ? "IPv6" : "Neither";
 	}
-	ret = help(nums);
-	cout << ret;
-	system("pause");
-	return 0;
 }
 
 int main() {
