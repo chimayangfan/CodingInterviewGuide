@@ -803,42 +803,30 @@
 //	return 0;
 //}
 
-#include <iostream>
-#include <vector>
-#include <numeric>
-#include <limits>
 #include <bits/stdc++.h>
 
 using namespace std;
 
-
-/*请完成下面这个函数，实现题目要求的功能
-当然，你也可以不按照下面这个模板来作答，完全按照自己的想法来 ^-^
-******************************开始写代码******************************/
-int smallestRange() {
-
-
+int longestArithSeqLength(vector<int>& A) {
+	if (A.size() <= 2) return A.size();
+	int res = 0;
+	vector<vector<int>> dp(A.size(), vector<int>(20001, 1));
+	for (int i = 1; i < A.size(); i++)
+		for (int j = 0; j < i; j++) {
+			int sub = A[i] - A[j] + 10000;
+			dp[i][sub] = max(dp[i][sub], dp[j][sub] + 1);
+			res = max(res, dp[i][sub]);
+		}
+	return res;
 }
-/******************************结束写代码******************************/
-
 
 int main() {
-	int num, s;
-	int MAX = INT_MAX;
-	scanf("%d", &s);
-	vector<int> Input;
-	int Result = MAX;
-	do {
-		cin >> num;
-		Input.push_back(num);
-	} while (getchar() != '\n');
-	sort(Input.begin(), Input.end());
-	for (int i = 0; i < Input.size() - 1; i++) {
-		int Left = min(Input[0] + s, Input[i + 1] - s);
-		int Right = max(Input[i] + s, Input[Input.size() - 1] - s);
-		Result = min(Result, Right - Left);
+	int i = 0;
+	try { i++; return i; }
+	catch (Exception e) { i++; }
+	finally{
+		i++;
 	}
-	printf("%d\n", Result);
 
 	return 0;
 
