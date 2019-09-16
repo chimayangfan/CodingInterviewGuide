@@ -98,16 +98,98 @@ string find_longest_num_str(string input)
 }
 
 
-class Solution {
-	public int smallestRangeII(int[] A, int K) {
-		Arrays.sort(A);
-		int n = A.length;
-		int res = A[n - 1] - A[0];
-		for (int i = 1; i<n; i++) {
-			int min = Math.min(A[0] + K, A[i] - K);
-			int max = Math.max(A[n - 1] - K, A[i - 1] + K);
-			res = Math.min(max - min, res);
-		}
-		return res;
+void allStr(string &str, int i, set<string>&output, string curStr)
+{
+	if (i >= str.size())
+	{
+		output.insert(curStr);
+		return;
 	}
+	char p = str[i];
+	++i;
+	switch (p)
+	{
+	case'2':
+	{
+		allStr(str, i, output, curStr + "a");
+		allStr(str, i, output, curStr + "b");
+		allStr(str, i, output, curStr + "c");
+		break;
+	}
+	case'3':
+	{
+		allStr(str, i, output, curStr + "d");
+		allStr(str, i, output, curStr + "e");
+		allStr(str, i, output, curStr + "f");
+		break;
+	}
+	case'4':
+	{
+		allStr(str, i, output, curStr + "g");
+		allStr(str, i, output, curStr + "h");
+		allStr(str, i, output, curStr + "i");
+		break;
+	}
+	case'5':
+	{
+		allStr(str, i, output, curStr + "j");
+		allStr(str, i, output, curStr + "k");
+		allStr(str, i, output, curStr + "l");
+		break;
+	}
+	case'6':
+	{
+		allStr(str, i, output, curStr + "m");
+		allStr(str, i, output, curStr + "n");
+		allStr(str, i, output, curStr + "o");
+		break;
+	}
+	case'7':
+	{
+		allStr(str, i, output, curStr + "p");
+		allStr(str, i, output, curStr + "q");
+		allStr(str, i, output, curStr + "r");
+		allStr(str, i, output, curStr + "s");
+		break;
+	}
+	case'8':
+	{
+		allStr(str, i, output, curStr + "t");
+		allStr(str, i, output, curStr + "u");
+		allStr(str, i, output, curStr + "v");
+		break;
+	}
+	case'9':
+	{
+		allStr(str, i, output, curStr + "w");
+		allStr(str, i, output, curStr + "x");
+		allStr(str, i, output, curStr + "y");
+		allStr(str, i, output, curStr + "z");
+		break;
+	}
+	default:
+		break;
+	}
+}
+int main()
+{
+	string str;
+	cin >> str;
+	set<string>output;
+	int index = 0;
+	allStr(str, 0, output, "");
+	cout << "[";
+	for (auto it = output.begin(); it != output.end(); ++it)
+	{
+
+		cout << *it;
+		auto it2 = it;
+		it2++;
+		if (it2 != output.end())
+		{
+			cout << ", ";
+		}
+	}
+	cout << "]" << endl;
+	return 0;
 }
