@@ -803,22 +803,35 @@
 //	return 0;
 //}
 
-#include<bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <numeric>
+#include <limits>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-int main()
-{
-	int n, s;
-	int MAX = 1e10;
-	scanf("%d%d", &n, &s);
+
+/*请完成下面这个函数，实现题目要求的功能
+当然，你也可以不按照下面这个模板来作答，完全按照自己的想法来 ^-^
+******************************开始写代码******************************/
+int smallestRange() {
+
+
+}
+/******************************结束写代码******************************/
+
+
+int main() {
+	int num, s;
+	int MAX = INT_MAX;
+	scanf("%d", &s);
 	vector<int> Input;
 	int Result = MAX;
-	for (int i = 0; i < n; i++) {
-		int tmp;
-		scanf("%d", &tmp);
-		Input.push_back(tmp);
-	}
+	do {
+		cin >> num;
+		Input.push_back(num);
+	} while (getchar() != '\n');
 	sort(Input.begin(), Input.end());
 	for (int i = 0; i < Input.size() - 1; i++) {
 		int Left = min(Input[0] + s, Input[i + 1] - s);
@@ -826,7 +839,9 @@ int main()
 		Result = min(Result, Right - Left);
 	}
 	printf("%d\n", Result);
+
 	return 0;
+
 }
 
 
