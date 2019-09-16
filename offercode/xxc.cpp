@@ -68,39 +68,31 @@ void findMinStr(string&str, int *cCount, vector<char>&mChar, int index, int curB
 		findMinStr(str, cCount, mChar, index + 1, curB, curE, minB, minE);
 	}
 }
-int main()
+string find_longest_num_str(string input)
 {
-	string str;
-	string m;
-	cin >> str;
-	cin >> m;
-	if (m.size() == 0)
+	if (input.size() == 0)
+		return "0/";
+	input = input + " ";
+	int maxLength = 0;
+	int maxIndex = 0;
+	int count = 0;
+	for (int i = 0; i < input.size(); ++i)
 	{
-		cout << str << endl;
-		return 0;
+		if (input[i] >= '0'&&input[i] <= '9')
+		{
+			count++;
+		}
+		else
+		{
+			if (maxLength < count)
+			{
+				maxLength = count;
+				maxIndex = i - 1;
+			}
+			count = 0;
+		}
 	}
-	int cCount[128];//统计某个字符数目
-	vector<char>mChar;//存有那些字符
-	for (int i = 0; i < 128; ++i)
-	{
-		cCount[i] = 0;
-	}
-	//统计匹配字符数目
-	for (int i = 0; i < m.size(); ++i)
-	{
-		if (cCount[m[i]] == 0)
-			mChar.push_back(m[i]);
-		cCount[m[i]]++;
-	}
-	int left = -1;
-	int right = -1;
-	findMinStr(str, cCount, mChar, 0, str.size(), 0, left, right);
-	if (left == -1)
-		cout << "" << endl;
-	else
-	{
-		string a = str.substr(left, right);
-		cout << a << endl;
-	}
-	return 0;
+	string output = input.substr(maxIndex - maxLength + 1, maxLength);
+	return  output;
+
 }
