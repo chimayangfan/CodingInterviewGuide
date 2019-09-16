@@ -3009,3 +3009,178 @@ int main()
 
 	return 0;
 }
+
+//快手第2题
+#include <bits/stdc++.h>
+
+using namespace std;
+
+void allStr(string &str, int i, set<string>&output, string curStr)
+{
+	if (i >= str.size())
+	{
+		output.insert(curStr);
+		return;
+	}
+	char p = str[i];
+	++i;
+	switch (p)
+	{
+	case'2':
+	{
+		allStr(str, i, output, curStr + "a");
+		allStr(str, i, output, curStr + "b");
+		allStr(str, i, output, curStr + "c");
+		break;
+	}
+	case'3':
+	{
+		allStr(str, i, output, curStr + "d");
+		allStr(str, i, output, curStr + "e");
+		allStr(str, i, output, curStr + "f");
+		break;
+	}
+	case'4':
+	{
+		allStr(str, i, output, curStr + "g");
+		allStr(str, i, output, curStr + "h");
+		allStr(str, i, output, curStr + "i");
+		break;
+	}
+	case'5':
+	{
+		allStr(str, i, output, curStr + "j");
+		allStr(str, i, output, curStr + "k");
+		allStr(str, i, output, curStr + "l");
+		break;
+	}
+	case'6':
+	{
+		allStr(str, i, output, curStr + "m");
+		allStr(str, i, output, curStr + "n");
+		allStr(str, i, output, curStr + "o");
+		break;
+	}
+	case'7':
+	{
+		allStr(str, i, output, curStr + "p");
+		allStr(str, i, output, curStr + "q");
+		allStr(str, i, output, curStr + "r");
+		allStr(str, i, output, curStr + "s");
+		break;
+	}
+	case'8':
+	{
+		allStr(str, i, output, curStr + "t");
+		allStr(str, i, output, curStr + "u");
+		allStr(str, i, output, curStr + "v");
+		break;
+	}
+	case'9':
+	{
+		allStr(str, i, output, curStr + "w");
+		allStr(str, i, output, curStr + "x");
+		allStr(str, i, output, curStr + "y");
+		allStr(str, i, output, curStr + "z");
+		break;
+	}
+	default:
+		break;
+	}
+}
+int main()
+{
+	string str;
+	cin >> str;
+	set<string>output;
+	int index = 0;
+	allStr(str, 0, output, "");
+	cout << "[";
+	for (auto it = output.begin(); it != output.end(); ++it)
+	{
+
+		cout << *it;
+		auto it2 = it;
+		it2++;
+		if (it2 != output.end())
+		{
+			cout << ", ";
+		}
+	}
+	cout << "]" << endl;
+	return 0;
+}
+
+//快手第3题
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int cutArr(vector<int> nums)
+{
+	int n = nums.size();
+	if (n == 0)
+		return 0;
+	if (n == 1)
+		return nums[0];
+	int sum = 0;
+	for (int i = 0; i < n; i++)
+	{
+		sum += nums[i];
+	}
+	vector<vector<int>> dp(n + 1, vector<int>(sum / 2 + 1, 0));
+	for (int i = 1; i <= n; i++)
+		for (int j = 1; j <= sum / 2; j++)
+		{
+			dp[i][j] = dp[i - 1][j];
+			if (nums[i - 1] <= j && dp[i - 1][j - nums[i - 1]] + nums[i - 1] > dp[i - 1][j]) {
+				dp[i][j] = dp[i - 1][j - nums[i - 1]] + nums[i - 1];
+			}
+		}
+	return sum - 2 * dp[n][sum / 2];
+}
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> nums(n, 0);
+	for (int i = 0; i < n; ++i) {
+		cin >> nums[i];
+	}
+	int res = cutArr(nums);
+	cout << res;
+
+	return 0;
+}
+
+//快手第4题
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int longestArithSeqLength(vector<int>& arr) {
+	if (arr.size() <= 2) return arr.size();
+	int res = 0;
+	vector<vector<int>> dp(arr.size(), vector<int>(20001, 1));
+	for (int i = 1; i < arr.size(); i++)
+		for (int j = 0; j < i; j++) {
+			int sub = arr[i] - arr[j] + 10000;
+			dp[i][sub] = max(dp[i][sub], dp[j][sub] + 1);
+			res = max(res, dp[i][sub]);
+		}
+	return res;
+}
+
+int main() {
+	int n;
+	cin >> n;
+	vector<int>arr(n, 0);
+	for (int i = 0; i < n; ++i) {
+		cin >> arr[i];
+	}
+	sort(arr.begin(), arr.end());
+	cout << longestArithSeqLength(arr);
+
+	return 0;
+
+}
