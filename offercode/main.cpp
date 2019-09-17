@@ -803,38 +803,26 @@
 //	return 0;
 //}
 
-#include <bits/stdc++.h>
-
+#include <iostream>
+#include <vector>
 using namespace std;
-
-string minWindow(string s, string t) {
-	int i = 0, j = 0;
-	while (i < s.length() && j < t.length()) {
-		if (s[i] == t[j]) {
-			i++;
-			j++;
+int main(void)
+{
+	int n, sum;
+	cin >> n >> sum;
+	vector<long> tmp(sum + 1, 0), input(n + 1, 0);
+	tmp[0] = 1, input[0] = 0;
+	vector<vector<long> >dp(n + 1, tmp);
+	for (int i = 1; i <= n; i++) cin >> input[i];
+	for (int i = 1; i <= n; i++)
+	{
+		for (int j = 1; j <= sum; j++)
+		{
+			if (j - input[i] >= 0) dp[i][j] = dp[i - 1][j] + dp[i - 1][j - input[i]]; //这个就如解析力写的一样
+			else dp[i][j] = dp[i - 1][j]; //否则直接继承该列上一行值
 		}
-		else {
-			i++;
-		}
 	}
-	return t.length() == j ? "SUB" : "NO";
-}
-
-int main() {
-	int n;
-	cin >> n;
-	vector<string> strarr1(n);
-	vector<string> strarr2(n);
-
-	for (int i = 0; i < n; ++i) {
-		cin >> strarr1[i] >> strarr2[i];
-	}
-
-	for (int i = 0; i < n; ++i) {
-		cout << minWindow(strarr1[i], strarr2[i]) << endl;
-	}
-
+	cout << dp[n][sum] << endl;  //输出最后一个
 	return 0;
 }
 
