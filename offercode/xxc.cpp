@@ -193,7 +193,7 @@ int mainA3()
 	cout << "]" << endl;
 	return 0;
 }
-int main()
+int mainA2()
 {
 	int N;
 	int M;
@@ -250,6 +250,71 @@ int main()
 			{
 				i = k1;
 				sumVal += countLeft;
+			}
+			T--;
+		}
+		cout << sumVal << endl;
+	}
+	return 0;
+}
+int main()
+{
+	int N;
+	int M;
+	cin >> N >> M;
+	set<int>val;
+	vector<int>allEle(N);
+	for (int i = 0; i < N; ++i)
+	{
+		int temp;
+		cin >> temp;
+		allEle[i] = temp;
+		val.insert(temp);
+	}
+	int k = 8 * M / N;//每个数的最多bit位
+	int numKind = pow(2, k);//最多数字种类
+	if (numKind == 1)
+	{
+		cout << N - 1 << endl;
+	}
+	else if (val.size() <= numKind)
+	{
+		cout << 0 << endl;
+	}
+	else
+	{
+		sort(allEle.begin(), allEle.end());
+		int sumVal = 0;
+		int T = val.size() - numKind;
+		//计数数组
+		vector<int>numCount;
+		numCount.push_back(1);
+		int baseVal = allEle[0];
+		for (int i = 1; i < allEle.size(); ++i)
+		{
+			if (allEle[i] == baseVal)
+			{
+				numCount[numCount.size() - 1]++;
+			}
+			else
+			{
+				numCount.push_back(1);
+				baseVal = allEle[i];
+			}
+		}
+		int i = 0, j = numCount.size() - 1;
+		while (T > 0)
+		{
+
+			if (numCount[i] < numCount[j])
+			{
+				sumVal += numCount[i];
+				++i;
+			}
+			else
+			{
+				sumVal += numCount[j];
+				--j;
 			}
 			T--;
 		}
