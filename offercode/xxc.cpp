@@ -199,24 +199,17 @@ int main()
 	int M;
 	cin >> N >> M;
 	set<int>val;
-	map<int, int>num;
+	vector<int>allEle(N);
 	for (int i = 0; i < N; ++i)
 	{
 		int temp;
 		cin >> temp;
-		if (val.count(temp) == 0)
-		{
-			val.insert(temp);
-			num[temp] = 1;
-		}
-		else
-		{
-			num[temp] = num[temp] + 1;
-		}
+		allEle[i] = temp;
+		val.insert(temp);
 	}
 	int k = 8 * M / N;//每个数的bit位
 	int numKind = pow(2, k);
-	if (numKind == 0)
+	if (numKind == 1)
 	{
 		cout << N - 1 << endl;
 	}
@@ -226,20 +219,41 @@ int main()
 	}
 	else
 	{
-		vector<int>mChange;
-		auto it = num.begin();
-		while (it != num.end())
+		sort(allEle.begin(), allEle.end());
+		int sumVal = 0;
+		int T = val.size() - numKind;
+		int i = 0, j = allEle.size() - 1;
+		while (T > 0)
 		{
-			mChange.push_back(it->second);
-			it++;
+			int baseLeft = allEle[i];
+			int k1 = i + 1;
+			int countLeft = 1;
+			while (allEle[k1] == baseLeft)
+			{
+				countLeft++;
+				k1++;
+			}
+			int baseRight = allEle[j];
+			int k2 = j - 1;
+			int countRight = 1;
+			while (allEle[k2] == baseRight)
+			{
+				k2--;
+				countRight++;
+			}
+			if (countLeft > countRight)
+			{
+				j = k2;
+				sumVal += countRight;
+			}
+			else
+			{
+				i = k1;
+				sumVal += countLeft;
+			}
+			T--;
 		}
-		int sumCount = 0;
-		sort(mChange.begin(), mChange.end());
-		for (int i = 0; i < numKind; ++i)
-		{
-			sumCount += mChange[i];
-		}
-		cout << sumCount << endl;
+		cout << sumVal << endl;
 	}
 	return 0;
 }
