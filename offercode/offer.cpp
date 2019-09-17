@@ -3232,3 +3232,39 @@ int main() {
 	return 0;
 
 }
+
+//寒武纪第3题
+#include <bits/stdc++.h>
+
+using namespace std;
+
+string minWindow(string s, string t) {
+	int i = 0, j = 0;
+	while (i < s.length() && j < t.length()) {
+		if (s[i] == t[j]) {
+			i++;
+			j++;
+		}
+		else {
+			i++;
+		}
+	}
+	return t.length() == j ? "SUB" : "NO";
+}
+
+int main() {
+	int n;
+	cin >> n;
+	vector<string> strarr1(n);
+	vector<string> strarr2(n);
+
+	for (int i = 0; i < n; ++i) {
+		cin >> strarr1[i] >> strarr2[i];
+	}
+
+	for (int i = 0; i < n; ++i) {
+		cout << minWindow(strarr1[i], strarr2[i]) << endl;
+	}
+
+	return 0;
+}

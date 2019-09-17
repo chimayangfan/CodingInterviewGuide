@@ -807,69 +807,37 @@
 
 using namespace std;
 
-string legalIPAddress(string IP) {
-	istringstream is(IP);
-	string substr = "";
-	int count = 0;
-	//IPv4
-	if (IP.find(':') == string::npos) { 
-		while (getline(is, substr, '.')) {
-			++count;
-			if (count > 4 || substr.empty() || (substr.size() > 1 && substr[0] == '0') || substr.size() > 3) 
-				return "Neither";
-			for (char c : substr) {
-				if (c < '0' || c > '9') 
-					return "Neither";
-			}
-			int val = stoi(substr);
-			if (val < 0 || val > 255) 
-				return "Neither";
+string minWindow(string s, string t) {
+	int i = 0, j = 0;
+	while (i < s.length() && j < t.length()) {
+		if (s[i] == t[j]) {
+			i++;
+			j++;
 		}
-		return (count == 4 && IP.back() != '.') ? "IPv4" : "Neither";
-	}
-	//IPv6
-	else { 
-		while (getline(is, substr, ':')) {
-			++count;
-			if (count > 8 || substr.empty() || substr.size() > 4) 
-				return "Neither";
-			for (char c : substr) {
-				if (!(c >= '0' && c <= '9') && !(c >= 'a' && c <= 'f') && !(c >= 'A' && c <= 'F')) 
-					return "Neither";
-			}
+		else {
+			i++;
 		}
-		return (count == 8 && IP.back() != ':') ? "IPv6" : "Neither";
 	}
+	return t.length() == j ? "SUB" : "NO";
 }
 
 int main() {
-	string IP;
-	cin >> IP;
-	cout << legalIPAddress(IP);
+	int n;
+	cin >> n;
+	vector<string> strarr1(n);
+	vector<string> strarr2(n);
+
+	for (int i = 0; i < n; ++i) {
+		cin >> strarr1[i] >> strarr2[i];
+	}
+
+	for (int i = 0; i < n; ++i) {
+		cout << minWindow(strarr1[i], strarr2[i]) << endl;
+	}
 
 	return 0;
 }
 
-string minWindow(string s, string t) {
-	int count[256] = { 0 };
-	for (auto c : t) ++count[c];
-	int len = 0, minLength = s.length();
-	string res;
-	for (int l = 0, r = 0; r < s.length(); ++r) {
-		count[s[r]]--;
-		if (count[s[r]] >= 0) ++len;
-		while (len == t.length()) {
-			if (r - l + 1 <= minLength) {
-				minLength = r - l + 1;
-				res = s.substr(l, r - l + 1);
-			}
-			count[s[l]]++;
-			if (count[s[l]] > 0) --len;
-			++l;
-		}
-	}
-	return res;
-}
 
 
 
