@@ -171,7 +171,7 @@ void allStr(string &str, int i, set<string>&output, string curStr)
 		break;
 	}
 }
-int main()
+int mainA3()
 {
 	string str;
 	cin >> str;
@@ -191,5 +191,55 @@ int main()
 		}
 	}
 	cout << "]" << endl;
+	return 0;
+}
+int main()
+{
+	int N;
+	int M;
+	cin >> N >> M;
+	set<int>val;
+	map<int, int>num;
+	for (int i = 0; i < N; ++i)
+	{
+		int temp;
+		cin >> temp;
+		if (val.count(temp) == 0)
+		{
+			val.insert(temp);
+			num[temp] = 1;
+		}
+		else
+		{
+			num[temp] = num[temp] + 1;
+		}
+	}
+	int k = 8 * M / N;//每个数的bit位
+	int numKind = pow(2, k);
+	if (numKind == 0)
+	{
+		cout << N - 1 << endl;
+	}
+	else if (val.size() <= numKind)
+	{
+		cout << 0 << endl;
+	}
+	else
+	{
+		vector<int>mChange;
+		auto it = num.begin();
+		while (it != num.end())
+		{
+			mChange.push_back(it->second);
+			it++;
+		}
+		int sumCount = 0;
+		sort(mChange.begin(), mChange.end());
+		for (int i = 0; i < numKind; ++i)
+		{
+			sumCount += mChange[i];
+		}
+		cout << sumCount << endl;
+	}
 	return 0;
 }
